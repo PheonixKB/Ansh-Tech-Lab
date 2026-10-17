@@ -45,16 +45,16 @@ A static marketing site for Ansh Tech Labs, built with **Astro + Tailwind CSS + 
 ### 2.1 Setup
 
 ```bash
-node -v                                   # use a current LTS version
+node -v                                   # Node 24 recommended (Astro 7 needs 22.22.0 or newer)
 npm create astro@latest ansh-tech-labs    # choose: Empty template, install deps, init git
 cd ansh-tech-labs
-npx astro add tailwind                    # adds Tailwind + the Vite plugin
+npm install tailwindcss @tailwindcss/vite # Tailwind's Vite plugin (see astro.config below)
 npx astro add sitemap
 npm install gsap @fontsource-variable/inter @fontsource-variable/jetbrains-mono
 npm run dev                               # http://localhost:4321
 ```
 
-Tailwind's setup has changed between versions. If `astro add tailwind` behaves differently, follow the Tailwind section of the Astro docs and keep the `@import "tailwindcss";` + `@theme` approach in section 4.
+Astro's docs mark the old `@astrojs/tailwind` integration as deprecated and say Tailwind's Vite plugin is the preferred setup for Tailwind 4, so we install the plugin directly. See `tech-stack.md` for versions and the full dependency list.
 
 ### 2.2 `astro.config.mjs`
 
@@ -703,8 +703,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: withastro/action@v3
+      - uses: actions/checkout@v7
+      - uses: withastro/action@v6
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -713,8 +713,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 ```
+
+The action versions above follow Astro's GitHub Pages deploy guide as of 17 Oct 2026. Re-check that guide before the first deploy, because action versions change. Commit your lockfile (`package-lock.json`); the action uses it to detect the package manager.
 
 1. Push to GitHub. In **Settings → Pages → Source**, choose **GitHub Actions**. Free plans need a **public** repo.
 2. Put `anshtechlabs.com` in `public/CNAME` and set the custom domain in Pages settings.
