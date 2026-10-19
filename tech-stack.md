@@ -1,21 +1,21 @@
 # Ansh Tech Labs Website: Tech Stack
 
-*Draft: 17 October 2026. Companion to [`idea.md`](./idea.md) (what and why) and [`design.md`](./design.md) (pages, components, copy).*
+_Draft: 17 October 2026. Companion to [`idea.md`](./idea.md) (what and why) and [`design.md`](./design.md) (pages, components, copy)._
 
 ## 1. Stack at a glance
 
-| Layer | Choice | Version checked* | Why |
-|---|---|---|---|
-| Framework | **Astro** | 7.4.0 | Builds to plain static HTML, ships almost no JavaScript, reusable components and layouts, dynamic routes for the four product pages |
-| Styling | **Tailwind CSS** + `@tailwindcss/vite` | 4.3.3 | Design tokens in CSS (`@theme`), fast to build a custom dark UI. Astro's docs now recommend Tailwind's Vite plugin |
-| Animation | **GSAP** + ScrollTrigger | 3.15.0 | Scroll reveals, count-up numbers, SVG line drawing, timelines |
-| Fonts | **Fontsource** (Inter, JetBrains Mono) | 5.3.0 each | Self-hosted, so no third-party font requests |
-| SEO | `@astrojs/sitemap` | 3.7.4 | Generates `sitemap-index.xml` |
-| Formatting | Prettier + Astro and Tailwind plugins | 3.9.10 / 1.1.1 / 0.8.1 | One consistent code style |
-| Type check | `@astrojs/check` | 0.9.10 | Catches errors in `.astro` files |
-| Tests (light) | Playwright + axe-core | 1.64.1 / 4.14.0 | Automated accessibility check on key pages |
-| Hosting | **GitHub Pages** (GitHub Actions deploy) | n/a | Free static hosting from the repo, custom domain `anshtechlabs.com` |
-| Forms | Formspree or Web3Forms | n/a | A static site has no backend |
+| Layer         | Choice                                   | Version checked*       | Why                                                                                                                                 |
+| ------------- | ---------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Framework     | **Astro**                                | 7.4.0                  | Builds to plain static HTML, ships almost no JavaScript, reusable components and layouts, dynamic routes for the four product pages |
+| Styling       | **Tailwind CSS** + `@tailwindcss/vite`   | 4.3.3                  | Design tokens in CSS (`@theme`), fast to build a custom dark UI. Astro's docs now recommend Tailwind's Vite plugin                  |
+| Animation     | **GSAP** + ScrollTrigger                 | 3.15.0                 | Scroll reveals, count-up numbers, SVG line drawing, timelines                                                                       |
+| Fonts         | **Fontsource** (Inter, JetBrains Mono)   | 5.3.0 each             | Self-hosted, so no third-party font requests                                                                                        |
+| SEO           | `@astrojs/sitemap`                       | 3.7.4                  | Generates `sitemap-index.xml`                                                                                                       |
+| Formatting    | Prettier + Astro and Tailwind plugins    | 3.9.10 / 1.1.1 / 0.8.1 | One consistent code style                                                                                                           |
+| Type check    | `@astrojs/check`                         | 0.9.10                 | Catches errors in `.astro` files                                                                                                    |
+| Tests (light) | Playwright + axe-core                    | 1.64.1 / 4.14.0        | Automated accessibility check on key pages                                                                                          |
+| Hosting       | **GitHub Pages** (GitHub Actions deploy) | n/a                    | Free static hosting from the repo, custom domain `anshtechlabs.com`                                                                 |
+| Forms         | Formspree or Web3Forms                   | n/a                    | A static site has no backend                                                                                                        |
 
 \* Latest versions on the npm registry, checked on 17 Oct 2026. Run `npm view <package> version` to see the current one. The lockfile is what actually pins versions.
 
@@ -23,13 +23,13 @@
 
 ## 2. Requirements
 
-| Tool | Requirement | Notes |
-|---|---|---|
-| **Node.js** | **24 recommended**, minimum 22.22.0 | Astro 7.4.0 declares `>=22.22.0`. `eslint-plugin-astro` (optional) needs 22.22.3+ or 24.16+, and the deploy action defaults to Node 24, so 24 keeps everything aligned |
-| npm | Comes with Node | |
-| Git + GitHub account | | |
-| Editor | VS Code | Extensions: **Astro** (`astro-build.astro-vscode`), **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`), **Prettier** (`esbenp.prettier-vscode`) |
-| Browser | Chrome or Edge + Firefox | DevTools, Lighthouse |
+| Tool                 | Requirement                         | Notes                                                                                                                                                                  |
+| -------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Node.js**          | **24 recommended**, minimum 22.22.0 | Astro 7.4.0 declares `>=22.22.0`. `eslint-plugin-astro` (optional) needs 22.22.3+ or 24.16+, and the deploy action defaults to Node 24, so 24 keeps everything aligned |
+| npm                  | Comes with Node                     |                                                                                                                                                                        |
+| Git + GitHub account |                                     |                                                                                                                                                                        |
+| Editor               | VS Code                             | Extensions: **Astro** (`astro-build.astro-vscode`), **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`), **Prettier** (`esbenp.prettier-vscode`)               |
+| Browser              | Chrome or Edge + Firefox            | DevTools, Lighthouse                                                                                                                                                   |
 
 Check: `node -v` and `npm -v`. To manage Node versions, use `nvm` or a similar tool and commit a `.nvmrc` file containing `24`.
 
@@ -42,12 +42,12 @@ Check: `node -v` and `npm -v`. To manage Node versions, use `nvm` or a similar t
 - One template plus one data file (`solutions.ts`) generates all four product pages.
 - It is close to plain HTML/CSS/JS, so it is quick to learn.
 
-| Alternative | Why not (for now) |
-|---|---|
-| Plain HTML/CSS/JS | Repeats the navbar and footer on every page; gets messy past a few pages |
-| Vite + React | Fine, but ships more JavaScript than a marketing site needs and needs pre-rendering for good SEO |
-| Next.js (static export) | Heavier than needed. Worth considering only if the site later becomes an app with logins |
-| Eleventy / Hugo | Good for content-heavy sites, less ergonomic for component-style UI and rich animation |
+| Alternative             | Why not (for now)                                                                                |
+| ----------------------- | ------------------------------------------------------------------------------------------------ |
+| Plain HTML/CSS/JS       | Repeats the navbar and footer on every page; gets messy past a few pages                         |
+| Vite + React            | Fine, but ships more JavaScript than a marketing site needs and needs pre-rendering for good SEO |
+| Next.js (static export) | Heavier than needed. Worth considering only if the site later becomes an app with logins         |
+| Eleventy / Hugo         | Good for content-heavy sites, less ergonomic for component-style UI and rich animation           |
 
 ### Styling: Tailwind CSS
 
@@ -65,11 +65,11 @@ Check: `node -v` and `npm -v`. To manage Node versions, use `nvm` or a similar t
 
 ### Hosting: GitHub Pages
 
-| Option | Good | Limits |
-|---|---|---|
-| **GitHub Pages** (chosen) | Free, code and hosting in one place, simple Actions deploy | **Free plans need a public repo.** No custom HTTP headers (no real CSP, HSTS control, etc.). No server code |
-| Cloudflare Pages | Free, supports custom headers, can run small server functions | One more account and service |
-| Netlify | Free tier, headers and form handling built in | One more account and service |
+| Option                    | Good                                                          | Limits                                                                                                      |
+| ------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **GitHub Pages** (chosen) | Free, code and hosting in one place, simple Actions deploy    | **Free plans need a public repo.** No custom HTTP headers (no real CSP, HSTS control, etc.). No server code |
+| Cloudflare Pages          | Free, supports custom headers, can run small server functions | One more account and service                                                                                |
+| Netlify                   | Free tier, headers and form handling built in                 | One more account and service                                                                                |
 
 The Astro project is identical on all three. If strong security headers become a requirement for a forensics brand, only the deploy step changes.
 
@@ -148,12 +148,12 @@ npx playwright install chromium            # downloads the test browser
 **`astro.config.mjs`**
 
 ```js
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
-import sitemap from '@astrojs/sitemap';
+import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: 'https://anshtechlabs.com',
+  site: "https://anshtechlabs.com",
   // With a custom domain, do NOT set `base`.
   // For testing on username.github.io/repo-name, temporarily add: base: '/repo-name'
   integrations: [sitemap()],
@@ -182,21 +182,31 @@ PUBLIC_FORM_ENDPOINT=https://example.invalid/replace-me
 **`playwright.config.ts`** (minimal)
 
 ```ts
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 export default defineConfig({
-  testDir: 'tests',
-  webServer: { command: 'npm run build && npm run preview', url: 'http://localhost:4321', reuseExistingServer: true },
-  use: { baseURL: 'http://localhost:4321' },
+  testDir: "tests",
+  webServer: {
+    command: "npm run build && npm run preview",
+    url: "http://localhost:4321",
+    reuseExistingServer: true,
+  },
+  use: { baseURL: "http://localhost:4321" },
 });
 ```
 
 **`tests/a11y.spec.ts`**
 
 ```ts
-import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
+import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
-for (const path of ['/', '/solutions/', '/solutions/strotpragna/', '/about/', '/contact/']) {
+for (const path of [
+  "/",
+  "/solutions/",
+  "/solutions/strotpragna/",
+  "/about/",
+  "/contact/",
+]) {
   test(`no axe violations on ${path}`, async ({ page }) => {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
@@ -276,6 +286,7 @@ Notes from the guide:
       directory: "/"
       schedule: { interval: "monthly" }
   ```
+
 - Run `npm audit` before releases and review what it reports.
 - **Headers:** GitHub Pages cannot set HTTP headers. Use a CSP `<meta>` tag (see `design.md`), knowing some directives do not work that way. Move hosting if full headers are required.
 - **No third-party scripts.** Everything (fonts, GSAP, icons) is bundled and served from the same origin. That keeps the CSP simple and avoids tracker-related cookie banners.
@@ -283,24 +294,24 @@ Notes from the guide:
 
 ## 9. When to revisit the stack
 
-| If this happens | Consider |
-|---|---|
-| Strong security headers become mandatory | Host on Cloudflare Pages or Netlify |
-| The repo must be private | A host that supports private repos on its free plan, or a paid GitHub plan |
-| Non-developers need to edit articles | A Git-based CMS (such as Decap or Keystatic) on top of Astro content collections |
-| The site needs logins, dashboards or a database | A separate application (Astro SSR or another framework) beside this static site |
-| Animation bundle size matters more than polish | CSS and `IntersectionObserver` for simple reveals |
+| If this happens                                 | Consider                                                                         |
+| ----------------------------------------------- | -------------------------------------------------------------------------------- |
+| Strong security headers become mandatory        | Host on Cloudflare Pages or Netlify                                              |
+| The repo must be private                        | A host that supports private repos on its free plan, or a paid GitHub plan       |
+| Non-developers need to edit articles            | A Git-based CMS (such as Decap or Keystatic) on top of Astro content collections |
+| The site needs logins, dashboards or a database | A separate application (Astro SSR or another framework) beside this static site  |
+| Animation bundle size matters more than polish  | CSS and `IntersectionObserver` for simple reveals                                |
 
 ## 10. What was and was not verified
 
-| Item | Status |
-|---|---|
-| Package versions and Node minimums | Read from the npm registry on 17 Oct 2026 (`npm view`) |
-| Deploy workflow and action versions | From Astro's GitHub Pages deploy guide. Could not be cross-checked against each action's GitHub releases from the build environment |
-| Tailwind setup (Vite plugin) | Astro's Tailwind integration page marks the old integration deprecated and recommends the Vite plugin |
-| Formspree/Web3Forms free limits and data terms | **Not checked.** Confirm before choosing |
-| GitHub Pages size, bandwidth and build limits | **Not checked.** A small marketing site is far below the documented limits, but confirm in GitHub's docs |
-| Nothing has been built or run yet | The commands and configs here are untested until the project is scaffolded |
+| Item                                           | Status                                                                                                                              |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Package versions and Node minimums             | Read from the npm registry on 17 Oct 2026 (`npm view`)                                                                              |
+| Deploy workflow and action versions            | From Astro's GitHub Pages deploy guide. Could not be cross-checked against each action's GitHub releases from the build environment |
+| Tailwind setup (Vite plugin)                   | Astro's Tailwind integration page marks the old integration deprecated and recommends the Vite plugin                               |
+| Formspree/Web3Forms free limits and data terms | **Not checked.** Confirm before choosing                                                                                            |
+| GitHub Pages size, bandwidth and build limits  | **Not checked.** A small marketing site is far below the documented limits, but confirm in GitHub's docs                            |
+| Nothing has been built or run yet              | The commands and configs here are untested until the project is scaffolded                                                          |
 
 ## 11. Learning resources
 

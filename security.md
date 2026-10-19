@@ -1,6 +1,6 @@
 # Ansh Tech Labs Website: Security Plan
 
-*Draft: 17 October 2026. Companion to [`idea.md`](./idea.md), [`design.md`](./design.md) and [`tech-stack.md`](./tech-stack.md).*
+_Draft: 17 October 2026. Companion to [`idea.md`](./idea.md), [`design.md`](./design.md) and [`tech-stack.md`](./tech-stack.md)._
 
 This document records the security decisions made for the website, the rules developers follow, and the items that still need an owner. Nothing in it is a guarantee. It is a plan to review with the company admins before coding starts.
 
@@ -8,16 +8,16 @@ This document records the security decisions made for the website, the rules dev
 
 ## 1. Decisions log
 
-| # | Topic | Decision | Status |
-|---|---|---|---|
-| 1 | Hosting and security headers | Host on **GitHub Pages**. **Accept its limits and use meta tags** (CSP, referrer policy) instead of HTTP headers | **Decided** |
-| 2 | Repository ownership | The repo **belongs to Ansh Tech Labs Pvt. Ltd.** Admins: **Harsh Panchal** ([harshp2035](https://github.com/harshp2035)) and **Jay Makwana** ([Jay04Makwana](https://github.com/Jay04Makwana)). The website is company property. The developer is an intern | **Decided** |
-| 3 | What we never publish | Real case data, client or agency names, active deployments; operational details that help adversaries; sanitized demo data only; screenshots and PDFs stripped of metadata; a named person approves content | **Decided** (approver's name still needed, see section 12) |
-| 4 | Contact form and data handling | Submissions are emailed to **jay@anshtechlabs.com** and **hp@anshtechlabs.com**. Provider, retention and privacy policy still to be decided | **Partly decided** (section 7) |
-| 5 | Domain, DNS and email authentication | Proposed in section 9 | Needs admin approval |
-| 6 | GitHub account and branch rules | Proposed in section 5 | Needs admin approval |
-| 7 | Supply chain rules | Proposed in section 8 | Needs admin approval |
-| 8 | `security.txt` and incident plan | Proposed in sections 11 and 13 | Needs admin approval |
+| #   | Topic                                | Decision                                                                                                                                                                                                                                                    | Status                                                     |
+| --- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| 1   | Hosting and security headers         | Host on **GitHub Pages**. **Accept its limits and use meta tags** (CSP, referrer policy) instead of HTTP headers                                                                                                                                            | **Decided**                                                |
+| 2   | Repository ownership                 | The repo **belongs to Ansh Tech Labs Pvt. Ltd.** Admins: **Harsh Panchal** ([harshp2035](https://github.com/harshp2035)) and **Jay Makwana** ([Jay04Makwana](https://github.com/Jay04Makwana)). The website is company property. The developer is an intern | **Decided**                                                |
+| 3   | What we never publish                | Real case data, client or agency names, active deployments; operational details that help adversaries; sanitized demo data only; screenshots and PDFs stripped of metadata; a named person approves content                                                 | **Decided** (approver's name still needed, see section 12) |
+| 4   | Contact form and data handling       | Submissions are emailed to **jay@anshtechlabs.com** and **hp@anshtechlabs.com**. Provider, retention and privacy policy still to be decided                                                                                                                 | **Partly decided** (section 7)                             |
+| 5   | Domain, DNS and email authentication | Proposed in section 9                                                                                                                                                                                                                                       | Needs admin approval                                       |
+| 6   | GitHub account and branch rules      | Proposed in section 5                                                                                                                                                                                                                                       | Needs admin approval                                       |
+| 7   | Supply chain rules                   | Proposed in section 8                                                                                                                                                                                                                                       | Needs admin approval                                       |
+| 8   | `security.txt` and incident plan     | Proposed in sections 11 and 13                                                                                                                                                                                                                              | Needs admin approval                                       |
 
 ---
 
@@ -47,21 +47,23 @@ GitHub Pages cannot set custom HTTP response headers, so we use `<meta>` tags in
 
 ### 3.1 What meta tags can and cannot do
 
-| Control | Via meta tag? | Plan |
-|---|---|---|
-| Content-Security-Policy (most directives) | Yes | Set in `<head>` (section 3.2) |
-| `frame-ancestors` (clickjacking protection) | **No**, ignored in meta | Not available. See risk note below |
-| CSP `report-uri` / `sandbox` | **No** | Not available |
-| Referrer policy | Yes (`<meta name="referrer">`) | `strict-origin-when-cross-origin` |
-| X-Frame-Options, X-Content-Type-Options, Permissions-Policy | **No** | Not available |
-| HSTS | No | Not controllable by us. Enable **Enforce HTTPS** in Pages settings and **check after launch** whether the host sends HSTS. Do not claim it until verified |
+| Control                                                     | Via meta tag?                  | Plan                                                                                                                                                      |
+| ----------------------------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Content-Security-Policy (most directives)                   | Yes                            | Set in `<head>` (section 3.2)                                                                                                                             |
+| `frame-ancestors` (clickjacking protection)                 | **No**, ignored in meta        | Not available. See risk note below                                                                                                                        |
+| CSP `report-uri` / `sandbox`                                | **No**                         | Not available                                                                                                                                             |
+| Referrer policy                                             | Yes (`<meta name="referrer">`) | `strict-origin-when-cross-origin`                                                                                                                         |
+| X-Frame-Options, X-Content-Type-Options, Permissions-Policy | **No**                         | Not available                                                                                                                                             |
+| HSTS                                                        | No                             | Not controllable by us. Enable **Enforce HTTPS** in Pages settings and **check after launch** whether the host sends HSTS. Do not claim it until verified |
 
 **Accepted risk: clickjacking.** The site could be framed by another site. Impact is low, because the site has no logins and no sensitive actions. The only thing a framing attacker could do with the contact form is trick someone into sending a message. The real concern is impersonation, handled in section 9. Revisit this if any feature beyond the contact form is added.
 
 ### 3.2 Starting CSP (meta tag)
 
 ```html
-<meta http-equiv="Content-Security-Policy" content="
+<meta
+  http-equiv="Content-Security-Policy"
+  content="
   default-src 'self';
   script-src 'self';
   style-src 'self';
@@ -71,8 +73,9 @@ GitHub Pages cannot set custom HTTP response headers, so we use `<meta>` tags in
   object-src 'none';
   base-uri 'self';
   form-action 'none';
-">
-<meta name="referrer" content="strict-origin-when-cross-origin">
+"
+/>
+<meta name="referrer" content="strict-origin-when-cross-origin" />
 ```
 
 Notes:
@@ -93,17 +96,17 @@ Move the same Astro project to Cloudflare Pages or Netlify (which support real h
 
 ## 4. Threats and controls at a glance
 
-| Threat | Likelihood / impact (qualitative) | Main controls |
-|---|---|---|
-| GitHub account takeover, malicious commit | Medium / High | Mandatory 2FA, branch protection, code owner review, least privilege (section 5) |
-| Registrar or DNS hijack | Low-Medium / **Very high** | Registrar 2FA and transfer lock, restricted access, CAA (section 9) |
-| Poisoned npm package or GitHub Action | Medium / High | Lockfile, `npm ci`, pinned actions, Dependabot, small dependency list (section 8) |
-| Lookalike domain / fake site | Medium / High | Defensive domains, brand monitoring, email authentication (section 9) |
-| Accidental disclosure (data, metadata, secrets) | Medium / High | Content policy, asset hygiene, secret scanning, review (sections 5, 6) |
-| Defacement through a bad merge | Low / High | PR review, protected `main`, fast rollback (section 13) |
-| XSS via our own code | Low / Medium | Strict CSP, coding rules, no third-party scripts (sections 3, 10) |
-| Clickjacking | Low / Low | Accepted for now (section 3.1) |
-| Form abuse, spam floods, data leakage, impersonation of agencies | Medium / Medium | Provider spam controls, recipients kept out of the repo, minimal fields, submissions treated as untrusted (section 7) |
+| Threat                                                           | Likelihood / impact (qualitative) | Main controls                                                                                                         |
+| ---------------------------------------------------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| GitHub account takeover, malicious commit                        | Medium / High                     | Mandatory 2FA, branch protection, code owner review, least privilege (section 5)                                      |
+| Registrar or DNS hijack                                          | Low-Medium / **Very high**        | Registrar 2FA and transfer lock, restricted access, CAA (section 9)                                                   |
+| Poisoned npm package or GitHub Action                            | Medium / High                     | Lockfile, `npm ci`, pinned actions, Dependabot, small dependency list (section 8)                                     |
+| Lookalike domain / fake site                                     | Medium / High                     | Defensive domains, brand monitoring, email authentication (section 9)                                                 |
+| Accidental disclosure (data, metadata, secrets)                  | Medium / High                     | Content policy, asset hygiene, secret scanning, review (sections 5, 6)                                                |
+| Defacement through a bad merge                                   | Low / High                        | PR review, protected `main`, fast rollback (section 13)                                                               |
+| XSS via our own code                                             | Low / Medium                      | Strict CSP, coding rules, no third-party scripts (sections 3, 10)                                                     |
+| Clickjacking                                                     | Low / Low                         | Accepted for now (section 3.1)                                                                                        |
+| Form abuse, spam floods, data leakage, impersonation of agencies | Medium / Medium                   | Provider spam controls, recipients kept out of the repo, minimal fields, submissions treated as untrusted (section 7) |
 
 ---
 
@@ -111,23 +114,23 @@ Move the same Astro project to Cloudflare Pages or Netlify (which support real h
 
 ### 5.1 Ownership
 
-- The repository lives under the **company's GitHub organization** (not a personal account). *Organization and repository names: to be filled in by the admins.*
+- The repository lives under the **company's GitHub organization** (not a personal account). _Organization and repository names: to be filled in by the admins._
 - Admins: **Harsh Panchal** (`harshp2035`) and **Jay Makwana** (`Jay04Makwana`). Two admins avoids a single point of failure.
 - The intern developer is a **contributor with Write access, not Admin**. They work on branches and open pull requests. An admin merges.
 - **Free GitHub Pages needs a public repository.** Treat everything in it, including history, as public forever.
 
 ### 5.2 Proposed settings (admins to approve)
 
-| Setting | Value |
-|---|---|
-| Organization: require two-factor authentication for all members | **On** |
-| Branch protection (or ruleset) on `main` | Require a pull request, **at least 1 approval**, require status checks (build + tests), block force-pushes and branch deletion |
-| `.github/CODEOWNERS` | Admins own everything, so their approval is required on every change (below) |
-| Secret scanning and push protection | **On** |
-| Dependabot alerts and updates | **On** (section 8) |
-| Actions: default `GITHUB_TOKEN` permissions | Read-only; the deploy workflow requests only what it needs |
-| Pages: Enforce HTTPS | **On** after the certificate is issued |
-| Member list review | Quarterly, and when anyone leaves (including the end of the internship) |
+| Setting                                                         | Value                                                                                                                          |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Organization: require two-factor authentication for all members | **On**                                                                                                                         |
+| Branch protection (or ruleset) on `main`                        | Require a pull request, **at least 1 approval**, require status checks (build + tests), block force-pushes and branch deletion |
+| `.github/CODEOWNERS`                                            | Admins own everything, so their approval is required on every change (below)                                                   |
+| Secret scanning and push protection                             | **On**                                                                                                                         |
+| Dependabot alerts and updates                                   | **On** (section 8)                                                                                                             |
+| Actions: default `GITHUB_TOKEN` permissions                     | Read-only; the deploy workflow requests only what it needs                                                                     |
+| Pages: Enforce HTTPS                                            | **On** after the certificate is issued                                                                                         |
+| Member list review                                              | Quarterly, and when anyone leaves (including the end of the internship)                                                        |
 
 `.github/CODEOWNERS`:
 
@@ -141,7 +144,7 @@ Move the same Astro project to Cloudflare Pages or Netlify (which support real h
 ### 5.3 Developer account hygiene
 
 - Use 2FA on your GitHub account (an authenticator app or a passkey is stronger than SMS).
-- **Commit with your GitHub no-reply email**, not a personal address, since commit authorship is public in a public repo. In GitHub settings: *Emails* → "Keep my email addresses private" and "Block command line pushes that expose my email". Then set `git config user.email` to the no-reply address GitHub shows.
+- **Commit with your GitHub no-reply email**, not a personal address, since commit authorship is public in a public repo. In GitHub settings: _Emails_ → "Keep my email addresses private" and "Block command line pushes that expose my email". Then set `git config user.email` to the no-reply address GitHub shows.
 - Never paste tokens or keys into the repo, issues, pull requests or chat. If one leaks, **rotate it immediately**. Deleting a commit does not make a public leak safe.
 - Do your work on branches and never push straight to `main`.
 
@@ -159,7 +162,7 @@ Move the same Astro project to Cloudflare Pages or Netlify (which support real h
 
 ### 6.2 What counts as helping an adversary
 
-Test before writing or approving a sentence or image: *"Would this help someone evade, counter or attack the tool, or identify who uses it?"* If yes, do not publish. Examples:
+Test before writing or approving a sentence or image: _"Would this help someone evade, counter or attack the tool, or identify who uses it?"_ If yes, do not publish. Examples:
 
 - Exact data sources, forums or collection methods the OSINT platform monitors
 - Supported-device lists or extraction techniques at a level that reveals limits or weaknesses
@@ -200,6 +203,7 @@ Images and PDFs often carry hidden data: GPS coordinates, camera model, author n
 
 ```markdown
 ## Content & security checklist
+
 - [ ] No real case data, client/agency names or active deployments
 - [ ] No operational details that could help an adversary
 - [ ] All screenshots and demos use synthetic data
@@ -270,7 +274,7 @@ Rules for handling these addresses:
 - **Run `npm audit`** before releases and read what it reports.
 - **Pin third-party GitHub Actions to a full commit SHA**, not a version tag, because tags can be moved. Add a comment with the version, for example:
   ```yaml
-  - uses: withastro/action@<full-40-character-commit-sha>  # v6
+  - uses: withastro/action@<full-40-character-commit-sha> # v6
   ```
   Look up the SHA for the version listed in Astro's deploy guide. Dependabot can keep pinned SHAs updated.
 - **Workflow permissions:** only `contents: read`, `pages: write`, `id-token: write`, as in the deploy workflow. No other secrets are needed, since the site has no form.
@@ -283,17 +287,17 @@ Rules for handling these addresses:
 
 The domain is the single most valuable asset. Whoever controls DNS can send visitors anywhere.
 
-| Control | Proposal |
-|---|---|
-| Registrar account | Owned by the **company**, not an individual. 2FA on, recovery email and phone are company-controlled |
-| Domain lock | Registrar/transfer lock on. Auto-renew on, with renewal reminders to two people |
-| Who can change DNS | Admins only. Log who has access |
-| CAA record | Restrict which certificate authorities may issue certificates for the domain |
-| DNSSEC | Enable if the registrar supports it |
-| Dangling records | Remove DNS records that point to services the company no longer uses (prevents subdomain takeover) |
-| Email authentication | Set **SPF, DKIM and DMARC** for the domain so attackers cannot easily send mail pretending to be the company |
-| Lookalike domains | Consider registering obvious variants (other extensions, common misspellings) and periodically search for fake copies of the site |
-| DNS cutover | The live site uses this domain today. **Do not change DNS until the new site has been tested on its `github.io` address and approved.** Change it in a quiet window with a rollback plan |
+| Control              | Proposal                                                                                                                                                                                 |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Registrar account    | Owned by the **company**, not an individual. 2FA on, recovery email and phone are company-controlled                                                                                     |
+| Domain lock          | Registrar/transfer lock on. Auto-renew on, with renewal reminders to two people                                                                                                          |
+| Who can change DNS   | Admins only. Log who has access                                                                                                                                                          |
+| CAA record           | Restrict which certificate authorities may issue certificates for the domain                                                                                                             |
+| DNSSEC               | Enable if the registrar supports it                                                                                                                                                      |
+| Dangling records     | Remove DNS records that point to services the company no longer uses (prevents subdomain takeover)                                                                                       |
+| Email authentication | Set **SPF, DKIM and DMARC** for the domain so attackers cannot easily send mail pretending to be the company                                                                             |
+| Lookalike domains    | Consider registering obvious variants (other extensions, common misspellings) and periodically search for fake copies of the site                                                        |
+| DNS cutover          | The live site uses this domain today. **Do not change DNS until the new site has been tested on its `github.io` address and approved.** Change it in a quiet window with a rollback plan |
 
 ---
 
@@ -330,17 +334,17 @@ The contact address is **to be provided by the admins**. It must be monitored. U
 
 ## 12. Open items for the admins
 
-| # | Question | Owner |
-|---|---|---|
-| 1 | **Who is the named content approver**, and who covers when they are away? | Admins |
-| 2 | GitHub **organization and repository names**; confirm the repo sits under the company organization | Admins |
-| 3 | Approve the proposed branch protection, CODEOWNERS, 2FA and secret-scanning settings (section 5.2) | Admins |
-| 4 | Partner logos: allowed as an exception to "no agency names"? Written permission on file? (section 6.6) | Admins |
-| 5 | Contact page: show any public email? Prefer a role address such as `contact@` over the two recipient addresses (section 7) | Admins |
-| 6 | Who owns the domain registrar account and DNS? Are the section 9 controls in place? | Admins |
-| 7 | Email for `security.txt`, and who monitors it | Admins |
-| 8 | Who decides the **form provider** and approves the privacy policy? One shared alias or two direct addresses? Who owns the provider account? (section 7) | Admins |
-| 9 | Does anyone on the team need Write access besides the intern? Who reviews access when the internship ends? | Admins |
+| #   | Question                                                                                                                                                | Owner  |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| 1   | **Who is the named content approver**, and who covers when they are away?                                                                               | Admins |
+| 2   | GitHub **organization and repository names**; confirm the repo sits under the company organization                                                      | Admins |
+| 3   | Approve the proposed branch protection, CODEOWNERS, 2FA and secret-scanning settings (section 5.2)                                                      | Admins |
+| 4   | Partner logos: allowed as an exception to "no agency names"? Written permission on file? (section 6.6)                                                  | Admins |
+| 5   | Contact page: show any public email? Prefer a role address such as `contact@` over the two recipient addresses (section 7)                              | Admins |
+| 6   | Who owns the domain registrar account and DNS? Are the section 9 controls in place?                                                                     | Admins |
+| 7   | Email for `security.txt`, and who monitors it                                                                                                           | Admins |
+| 8   | Who decides the **form provider** and approves the privacy policy? One shared alias or two direct addresses? Who owns the provider account? (section 7) | Admins |
+| 9   | Does anyone on the team need Write access besides the intern? Who reviews access when the internship ends?                                              | Admins |
 
 ---
 
@@ -350,7 +354,7 @@ The contact address is **to be provided by the admins**. It must be monitored. U
 
 1. **Detect and tell:** whoever notices tells both admins immediately (phone, not only email). Record the time and what was seen.
 2. **Contain:**
-   - Bad content live: **revert the commit** (`git revert`) and push, or re-run the deploy on the last good commit. For a serious case, unpublish the site (repo *Settings → Pages*) until it is fixed.
+   - Bad content live: **revert the commit** (`git revert`) and push, or re-run the deploy on the last good commit. For a serious case, unpublish the site (repo _Settings → Pages_) until it is fixed.
    - Leaked secret or file: **rotate** the secret first, then remove the file. Assume anything pushed to a public repo has already been copied.
    - Account takeover suspected: remove the account from the organization, reset credentials, review the organization **audit log** and recent commits.
    - DNS or domain tampering: contact the registrar at once, lock the domain, restore records.

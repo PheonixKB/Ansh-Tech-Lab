@@ -2,18 +2,18 @@
 
 Instructions for an AI coding agent building and maintaining the Ansh Tech Labs website (digital forensics, OSINT and cyber-intelligence tools for law-enforcement agencies and corporate security teams). Read this file first, then the spec files it points to.
 
-*Draft: 18 October 2026. The repo is owned by Ansh Tech Labs Pvt. Ltd. A human intern builds the site; company admins approve every change.*
+_Draft: 18 October 2026. The repo is owned by Ansh Tech Labs Pvt. Ltd. A human intern builds the site; company admins approve every change._
 
 ## 1. Source of truth
 
 Do not invent requirements. When files disagree, the order is: `security.md` > `design.md` > `tech-stack.md` > `idea.md`. If something is missing, ask. Do not guess.
 
-| File | Use it for |
-|---|---|
-| `security.md` | Rules that override everything else: never-publish policy, CSP, repo access, form handling, supply chain |
-| `design.md` | Tokens, components, `solutions.ts` data, every page spec, GSAP code, build order (section 11), open items (section 12) |
-| `tech-stack.md` | Versions, config files, commands, deploy workflow |
-| `idea.md` | Goals, audience, tone, scope (v1 / v1.1 / v2 / not planned) |
+| File            | Use it for                                                                                                             |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `security.md`   | Rules that override everything else: never-publish policy, CSP, repo access, form handling, supply chain               |
+| `design.md`     | Tokens, components, `solutions.ts` data, every page spec, GSAP code, build order (section 11), open items (section 12) |
+| `tech-stack.md` | Versions, config files, commands, deploy workflow                                                                      |
+| `idea.md`       | Goals, audience, tone, scope (v1 / v1.1 / v2 / not planned)                                                            |
 
 ## 2. Hard rules (stop and ask a human if a task would break one)
 
@@ -87,47 +87,47 @@ These are the capabilities required, grouped by phase. The right-hand column nam
 
 ### 7.1 Core build skills
 
-| Capability | What it means here | Matching skill or tool |
-|---|---|---|
-| **Astro** | Components, layouts, dynamic routes with `getStaticPaths`, static output, content collections (v1.1), sitemap | Docs and the spec in `design.md` |
-| **Tailwind CSS 4** | `@theme` tokens, utility-first styling, responsive variants, no inline styles | `design.md` section 4 |
-| **TypeScript** | Typed data files (`solutions.ts`, `site.ts`), strict mode | `astro check` |
-| **GSAP + ScrollTrigger** | Reveal, stagger, count-up, SVG draw-in, pipeline highlight, `matchMedia` for reduced motion, clean-up | `design.md` section 8 |
-| **Semantic HTML and CSS** | Landmarks, forms, focus styles, fluid layout, `prefers-reduced-motion` | none needed |
-| **Git and GitHub** | Branches, PRs, CODEOWNERS, branch protection, Actions, Pages, Dependabot | `gh` CLI |
+| Capability                | What it means here                                                                                            | Matching skill or tool           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **Astro**                 | Components, layouts, dynamic routes with `getStaticPaths`, static output, content collections (v1.1), sitemap | Docs and the spec in `design.md` |
+| **Tailwind CSS 4**        | `@theme` tokens, utility-first styling, responsive variants, no inline styles                                 | `design.md` section 4            |
+| **TypeScript**            | Typed data files (`solutions.ts`, `site.ts`), strict mode                                                     | `astro check`                    |
+| **GSAP + ScrollTrigger**  | Reveal, stagger, count-up, SVG draw-in, pipeline highlight, `matchMedia` for reduced motion, clean-up         | `design.md` section 8            |
+| **Semantic HTML and CSS** | Landmarks, forms, focus styles, fluid layout, `prefers-reduced-motion`                                        | none needed                      |
+| **Git and GitHub**        | Branches, PRs, CODEOWNERS, branch protection, Actions, Pages, Dependabot                                      | `gh` CLI                         |
 
 ### 7.2 Design and UX skills
 
-| Capability | What it means here | Matching skill |
-|---|---|---|
-| **Distinctive visual design** | Keep the case-file look (mono eyebrows, thin borders, one cyan accent). Avoid generic templates | `frontend-design` |
-| **Design-to-code from Figma** | Turn the approved Figma screens into components using tokens | `figma:figma-design-to-code` (needs the Figma connector and file access; not installed so far) |
-| **Motion from design** | Match animation timing and easing to the prototype | `figma:figma-implement-motion` |
-| **Design-system upkeep** | Check for hard-coded values, document component variants and states | `design:design-system` |
-| **Design handoff and critique** | Compare the build to the design, list differences | `design:design-critique`, `design:design-handoff` |
-| **UX copy** | Button labels, form errors, empty and success states, responsible-use note | `design:ux-copy` |
+| Capability                      | What it means here                                                                              | Matching skill                                                                                 |
+| ------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Distinctive visual design**   | Keep the case-file look (mono eyebrows, thin borders, one cyan accent). Avoid generic templates | `frontend-design`                                                                              |
+| **Design-to-code from Figma**   | Turn the approved Figma screens into components using tokens                                    | `figma:figma-design-to-code` (needs the Figma connector and file access; not installed so far) |
+| **Motion from design**          | Match animation timing and easing to the prototype                                              | `figma:figma-implement-motion`                                                                 |
+| **Design-system upkeep**        | Check for hard-coded values, document component variants and states                             | `design:design-system`                                                                         |
+| **Design handoff and critique** | Compare the build to the design, list differences                                               | `design:design-critique`, `design:design-handoff`                                              |
+| **UX copy**                     | Button labels, form errors, empty and success states, responsible-use note                      | `design:ux-copy`                                                                               |
 
 ### 7.3 Quality skills
 
-| Capability | What it means here | Matching skill or tool |
-|---|---|---|
+| Capability                      | What it means here                                                         | Matching skill or tool                  |
+| ------------------------------- | -------------------------------------------------------------------------- | --------------------------------------- |
 | **Accessibility (WCAG 2.1 AA)** | Contrast, keyboard, focus order, labels, touch targets, screen-reader text | `design:accessibility-review`, axe-core |
-| **Testing** | Playwright smoke and a11y tests, link checks, build checks | `engineering:testing-strategy` |
-| **Performance** | Image formats and sizes, font loading, no layout shift, small JS | Lighthouse |
-| **SEO** | Titles, descriptions, canonical URLs, Open Graph, sitemap, structured data | `design.md` section 9 |
-| **Code review** | Review each change for security, correctness and simplicity before the PR | `engineering:code-review` |
-| **Debugging** | Reproduce, isolate, fix. Do not patch around a CSP error | `engineering:debug` |
+| **Testing**                     | Playwright smoke and a11y tests, link checks, build checks                 | `engineering:testing-strategy`          |
+| **Performance**                 | Image formats and sizes, font loading, no layout shift, small JS           | Lighthouse                              |
+| **SEO**                         | Titles, descriptions, canonical URLs, Open Graph, sitemap, structured data | `design.md` section 9                   |
+| **Code review**                 | Review each change for security, correctness and simplicity before the PR  | `engineering:code-review`               |
+| **Debugging**                   | Reproduce, isolate, fix. Do not patch around a CSP error                   | `engineering:debug`                     |
 
 ### 7.4 Security and release skills
 
-| Capability | What it means here | Matching skill |
-|---|---|---|
-| **Secure front-end practice** | CSP meta tag, no inline code, safe links (`rel="noopener"`), no user-controlled HTML, treat form input as untrusted | `security.md` sections 3, 7, 10 |
-| **Supply-chain hygiene** | Lockfile, `npm ci`, `npm audit`, Dependabot, SHA-pinned actions, review new packages | `security.md` section 8 |
-| **Content-disclosure review** | Check text, images, screenshots and PDFs against the never-publish policy and strip metadata | `security.md` section 6 |
-| **Deployment** | Pages workflow, custom domain, DNS cut-over last, rollback plan | `engineering:deploy-checklist` |
-| **Incident handling** | Follow the runbook if something sensitive is published | `engineering:incident-response`, `security.md` section 13 |
-| **Documentation** | Keep README, these files and the open-items lists current | `engineering:documentation` |
+| Capability                    | What it means here                                                                                                  | Matching skill                                            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| **Secure front-end practice** | CSP meta tag, no inline code, safe links (`rel="noopener"`), no user-controlled HTML, treat form input as untrusted | `security.md` sections 3, 7, 10                           |
+| **Supply-chain hygiene**      | Lockfile, `npm ci`, `npm audit`, Dependabot, SHA-pinned actions, review new packages                                | `security.md` section 8                                   |
+| **Content-disclosure review** | Check text, images, screenshots and PDFs against the never-publish policy and strip metadata                        | `security.md` section 6                                   |
+| **Deployment**                | Pages workflow, custom domain, DNS cut-over last, rollback plan                                                     | `engineering:deploy-checklist`                            |
+| **Incident handling**         | Follow the runbook if something sensitive is published                                                              | `engineering:incident-response`, `security.md` section 13 |
+| **Documentation**             | Keep README, these files and the open-items lists current                                                           | `engineering:documentation`                               |
 
 ### 7.5 Working-with-people skills
 
@@ -139,12 +139,12 @@ These are the capabilities required, grouped by phase. The right-hand column nam
 
 Repeatable tasks that would help any agent on this project. Write them only once the first pages exist, so they reflect real code.
 
-| Proposed skill | Task it covers |
-|---|---|
-| `add-solution` | Add a product by editing `solutions.ts`, adding media, running checks. No new page file |
-| `content-review` | Run the never-publish checklist on a diff (text, images, PDFs, metadata) |
-| `a11y-pass` | Run axe and the keyboard and reduced-motion checks, report findings by page |
-| `release-check` | Pre-launch list: CSP console check, Lighthouse, links, sitemap, DNS plan, rollback |
+| Proposed skill   | Task it covers                                                                          |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| `add-solution`   | Add a product by editing `solutions.ts`, adding media, running checks. No new page file |
+| `content-review` | Run the never-publish checklist on a diff (text, images, PDFs, metadata)                |
+| `a11y-pass`      | Run axe and the keyboard and reduced-motion checks, report findings by page             |
+| `release-check`  | Pre-launch list: CSP console check, Lighthouse, links, sitemap, DNS plan, rollback      |
 
 ## 9. Phase order (summary)
 
