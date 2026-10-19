@@ -1,10 +1,10 @@
-# Project Context: Ansh Tech Labs Website
+﻿# Project Context: Ansh Tech Labs Website
 
 ## Overview
 
-Static marketing website for Ansh Tech Labs — digital forensics, OSINT and cyber-intelligence tools for law-enforcement agencies and corporate security teams.
+Static marketing website for Ansh Tech Labs â€” digital forensics, OSINT and cyber-intelligence tools for law-enforcement agencies and corporate security teams.
 
-**Status:** In development — build pipeline established, core pages in progress.
+**Status:** In development â€” build pipeline established, core pages in progress.
 
 **Hosting:** GitHub Pages via GitHub Actions, custom domain `anshtechlabs.com`
 
@@ -15,7 +15,7 @@ Static marketing website for Ansh Tech Labs — digital forensics, OSINT and cyb
 - Animation: GSAP + ScrollTrigger
 - Fonts: `@fontsource-variable/inter`, `@fontsource-variable/jetbrains-mono` (self-hosted)
 - SEO: `@astrojs/sitemap`
-- Forms: Disabled until provider approved (security.md §7)
+- Forms: Disabled until provider approved (security.md Â§7)
 - Testing: Playwright + axe-core
 
 ## Design Principles (from design.md)
@@ -26,27 +26,27 @@ Static marketing website for Ansh Tech Labs — digital forensics, OSINT and cyb
 4. **Honest visuals.** Diagrams are labelled `CONCEPTUAL WORKFLOW / ILLUSTRATIVE DATA`. Use sanitized or mock data in any screenshot. Never show real case data.
 5. **Motion supports meaning.** Animate to explain flow (lines connecting, pipeline lighting up), never to decorate. Respect reduced-motion.
 
-## Design Tokens (from design.md §4)
+## Design Tokens (from design.md Â§4)
 
 ### Colors
 
-- `--color-ink-950: #060B14` — page background
-- `--color-ink-900: #0A1320` — cards
-- `--color-ink-800: #0D1B2B` — alternate section bands
-- `--color-band: #0F2D3A` — CTA band (teal-tinted)
-- `--color-line: #1B2D3F` — 1px borders
+- `--color-ink-950: #060B14` â€” page background
+- `--color-ink-900: #0A1320` â€” cards
+- `--color-ink-800: #0D1B2B` â€” alternate section bands
+- `--color-band: #0F2D3A` â€” CTA band (teal-tinted)
+- `--color-line: #1B2D3F` â€” 1px borders
 - `--color-text: #F2F6FA`
-- `--color-muted: #9BA9B8` — body copy on dark
-- `--color-faint: #7C8CA0` — small labels (not on --color-band)
-- `--color-cyan: #40DFF2` — accent
-- `--color-cyan-dim: #1E7F8C` — diagram strokes, subtle accents
+- `--color-muted: #9BA9B8` â€” body copy on dark
+- `--color-faint: #7C8CA0` â€” small labels (not on --color-band)
+- `--color-cyan: #40DFF2` â€” accent
+- `--color-cyan-dim: #1E7F8C` â€” diagram strokes, subtle accents
 
 ### Typography
 
-- **Display (H1):** Inter, `clamp(2.5rem, 5vw, 4rem)`, 400–500, tight leading (1.05–1.1), tracking `-0.02em`
+- **Display (H1):** Inter, `clamp(2.5rem, 5vw, 4rem)`, 400â€“500, tight leading (1.05â€“1.1), tracking `-0.02em`
 - **Section title (H2):** Inter, `clamp(1.75rem, 3vw, 2.75rem)`, 400
-- **Card title (H3):** Inter, 1.25–1.5rem, 400–500
-- **Body:** Inter, 1rem–1.125rem, 400, `text-muted`, max width ~65ch
+- **Card title (H3):** Inter, 1.25â€“1.5rem, 400â€“500
+- **Body:** Inter, 1remâ€“1.125rem, 400, `text-muted`, max width ~65ch
 - **Eyebrow / label:** JetBrains Mono, 0.75rem minimum, 400, uppercase, tracking `0.08em`, `text-cyan`
 - **Caption / tag:** JetBrains Mono, 0.75rem minimum, 400, `text-faint`
 
@@ -106,7 +106,7 @@ astro.config.mjs     # Vite + Tailwind + sitemap integration
 package.json         # Dependencies and scripts
 ```
 
-## Open Items (admins per security.md §12)
+## Open Items (admins per security.md Â§12)
 
 - Named content approver
 - Form provider and privacy policy text
@@ -116,4 +116,4 @@ package.json         # Dependencies and scripts
 - `security.txt` contact address
 - Public repo vs private hosting decision
 
-**Current focus:** Version 1 launch — home page, solutions overview, 4 product pages, about, contact (form disabled), privacy, 404.
+**Current focus:** Version 1 launch â€” home page, solutions overview, 4 product pages, about, contact (form disabled), privacy, 404.
