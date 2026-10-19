@@ -1,16 +1,29 @@
 ---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+const { title } = Astro.props;
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title || 'Ansh Tech Labs'} | Ansh Tech Labs</title>
+  </head>
+  <body class="bg-ink-950 text-text">
+    <Navbar currentPath={Astro.url.pathname} />
+    <main class="mx-auto max-w-[1200px] px-6 py-20">
+      <h1 class="hero-title mb-6 text-5xl font-bold text-cyan">From complex digital data to actionable legal evidence</h1>
+      <p class="mb-8 max-w-2xl text-lg text-muted">
+        Intelligence platforms and forensic tools for the teams that turn fragmented digital traces into meaningful investigative insight.
+      </p>
+      <div class="flex flex-col justify-center gap-4 sm:flex-row">
+        <a href="/contact/" class="rounded bg-cyan px-6 py-3 font-medium text-ink-950">Request a Demo</a>
+        <a href="/solutions/" class="line cyan-dim rounded border px-6 py-3 hover:text-cyan">Explore Solutions</a>
+      </div>
+    </main>
+    <Footer />
+  </body>
 </html>

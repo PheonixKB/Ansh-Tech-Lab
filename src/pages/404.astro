@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = '404: Page Not Found';
+const description = 'Page not found';
+---
+
+<Layout title={title} description={description}>
+  <section class="min-h-screen flex items-center justify-center bg-ink-950">
+    <div class="text-center">
+      <h1 class="text-5xl font-bold text-cyan">404</h1>
+      <p class="text-muted text-2xl mb-8">Page not found</p>
+      <a href="/" class="text-cyan hover:underline">Go to Home</a>
+    </div>
+  </section>
+</Layout>

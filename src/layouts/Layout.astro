@@ -1,0 +1,20 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | Ansh Tech Labs</title>
+  </head>
+  <body class="bg-ink-950 text-text">
+    <Navbar currentPath={Astro.url.pathname} />
+    <main><slot /></main>
+    <Footer />
+  </body>
+</html>
