@@ -17,11 +17,13 @@
 
 ## Version 1.1 (Post-Launch)
 
-- Security & responsible use page
-- Careers page
-- Insights blog section
-- Real product screenshots/demo loops
-- Second language support (optional)
+| ID    | Title                      | Description                                         | Status  | Priority |
+| ----- | -------------------------- | --------------------------------------------------- | ------- | -------- |
+| FT-11 | Security & responsible use | Add /security/ page with responsible use guidelines | pending | High     |
+| FT-12 | Careers page               | Add /careers/ page (placeholder with admin note)    | pending | Medium   |
+| FT-13 | Insights blog section      | Add blog index and first placeholder post           | pending | Medium   |
+| FT-14 | Product screenshots/demo   | Replace conceptual diagrams with placeholders       | pending | Low      |
+| FT-15 | Second language support    | Optional: add i18n structure if approved            | pending | Low      |
 
 ## Version 2 (Needs Content)
 
