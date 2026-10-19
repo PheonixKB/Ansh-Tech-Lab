@@ -2,8 +2,8 @@
 
 ## Version 1 (Launch) - Core Requirements
 
-| ID    | Title                       | Description                                                                                                           | Status      | Priority |
-| ----- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- | ----------- | -------- |
+| ID    | Title                       | Description                                                                                                           | Status    | Priority |
+| ----- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------- | -------- |
 | FT-01 | Home page design and build  | Implement home page with hero, trust row, partner strip, audience cards, solution portfolio, pipeline steps, CTA band | completed | High     |
 | FT-02 | Solutions overview page     | Build /solutions/ page with Law Enforcement and Corporate Security sections                                           | completed | High     |
 | FT-03 | Four product detail pages   | Generate from template: STROTPRAGNA, Dronlyzer, Fingerprint Kit, LEA Solutions                                        | completed | High     |
