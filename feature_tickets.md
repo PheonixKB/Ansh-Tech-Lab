@@ -4,15 +4,15 @@
 
 | ID    | Title                       | Description                                                                                                           | Status      | Priority |
 | ----- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- | ----------- | -------- |
-| FT-01 | Home page design and build  | Implement home page with hero, trust row, partner strip, audience cards, solution portfolio, pipeline steps, CTA band | pending     | High     |
-| FT-02 | Solutions overview page     | Build /solutions/ page with Law Enforcement and Corporate Security sections                                           | pending     | High     |
-| FT-03 | Four product detail pages   | Generate from template: STROTPRAGNA, Dronlyzer, Fingerprint Kit, LEA Solutions                                        | pending     | High     |
-| FT-04 | About page                  | Build /about/ page with mission, expertise, who we serve                                                              | pending     | Medium   |
-| FT-05 | Contact page                | Build /contact/ page with demo request form (disabled until provider approved)                                        | pending     | High     |
-| FT-06 | Privacy page                | Build /privacy/ page with policy text and visitor warning                                                             | pending     | Medium   |
-| FT-07 | 404 page                    | Build /404 error page                                                                                                 | pending     | Low      |
-| FT-08 | Navigation and layout       | Implement Navbar, Footer, Layout wrapper across all pages                                                             | pending     | High     |
-| FT-09 | Data file setup             | Create src/data/solutions.ts and src/data/site.ts as single source of truth                                           | pending     | High     |
+| FT-01 | Home page design and build  | Implement home page with hero, trust row, partner strip, audience cards, solution portfolio, pipeline steps, CTA band | completed | High     |
+| FT-02 | Solutions overview page     | Build /solutions/ page with Law Enforcement and Corporate Security sections                                           | completed | High     |
+| FT-03 | Four product detail pages   | Generate from template: STROTPRAGNA, Dronlyzer, Fingerprint Kit, LEA Solutions                                        | completed | High     |
+| FT-04 | About page                  | Build /about/ page with mission, expertise, who we serve                                                              | completed | Medium   |
+| FT-05 | Contact page                | Build /contact/ page with demo request form (disabled until provider approved)                                        | completed | High     |
+| FT-06 | Privacy page                | Build /privacy/ page with policy text and visitor warning                                                             | completed | Medium   |
+| FT-07 | 404 page                    | Build /404 error page                                                                                                 | completed | Low      |
+| FT-08 | Navigation and layout       | Implement Navbar, Footer, Layout wrapper across all pages                                                             | completed | High     |
+| FT-09 | Data file setup             | Create src/data/solutions.ts and src/data/site.ts as single source of truth                                           | completed | High     |
 | FT-10 | CSP and security compliance | Ensure build is CSP-clean, no inline scripts/styles, form-action 'none' ✓                                             | completed | High     |
 
 ## Version 1.1 (Post-Launch)
