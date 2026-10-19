@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Contact / Request a Demo';
+const description = 'Get in touch with Ansh Tech Labs';
+---
+
+<Layout title={title} description={description}>
+  <section class="prose lg:prose-xl max-w-none">
+    <h1 class="text-3xl font-bold mb-8">Request a Demo</h1>
+    <p class="text-muted mb-8">
+      Ready to bring clarity to your investigation? Fill out the form below and our team will be in touch shortly.
+    </p>
+    
+    <div class="bg-ink-800 p-8 rounded border-line">
+      <p class="text-muted mb-4">
+        <strong>Note:</strong> The contact form is currently disabled. Until a form provider is approved by the admins, please use the contact details below.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-medium mb-3">Email</h3>
+          <p class="text-muted">TBD</p>
+        </div>
+        <div>
+          <h3 class="font-medium mb-3">Location</h3>
+          <p class="text-muted">Gandhinagar, Gujarat, India</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
