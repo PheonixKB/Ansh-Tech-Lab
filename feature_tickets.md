@@ -13,7 +13,7 @@
 | FT-07 | 404 page                    | Build /404 error page                                                                                                 | pending     | Low      |
 | FT-08 | Navigation and layout       | Implement Navbar, Footer, Layout wrapper across all pages                                                             | pending     | High     |
 | FT-09 | Data file setup             | Create src/data/solutions.ts and src/data/site.ts as single source of truth                                           | pending     | High     |
-| FT-10 | CSP and security compliance | Ensure build is CSP-clean, no inline scripts/styles, form-action 'none' ✓                                             | in_progress | High     |
+| FT-10 | CSP and security compliance | Ensure build is CSP-clean, no inline scripts/styles, form-action 'none' ✓                                             | completed | High     |
 
 ## Version 1.1 (Post-Launch)
 
