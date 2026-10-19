@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@fontsource-variable /inter;
+@fontsource-variable /jetbrains-mono;
+
+@theme {
+  /* Surfaces */
+  --color-ink-950: #060b14; /* page background */
+  --color-ink-900: #0a1320; /* cards */
+  --color-ink-800: #0d1b2b; /* alternate section bands */
+  --color-band: #0f2d3a; /* CTA band (teal-tinted) */
+  --color-line: #1b2d3f; /* 1px borders */
+
+  /* Text */
+  --color-text: #f2f6fa;
+  --color-muted: #9ba9b8; /* body copy on dark */
+  --color-faint: #7c8ca0; /* small labels (not on --color-band) */
+
+  /* Accent */
+  --color-cyan: #40dff2;
+  --color-cyan-dim: #1e7f8c; /* diagram strokes, subtle accents */
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-ink-950);
+    color: var(--color-text);
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
