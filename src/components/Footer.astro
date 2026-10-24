@@ -1,42 +1,41 @@
 ---
 import { withBase } from '../utils/url';
+import { site } from '../data/site';
+import { solutions } from '../data/solutions';
 ---
 
-<footer class="border-t border-line bg-ink-950 py-16">
-  <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 px-6 lg:grid-cols-4">
-    <div class="col-span-1 lg:col-span-2">
-      <a href={withBase("/")} class="mb-4 block font-mono text-sm uppercase tracking-wider text-cyan">
-        ANSH TECH LABS
+<footer class="footer-section border-t border-line">
+  <div class="container-site grid grid-cols-1 gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
+    <div data-ix="large" class="lg:col-span-2">
+      <a href={withBase('/')} class="mb-4 block text-lg font-medium tracking-tight text-text">
+        Ansh Tech Labs
       </a>
-      <p class="text-muted">
-        Advanced digital forensics, OSINT and cyber-intelligence. Built for the work of investigation.
-      </p>
+      <p class="max-w-md text-muted">{site.tagline}</p>
     </div>
-    <div>
-      <h4 class="mb-4 text-muted">Solutions</h4>
+    <div data-ix="large">
+      <h2 class="mb-4 text-xl text-text">Solutions</h2>
       <ul class="space-y-2 text-muted">
-        <li><a href={withBase("/solutions/strotpragna/")} class="hover:text-cyan">STROTPRAGNA</a></li>
-        <li><a href={withBase("/solutions/dronlyzer/")} class="hover:text-cyan">Dronlyzer</a></li>
-        <li><a href={withBase("/solutions/fingerprint-kit/")} class="hover:text-cyan">Fingerprint Kit</a></li>
-        <li><a href={withBase("/solutions/lea-solutions/")} class="hover:text-cyan">LEA Solutions</a></li>
+        {solutions.map((s) => (
+          <li>
+            <a href={withBase(`/solutions/${s.slug}/`)} class="hover:text-cyan-text">{s.name}</a>
+          </li>
+        ))}
       </ul>
     </div>
-    <div>
-      <h4 class="mb-4 text-muted">Company</h4>
+    <div data-ix="large">
+      <h2 class="mb-4 text-xl text-text">Company</h2>
       <ul class="space-y-2 text-muted">
-        <li><a href={withBase("/about/")} class="hover:text-cyan">About</a></li>
-        <li><a href={withBase("/contact/")} class="hover:text-cyan">Contact</a></li>
-        <li><a href={withBase("/privacy/")} class="hover:text-cyan">Privacy</a></li>
+        <li><a href={withBase('/about/')} class="hover:text-cyan-text">About</a></li>
+        <li><a href={withBase('/contact/')} class="hover:text-cyan-text">Contact</a></li>
+        <li><a href={withBase('/privacy/')} class="hover:text-cyan-text">Privacy</a></li>
       </ul>
-    </div>
-    <div>
-      <h4 class="mb-4 text-muted">Our Focus</h4>
-      <p class="text-muted">
-        Precision in data. Clarity in evidence.
-      </p>
     </div>
   </div>
-  <div class="mt-8 border-t border-line pt-8 text-sm text-muted">
-    © 2026 Ansh Tech Labs Pvt. Ltd.
+  <div class="container-site">
+    <div data-ix="divider" class="divider"></div>
+    <div class="flex flex-col gap-2 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+      <p>© 2026 Ansh Tech Labs Pvt. Ltd.</p>
+      <p>{site.footerMotto}</p>
+    </div>
   </div>
 </footer>

@@ -12,6 +12,8 @@ const base = process.env.BASE_PATH || "/";
 export default defineConfig({
   site,
   base,
+  // AGENTS.md rule 6: CSP-clean output, so never inline stylesheets into the HTML.
+  build: { inlineStylesheets: "never" },
   vite: {
     plugins: [tailwindcss()],
   },
