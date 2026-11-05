@@ -29,12 +29,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: gh-pages
-          path: dist/
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v5
-        with:
-          page_dir: dist/
+      # No download step: withastro/action uploads the built site as the
+      # "github-pages" artifact, and deploy-pages publishes that artifact itself.
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
