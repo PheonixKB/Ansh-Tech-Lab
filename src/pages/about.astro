@@ -3,72 +3,80 @@ import Layout from '../layouts/Layout.astro';
 
 const title = 'About Ansh Tech Labs';
 const description = 'A specialized technology hub for digital investigation.';
+
+const expertise = [
+  { title: 'White-hat hackers', body: 'Ethical security research and vulnerability discovery.' },
+  { title: 'Forensic analysts', body: 'Digital evidence examination and case construction.' },
+  { title: 'Software engineers', body: 'Building scalable forensic platforms and automation.' },
+];
+
+const audiences = [
+  { title: 'Law Enforcement Agencies', body: 'End-to-end evidence collection and analysis pipelines.' },
+  { title: 'Corporate Security Teams', body: 'Monitoring OSINT and threat intelligence to prevent data breaches.' },
+];
 ---
 
 <Layout title={title} description={description}>
-  <section class="prose lg:prose-xl max-w-none">
-    <h1 class="text-3xl font-bold">A specialized technology hub for digital investigation.</h1>
-    <p class="text-muted lg:text-larger mb-8">
-      We develop advanced forensic tools and cyber intelligence platforms that bridge the gap between complex digital data and actionable legal evidence.
-    </p>
+  <section class="section hero-glow pb-12 pt-16 md:pt-24">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">About</p>
+      <h1 class="mb-6 max-w-5xl">A specialized technology hub for digital investigation.</h1>
+      <p data-ix="lead" class="max-w-2xl text-lg text-muted">
+        We develop advanced forensic tools and cyber intelligence platforms that bridge the gap between complex digital data and actionable legal evidence.
+      </p>
+    </div>
+  </section>
 
-    <section class="bg-ink-800 pt-8 pb-12">
-      <h2 class="text-2xl font-medium mb-4">01 / OUR MISSION</h2>
-      <p class="text-muted">
+  <section class="section bg-ink-800">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">01</p>
+      <h2 class="mb-4 max-w-3xl">Our mission</h2>
+      <p data-ix="lead" class="max-w-3xl text-xl text-muted">
         Building precise, reliable tools for the investigation community. Every solution is designed with the investigator's workflow in mind.
       </p>
-    </section>
+    </div>
+  </section>
 
-    <section class="py-8">
-      <h2 class="text-2xl font-medium mb-4">02 / EXPERTISE</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div>
-          <h3 class="font-medium">White-hat hackers</h3>
-          <p class="text-muted">
-            Ethical security research and vulnerability discovery.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-medium">Forensic analysts</h3>
-          <p class="text-muted">
-            Digital evidence examination and case construction.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-medium">Software engineers</h3>
-          <p class="text-muted">
-            Building scalable forensic platforms and automation.
-          </p>
-        </div>
+  <section class="section">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">02</p>
+      <h2 class="mb-12 max-w-3xl">Expertise</h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {expertise.map((e) => (
+          <div data-ix="large" class="card">
+            <h3 class="mb-3 text-2xl">{e.title}</h3>
+            <p class="text-muted">{e.body}</p>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="py-8">
-      <h2 class="text-2xl font-medium mb-4">03 / WHO WE SERVE</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h3 class="font-medium">Law Enforcement Agencies</h3>
-          <p class="text-muted">
-            End-to-end evidence collection and analysis pipelines.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-medium">Corporate Security Teams</h3>
-          <p class="text-muted">
-            Monitoring OSINT and threat intelligence to prevent data breaches.
-          </p>
-        </div>
+  <section class="section bg-ink-800">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">03</p>
+      <h2 class="mb-12 max-w-3xl">Who we serve</h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {audiences.map((a) => (
+          <div data-ix="large" class="card">
+            <h3 class="mb-3 text-2xl">{a.title}</h3>
+            <p class="text-muted">{a.body}</p>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="py-8 bg-ink-800">
-      <h2 class="text-2xl font-medium mb-4">04 / HOW WE WORK</h2>
-      <p class="text-muted">
-        <strong>Precision in data.</strong> Clarity in evidence. Our principles guide every tool we build and every investigation we support.
+  <section class="section">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">04</p>
+      <h2 class="mb-4 max-w-3xl">How we work</h2>
+      <p data-ix="lead" class="mb-4 max-w-3xl text-xl text-text">
+        <strong class="font-medium">Precision in data.</strong> Clarity in evidence. Our principles guide every tool we build and every investigation we support.
       </p>
-      <p class="mt-4 text-muted">
+      <p data-ix="large" class="max-w-3xl text-muted">
         Please do not include case evidence, personal identifiers or sensitive operational details.
       </p>
-    </section>
+    </div>
   </section>
 </Layout>

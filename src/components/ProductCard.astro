@@ -1,0 +1,28 @@
+---
+import { withBase } from '../utils/url';
+import type { Solution } from '../data/solutions';
+
+interface Props {
+  solution: Solution;
+  index: number;
+}
+
+const { solution, index } = Astro.props;
+---
+
+<article data-ix="large" class="card relative flex h-full flex-col">
+  <div class="mb-6 flex items-start justify-between gap-4">
+    <p class="text-sm text-cyan-text">{solution.category}</p>
+    <p class="text-sm text-faint" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
+  </div>
+  <h3 class="mb-3 text-text">
+    <a
+      href={withBase(`/solutions/${solution.slug}/`)}
+      class="after:absolute after:inset-0 focus-visible:outline-offset-8"
+    >
+      {solution.name}
+    </a>
+  </h3>
+  <p class="mb-8 text-muted">{solution.blurb}</p>
+  <p class="mt-auto text-sm font-medium text-cyan-text">Explore solution ↗</p>
+</article>

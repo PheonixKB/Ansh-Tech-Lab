@@ -1,34 +1,141 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
 import { withBase } from '../utils/url';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css';
-const { title } = Astro.props;
-// Staging copy on a github.io project address: keep it out of search engines.
-const isStaging = import.meta.env.BASE_URL !== '/';
+import { solutions } from '../data/solutions';
+
+const trust = [
+  '10+ years in cyber forensics',
+  'Built for investigative workflows',
+  'Law enforcement & corporate security',
+];
+
+const audiences = [
+  {
+    title: 'For Law Enforcement',
+    body: 'Connect evidence collection and analysis across police, forensic labs and government investigations.',
+    tags: ['Digital evidence', 'UAV forensics', 'Biometrics'],
+    href: '/solutions/#law-enforcement',
+  },
+  {
+    title: 'For Corporate Security',
+    body: 'Monitor open-source signals and threat intelligence to identify exposure and help prevent data breaches.',
+    tags: ['OSINT', 'Deep web monitoring', 'Threat intelligence'],
+    href: '/solutions/#corporate-security',
+  },
+];
+
+const pipeline = [
+  { title: 'Collect', body: 'Gather relevant digital, open-source or field evidence.' },
+  { title: 'Correlate', body: 'Connect entities, events and data points in context.' },
+  { title: 'Analyze', body: 'Examine relationships and reconstruct activity.' },
+  { title: 'Report', body: 'Organize findings for investigative and legal review.' },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title || 'Ansh Tech Labs'} | Ansh Tech Labs</title>
-    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
-    {isStaging && <meta name="robots" content="noindex, nofollow" />}
-  </head>
-  <body class="bg-ink-950 text-text">
-    <Navbar currentPath={Astro.url.pathname} />
-    <main class="mx-auto max-w-[1200px] px-6 py-20">
-      <h1 class="hero-title mb-6 text-5xl font-bold text-cyan">From complex digital data to actionable legal evidence</h1>
-      <p class="mb-8 max-w-2xl text-lg text-muted">
+<Layout
+  title="Digital forensics & OSINT platforms"
+  description="Intelligence platforms and forensic tools for law enforcement and corporate security teams."
+>
+  <!-- 1. Hero -->
+  <section class="section hero-glow pb-12 pt-16 md:pt-24">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">Digital forensics, OSINT and cyber-intelligence</p>
+      <h1 class="mb-6 max-w-5xl">From complex digital data to actionable legal evidence</h1>
+      <p data-ix="lead" class="mb-10 max-w-2xl text-lg text-muted">
         Intelligence platforms and forensic tools for the teams that turn fragmented digital traces into meaningful investigative insight.
       </p>
-      <div class="flex flex-col justify-center gap-4 sm:flex-row">
-        <a href={withBase("/contact/")} class="rounded bg-cyan px-6 py-3 font-medium text-ink-950">Request a Demo</a>
-        <a href={withBase("/solutions/")} class="line cyan-dim rounded border px-6 py-3 hover:text-cyan">Explore Solutions</a>
+      <div data-ix="small" class="flex flex-col gap-4 sm:flex-row">
+        <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
+        <a href={withBase('/solutions/')} class="btn btn-secondary">Explore Solutions</a>
       </div>
-    </main>
-    <Footer />
-  </body>
-</html>
+    </div>
+  </section>
+
+  <!-- 2. Trust row -->
+  <section class="section py-0 md:py-0 xl:py-0">
+    <div class="container-site">
+      <div data-ix="divider" class="divider"></div>
+      <ul class="grid grid-cols-1 gap-4 py-8 text-muted md:grid-cols-3">
+        {trust.map((item) => <li data-ix="small">{item}</li>)}
+      </ul>
+      <div data-ix="divider" class="divider"></div>
+    </div>
+  </section>
+
+  <!-- 4. Who we serve -->
+  <section class="section">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">01 / Who we serve</p>
+      <h2 class="mb-4 max-w-3xl">Different mandates. Shared need for clarity.</h2>
+      <p data-ix="lead" class="mb-12 max-w-2xl text-muted">
+        From public-sector investigations to enterprise threat monitoring, put the right intelligence in the right hands.
+      </p>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {audiences.map((a) => (
+          <article data-ix="large" class="card relative flex flex-col">
+            <h3 class="mb-3">
+              <a href={withBase(a.href)} class="after:absolute after:inset-0 focus-visible:outline-offset-8">
+                {a.title}
+              </a>
+            </h3>
+            <p class="mb-6 text-muted">{a.body}</p>
+            <ul class="mt-auto flex flex-wrap gap-2">
+              {a.tags.map((t) => <li class="tag">{t}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Solution portfolio -->
+  <section class="section bg-ink-800">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">02 / The solution portfolio</p>
+      <h2 class="mb-12 max-w-3xl">Specialized tools. One investigative purpose.</h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {solutions.map((s, i) => <ProductCard solution={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. From signal to evidence -->
+  <section class="section">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">03 / From signal to evidence</p>
+      <h2 class="mb-4 max-w-3xl">A clear path through complex data.</h2>
+      <p data-ix="lead" class="mb-12 max-w-2xl text-muted">
+        A common investigative framework connects collection, context, analysis and reporting across our solutions.
+      </p>
+      <ol data-pipeline class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {pipeline.map((step, i) => (
+          <li data-ix="large" data-step class="card">
+            <p class="mb-6 text-sm text-cyan-text">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="mb-3">{step.title}</h3>
+            <p class="text-muted">{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 8. CTA band -->
+  <section class="section pt-0 md:pt-0 xl:pt-0">
+    <div class="container-site">
+      <div data-ix="large" class="rounded-xl border border-line bg-band p-8 md:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12">
+        <div class="mb-8 max-w-2xl lg:mb-0">
+          <p class="eyebrow">Start a conversation</p>
+          <h2 class="mb-4">Bring clarity to your next investigation.</h2>
+          <p class="text-muted">
+            Talk to our team about your evidence workflow, intelligence needs and the right solution for your organization.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 sm:flex-row lg:flex-col">
+          <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
+          <a href={withBase('/contact/')} class="btn btn-secondary">Or Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,27 +1,44 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
 
-@fontsource-variable /inter;
-@fontsource-variable /jetbrains-mono;
-
+/*
+  Tokens ported from the Webflow template (Colors, Typography and Sizes variable
+  collections). Token names are kept from the previous theme (ink-*, cyan, muted ...)
+  so existing utility classes keep working; only the values changed.
+*/
 @theme {
-  /* Surfaces */
-  --color-ink-950: #060b14; /* page background */
-  --color-ink-900: #0a1320; /* cards */
-  --color-ink-800: #0d1b2b; /* alternate section bands */
-  --color-band: #0f2d3a; /* CTA band (teal-tinted) */
-  --color-line: #1b2d3f; /* 1px borders */
+  /* Surfaces: template Neutral Primary / Secondary */
+  --color-ink-950: #09090b; /* page background */
+  --color-ink-900: #101013; /* cards */
+  --color-ink-800: #101013; /* alternate section bands */
+  --color-band: rgb(40 178 191 / 0.1); /* CTA band (accent at 10%) */
 
-  /* Text */
-  --color-text: #f2f6fa;
-  --color-muted: #9ba9b8; /* body copy on dark */
-  --color-faint: #7c8ca0; /* small labels (not on --color-band) */
+  /* Borders: template Neutral Inverse at 10% / 20% */
+  --color-line: rgb(243 243 243 / 0.1);
+  --color-line-strong: rgb(243 243 243 / 0.2);
 
-  /* Accent */
-  --color-cyan: #40dff2;
-  --color-cyan-dim: #1e7f8c; /* diagram strokes, subtle accents */
+  /* Text: template Neutral Inverse at 100% / 60% / 50% */
+  --color-text: #f3f3f3;
+  --color-muted: rgb(243 243 243 / 0.6); /* body copy; use this on the band */
+  --color-faint: rgb(
+    243 243 243 / 0.5
+  ); /* small labels (not on --color-band) */
+
+  /* Accent: template Accent Primary */
+  --color-cyan: #28b2bf;
+  --color-cyan-hover: #4bcdd9;
+  --color-cyan-text: #46bbc7; /* accent used as text on dark */
+  --color-cyan-dim: rgb(40 178 191 / 0.4); /* hover borders, subtle accents */
+  --color-accent-10: rgb(40 178 191 / 0.1);
+  --color-accent-20: rgb(40 178 191 / 0.2);
+
+  /* Radii: template Sizes collection */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem; /* buttons, inputs, tags */
+  --radius-xl: 1rem; /* cards */
 
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 }
 
 @layer base {
@@ -32,15 +49,169 @@
   }
   body {
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Template headings: weight 500, line-height 1.04, tracking -0.01em */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+  }
+  /* Template sizes (H1 5.65rem, H2 2.83rem, H3 2rem, H4 1.41rem), fluid on small screens */
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 5.65rem);
+  }
+  h2 {
+    font-size: clamp(1.875rem, 4vw, 2.83rem);
+  }
+  h3 {
+    font-size: clamp(1.375rem, 2.5vw, 2rem);
+  }
+  h4 {
+    font-size: 1.41rem;
+    line-height: 1.3;
+  }
+
   :focus-visible {
-    outline: 2px solid var(--color-cyan);
+    outline: 2px solid var(--color-cyan-hover);
     outline-offset: 3px;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
+  }
+}
+
+@layer components {
+  /* Layout: template container 1280px, section padding 8rem (scaled down on small screens) */
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1280px;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 1024px) {
+    .container-site {
+      padding-inline: 1.5rem;
+    }
+  }
+  .section {
+    padding-block: 4rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 6rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .section {
+      padding-block: 8rem;
+    }
+  }
+
+  /* Eyebrow: template 0.9rem Inter in the accent colour (replaces the mono labels) */
+  .eyebrow {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    color: var(--color-cyan-text);
+    margin-bottom: 1rem;
+  }
+
+  /* Buttons: template radius 0.75rem, padding 1em 1.5em, min height 44px */
+  .btn {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1em 1.5em;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    line-height: 1;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  /* Dark text on the accent: the template's light text on #28B2BF is only ~2.4:1 */
+  .btn-primary {
+    background: var(--color-cyan);
+    color: var(--color-ink-950);
+  }
+  .btn-primary:hover {
+    background: var(--color-cyan-hover);
+  }
+  .btn-secondary {
+    background: var(--color-accent-20);
+    color: var(--color-text);
+  }
+  .btn-secondary:hover {
+    background: var(--color-accent-10);
+  }
+
+  /* Cards: template radius 1rem, padding 2rem, 10% border */
+  .card {
+    background: var(--color-ink-900);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+  @media (min-width: 768px) {
+    .card {
+      padding: 2rem;
+    }
+  }
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--color-cyan-dim);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover,
+    .card:focus-within {
+      transform: none;
+    }
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-lg);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  /* Soft accent glow behind the hero */
+  .hero-glow {
+    background: radial-gradient(
+      60rem 30rem at 50% -10%,
+      var(--color-accent-20),
+      transparent 70%
+    );
+  }
+
+  /* Pipeline step lit by animations.ts */
+  [data-step] {
+    transition: border-color 0.4s ease;
+  }
+  [data-step].is-lit {
+    border-color: var(--color-cyan-dim);
   }
 }
