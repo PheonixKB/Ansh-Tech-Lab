@@ -1,76 +1,100 @@
 ---
 import { withBase, stripBase } from '../utils/url';
 import { site } from '../data/site';
+import { solutions } from '../data/solutions';
 
 const currentPath = stripBase(Astro.url.pathname);
 const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 
-const linkClass = (href: string) =>
-  isActive(href) ? 'text-cyan-text' : 'text-muted hover:text-text';
+const links = site.nav.filter((item) => item.href !== '/solutions/');
 ---
 
-<header class="sticky top-0 z-40 pt-3 sm:pt-4">
-  <div class="container-site">
-    <nav
-      data-nav
-      aria-label="Main"
-      class="relative rounded-xl border border-line bg-ink-900/80 backdrop-blur"
-    >
-      <div class="flex h-16 items-center justify-between px-4 sm:px-6">
-        <a href={withBase('/')} class="text-lg font-medium tracking-tight text-text">
-          Ansh Tech Labs
-        </a>
+<header class="sticky top-0 z-40">
+  <nav data-nav aria-label="Main" class="surface-accent">
+    <div class="container-site flex h-16 items-center justify-between gap-6">
+      <a href={withBase('/')} class="text-lg font-medium tracking-tight">Ansh Tech Labs</a>
 
-        <ul class="hidden items-center gap-8 md:flex">
-          {site.nav.map((item) => (
-            <li>
-              <a
-                href={withBase(item.href)}
-                class={linkClass(item.href)}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
+      <ul class="hidden items-center gap-6 md:flex">
+        <li class="relative" data-dropdown>
+          <button
+            type="button"
+            data-dropdown-toggle
+            aria-expanded="false"
+            aria-controls="mega-solutions"
+            class="inline-flex min-h-11 items-center gap-1 px-2"
+          >
+            Solutions
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4.5l4 4 4-4"></path></svg>
+          </button>
+          <div
+            id="mega-solutions"
+            data-dropdown-panel
+            class="absolute left-1/2 top-full hidden w-[40rem] -translate-x-1/2 pt-3"
+          >
+            <ul class="grid grid-cols-2 gap-2 rounded-xl border border-line bg-ink-900 p-3 text-text shadow-xl">
+              {solutions.map((s) => (
+                <li>
+                  <a href={withBase(`/solutions/${s.slug}/`)} class="block rounded-lg p-3 hover:bg-accent-10">
+                    <span class="block text-xs text-cyan-text">{s.category}</span>
+                    <span class="block font-medium">{s.name}</span>
+                    <span class="block text-sm text-muted">{s.blurb}</span>
+                  </a>
+                </li>
+              ))}
+              <li class="col-span-2">
+                <a href={withBase('/solutions/')} class="block rounded-lg p-3 text-sm font-medium text-cyan-text hover:bg-accent-10">View all solutions ↗</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        {links.map((item) => (
           <li>
-            <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
+            <a
+              href={withBase(item.href)}
+              class:list={['inline-flex min-h-11 items-center px-2 hover:underline', isActive(item.href) && 'underline underline-offset-4']}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
           </li>
-        </ul>
+        ))}
+        <li>
+          <a href={withBase('/contact/')} class="btn btn-on-accent">Request a Demo</a>
+        </li>
+      </ul>
 
-        <button
-          type="button"
-          data-nav-toggle
-          aria-expanded="false"
-          aria-controls="mobile-menu"
-          class="inline-flex size-11 items-center justify-center rounded-lg border border-line text-text md:hidden"
-        >
-          <span class="sr-only">Menu</span>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-            <path d="M3 6h14M3 10h14M3 14h14"></path>
-          </svg>
-        </button>
-      </div>
+      <button
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="inline-flex size-11 items-center justify-center rounded-lg border border-ink-950/40 md:hidden"
+      >
+        <span class="sr-only">Menu</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h14M3 10h14M3 14h14"></path>
+        </svg>
+      </button>
+    </div>
 
-      <div id="mobile-menu" data-nav-panel class="hidden border-t border-line px-4 py-4 md:hidden">
-        <ul class="flex flex-col gap-1">
-          {site.nav.map((item) => (
-            <li>
-              <a
-                href={withBase(item.href)}
-                class:list={['block rounded-lg px-3 py-3', linkClass(item.href)]}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-          <li class="pt-2">
-            <a href={withBase('/contact/')} class="btn btn-primary w-full">Request a Demo</a>
+    <div id="mobile-menu" data-nav-panel class="hidden bg-ink-900 text-text md:hidden">
+      <ul class="container-site flex flex-col gap-1 py-4">
+        {site.nav.map((item) => (
+          <li>
+            <a
+              href={withBase(item.href)}
+              class:list={['block rounded-lg px-3 py-3', isActive(item.href) ? 'text-cyan-text' : 'text-muted hover:text-text']}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
           </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+        ))}
+        <li class="pt-2">
+          <a href={withBase('/contact/')} class="btn btn-primary w-full">Request a Demo</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>

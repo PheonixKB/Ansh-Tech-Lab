@@ -4,11 +4,6 @@ import ProductCard from '../components/ProductCard.astro';
 import { withBase } from '../utils/url';
 import { solutions } from '../data/solutions';
 
-const trust = [
-  '10+ years in cyber forensics',
-  'Built for investigative workflows',
-  'Law enforcement & corporate security',
-];
 
 const audiences = [
   {
@@ -25,6 +20,17 @@ const audiences = [
   },
 ];
 
+const capabilities = [
+  'Digital evidence',
+  'UAV forensics',
+  'Biometrics',
+  'OSINT',
+  'Deep web monitoring',
+  'Threat intelligence',
+  'Law enforcement',
+  'Corporate security',
+];
+
 const pipeline = [
   { title: 'Collect', body: 'Gather relevant digital, open-source or field evidence.' },
   { title: 'Correlate', body: 'Connect entities, events and data points in context.' },
@@ -37,29 +43,73 @@ const pipeline = [
   title="Digital forensics & OSINT platforms"
   description="Intelligence platforms and forensic tools for law enforcement and corporate security teams."
 >
-  <!-- 1. Hero -->
-  <section class="section hero-glow pb-12 pt-16 md:pt-24">
+  <!-- 1. Hero: accent surface, headline + four solution cards (template Hero) -->
+  <header class="section surface-accent">
     <div class="container-site">
       <p data-ix="eyebrow" class="eyebrow">Digital forensics, OSINT and cyber-intelligence</p>
       <h1 class="mb-6 max-w-5xl">From complex digital data to actionable legal evidence</h1>
-      <p data-ix="lead" class="mb-10 max-w-2xl text-lg text-muted">
+      <p data-ix="lead" class="mb-8 max-w-2xl text-lg">
         Intelligence platforms and forensic tools for the teams that turn fragmented digital traces into meaningful investigative insight.
       </p>
-      <div data-ix="small" class="flex flex-col gap-4 sm:flex-row">
-        <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
-        <a href={withBase('/solutions/')} class="btn btn-secondary">Explore Solutions</a>
+      <div data-ix="small" class="mb-12 flex flex-col gap-4 sm:flex-row">
+        <a href={withBase('/contact/')} class="btn btn-on-accent">Request a Demo</a>
+        <a href={withBase('/solutions/')} class="btn border border-ink-950">Explore Solutions</a>
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {solutions.map((s, i) => <ProductCard solution={s} index={i} heading="h2" />)}
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Capability marquee (template Logos band; text, not invented client logos) -->
+  <section class="section py-10 md:py-12 xl:py-12" aria-label="Capabilities">
+    <div class="container-site">
+      <p data-ix="eyebrow" class="eyebrow">Built for investigative workflows</p>
+      <div class="marquee text-xl text-muted">
+        <ul class="marquee-track">
+          {capabilities.map((c) => <li class="whitespace-nowrap">{c}</li>)}
+        </ul>
+        <ul class="marquee-track" aria-hidden="true">
+          {capabilities.map((c) => <li class="whitespace-nowrap">{c}</li>)}
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 2. Trust row -->
-  <section class="section py-0 md:py-0 xl:py-0">
+  <!-- 3. Feature tabs (template Features): one tab per solution -->
+  <section class="section bg-ink-800">
     <div class="container-site">
-      <div data-ix="divider" class="divider"></div>
-      <ul class="grid grid-cols-1 gap-4 py-8 text-muted md:grid-cols-3">
-        {trust.map((item) => <li data-ix="small">{item}</li>)}
-      </ul>
-      <div data-ix="divider" class="divider"></div>
+      <div class="mb-12 max-w-3xl">
+        <p data-ix="eyebrow" class="eyebrow">The solution portfolio</p>
+        <h2 class="mb-4">Specialized tools. One investigative purpose.</h2>
+      </div>
+      <div data-tabs>
+        <div role="tablist" aria-label="Solutions" class="grid grid-cols-1 gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
+          {solutions.map((s, i) => (
+            <button type="button" role="tab" id={`tab-${s.slug}`} aria-controls={`panel-${s.slug}`} class="tab-link">
+              <span class="block text-lg font-medium">{s.name}</span>
+              <span class="block text-sm">{s.category}</span>
+            </button>
+          ))}
+        </div>
+        {solutions.map((s) => (
+          <div role="tabpanel" id={`panel-${s.slug}`} aria-labelledby={`tab-${s.slug}`} class="card mt-6 grid gap-8 md:grid-cols-2" tabindex="0">
+            <div>
+              <h3 class="mb-3">{s.headline.join(' ')}</h3>
+              <p class="mb-6 text-muted">{s.sub}</p>
+              <a href={withBase(`/solutions/${s.slug}/`)} class="btn btn-primary">Explore {s.name}</a>
+            </div>
+            <ul class="space-y-4">
+              {s.capabilities.slice(0, 3).map((c) => (
+                <li>
+                  <p class="font-medium">{c.title}</p>
+                  <p class="text-sm text-muted">{c.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -89,17 +139,6 @@ const pipeline = [
     </div>
   </section>
 
-  <!-- 5. Solution portfolio -->
-  <section class="section bg-ink-800">
-    <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">02 / The solution portfolio</p>
-      <h2 class="mb-12 max-w-3xl">Specialized tools. One investigative purpose.</h2>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {solutions.map((s, i) => <ProductCard solution={s} index={i} />)}
-      </div>
-    </div>
-  </section>
-
   <!-- 6. From signal to evidence -->
   <section class="section">
     <div class="container-site">
@@ -120,20 +159,18 @@ const pipeline = [
     </div>
   </section>
 
-  <!-- 8. CTA band -->
+  <!-- CTA: accent split block (template CTA) -->
   <section class="section pt-0 md:pt-0 xl:pt-0">
     <div class="container-site">
-      <div data-ix="large" class="rounded-xl border border-line bg-band p-8 md:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12">
+      <div data-ix="large" class="surface-accent rounded-xl p-8 md:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12">
         <div class="mb-8 max-w-2xl lg:mb-0">
           <p class="eyebrow">Start a conversation</p>
           <h2 class="mb-4">Bring clarity to your next investigation.</h2>
-          <p class="text-muted">
-            Talk to our team about your evidence workflow, intelligence needs and the right solution for your organization.
-          </p>
+          <p>Talk to our team about your evidence workflow, intelligence needs and the right solution for your organization.</p>
         </div>
         <div class="flex flex-col gap-4 sm:flex-row lg:flex-col">
-          <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
-          <a href={withBase('/contact/')} class="btn btn-secondary">Or Contact Us</a>
+          <a href={withBase('/contact/')} class="btn btn-on-accent">Request a Demo</a>
+          <a href={withBase('/contact/')} class="btn border border-ink-950">Or Contact Us</a>
         </div>
       </div>
     </div>

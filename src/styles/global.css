@@ -207,6 +207,84 @@
     );
   }
 
+  /* Template "is-accent-primary" surfaces. Dark text on #28B2BF is ~7.6:1;
+     the template's light text on it is only ~2.4:1, so the text colour is flipped. */
+  .surface-accent {
+    background: var(--color-cyan);
+    color: var(--color-ink-950);
+  }
+  .btn-on-accent {
+    background: var(--color-ink-950);
+    color: var(--color-text);
+  }
+  .btn-on-accent:hover {
+    background: var(--color-ink-900);
+  }
+  .surface-accent .eyebrow {
+    color: var(--color-ink-950);
+  }
+  .surface-accent :focus-visible {
+    outline-color: var(--color-ink-950);
+  }
+
+  /* Capability marquee (template "Logos" band, text instead of invented logos) */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+    );
+  }
+  .marquee-track {
+    display: flex;
+    flex: none;
+    min-width: 100%;
+    gap: 3rem;
+    padding-right: 3rem;
+    animation: marquee-left 50s linear infinite;
+    will-change: transform;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-left {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow-x: auto;
+    }
+    .marquee-track {
+      animation: none;
+    }
+    .marquee-track[aria-hidden="true"] {
+      display: none;
+    }
+  }
+
+  /* Feature tabs (template "Features" component) */
+  .tab-link {
+    display: block;
+    width: 100%;
+    padding: 1rem 0;
+    text-align: left;
+    border-top: 2px solid var(--color-line);
+    color: var(--color-muted);
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .tab-link[aria-selected="true"] {
+    border-top-color: var(--color-cyan);
+    color: var(--color-text);
+  }
+
   /* Pipeline step lit by animations.ts */
   [data-step] {
     transition: border-color 0.4s ease;
