@@ -19,9 +19,9 @@ const audiences = [
 <Layout title={title} description={description}>
   <section class="section hero-glow pb-12 pt-16 md:pt-24">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">About</p>
-      <h1 class="mb-6 max-w-5xl">A specialized technology hub for digital investigation.</h1>
-      <p data-ix="lead" class="max-w-2xl text-lg text-muted">
+      <p class="reveal eyebrow">About</p>
+      <h1 class="reveal mb-6 max-w-5xl">A specialized technology hub for digital investigation.</h1>
+      <p class="reveal max-w-2xl text-lg text-muted">
         We develop advanced forensic tools and cyber intelligence platforms that bridge the gap between complex digital data and actionable legal evidence.
       </p>
     </div>
@@ -29,9 +29,9 @@ const audiences = [
 
   <section class="section bg-ink-800">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">01</p>
-      <h2 class="mb-4 max-w-3xl">Our mission</h2>
-      <p data-ix="lead" class="max-w-3xl text-xl text-muted">
+      <p class="reveal eyebrow">01</p>
+      <h2 class="reveal mb-4 max-w-3xl">Our mission</h2>
+      <p class="reveal max-w-3xl text-xl text-muted">
         Building precise, reliable tools for the investigation community. Every solution is designed with the investigator's workflow in mind.
       </p>
     </div>
@@ -39,11 +39,11 @@ const audiences = [
 
   <section class="section">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">02</p>
-      <h2 class="mb-12 max-w-3xl">Expertise</h2>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <p class="reveal eyebrow">02</p>
+      <h2 class="reveal mb-12 max-w-3xl">Expertise</h2>
+      <div class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-3">
         {expertise.map((e) => (
-          <div data-ix="large" class="card">
+          <div class="stagger-item card">
             <h3 class="mb-3 text-2xl">{e.title}</h3>
             <p class="text-muted">{e.body}</p>
           </div>
@@ -54,11 +54,11 @@ const audiences = [
 
   <section class="section bg-ink-800">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">03</p>
-      <h2 class="mb-12 max-w-3xl">Who we serve</h2>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <p class="reveal eyebrow">03</p>
+      <h2 class="reveal mb-12 max-w-3xl">Who we serve</h2>
+      <div class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-2">
         {audiences.map((a) => (
-          <div data-ix="large" class="card">
+          <div class="stagger-item card">
             <h3 class="mb-3 text-2xl">{a.title}</h3>
             <p class="text-muted">{a.body}</p>
           </div>
@@ -69,12 +69,12 @@ const audiences = [
 
   <section class="section">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">04</p>
-      <h2 class="mb-4 max-w-3xl">How we work</h2>
-      <p data-ix="lead" class="mb-4 max-w-3xl text-xl text-text">
+      <p class="reveal eyebrow">04</p>
+      <h2 class="reveal mb-4 max-w-3xl">How we work</h2>
+      <p class="reveal mb-4 max-w-3xl text-xl text-text">
         <strong class="font-medium">Precision in data.</strong> Clarity in evidence. Our principles guide every tool we build and every investigation we support.
       </p>
-      <p data-ix="large" class="max-w-3xl text-muted">
+      <p class="reveal max-w-3xl text-muted">
         Please do not include case evidence, personal identifiers or sensitive operational details.
       </p>
     </div>
