@@ -37,43 +37,43 @@ const pipeline = [
   title="Digital forensics & OSINT platforms"
   description="Intelligence platforms and forensic tools for law enforcement and corporate security teams."
 >
-  <!-- 1. Hero -->
-  <section class="section hero-glow pb-12 pt-16 md:pt-24">
+  <!-- 1. Hero — glow variant -->
+  <section class="section section--glow">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">Digital forensics, OSINT and cyber-intelligence</p>
-      <h1 class="mb-6 max-w-5xl">From complex digital data to actionable legal evidence</h1>
-      <p data-ix="lead" class="mb-10 max-w-2xl text-lg text-muted">
+      <p class="reveal eyebrow">Digital forensics, OSINT and cyber-intelligence</p>
+      <h1 class="reveal mb-6 max-w-5xl">From complex digital data to actionable legal evidence</h1>
+      <p class="reveal mb-10 max-w-2xl text-lg text-muted">
         Intelligence platforms and forensic tools for the teams that turn fragmented digital traces into meaningful investigative insight.
       </p>
-      <div data-ix="small" class="flex flex-col gap-4 sm:flex-row">
-        <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
-        <a href={withBase('/solutions/')} class="btn btn-secondary">Explore Solutions</a>
+      <div class="stagger-group flex flex-col gap-4 sm:flex-row">
+        <a href={withBase('/contact/')} class="stagger-item btn btn-primary">Request a Demo</a>
+        <a href={withBase('/solutions/')} class="stagger-item btn btn-secondary">Explore Solutions</a>
       </div>
     </div>
   </section>
 
-  <!-- 2. Trust row -->
-  <section class="section py-0 md:py-0 xl:py-0">
+  <!-- 2. Trust row — default variant, compact -->
+  <section class="section section--default" style="--space-section: 3rem; --space-section-sm: 2rem; --space-section-md: 3rem; --space-section-lg: 4rem;">
     <div class="container-site">
-      <div data-ix="divider" class="divider"></div>
-      <ul class="grid grid-cols-1 gap-4 py-8 text-muted md:grid-cols-3">
-        {trust.map((item) => <li data-ix="small">{item}</li>)}
+      <div class="reveal divider"></div>
+      <ul class="stagger-group grid grid-cols-1 gap-4 py-6 text-muted md:grid-cols-3">
+        {trust.map((item) => <li class="stagger-item">{item}</li>)}
       </ul>
-      <div data-ix="divider" class="divider"></div>
+      <div class="reveal divider"></div>
     </div>
   </section>
 
-  <!-- 4. Who we serve -->
-  <section class="section">
+  <!-- 3. Who we serve — default variant -->
+  <section class="section section--default">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">01 / Who we serve</p>
-      <h2 class="mb-4 max-w-3xl">Different mandates. Shared need for clarity.</h2>
-      <p data-ix="lead" class="mb-12 max-w-2xl text-muted">
+      <p class="reveal eyebrow">01 / Who we serve</p>
+      <h2 class="reveal mb-4 max-w-3xl">Different mandates. Shared need for clarity.</h2>
+      <p class="reveal mb-12 max-w-2xl text-muted">
         From public-sector investigations to enterprise threat monitoring, put the right intelligence in the right hands.
       </p>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-2">
         {audiences.map((a) => (
-          <article data-ix="large" class="card relative flex flex-col">
+          <article class="stagger-item card relative flex flex-col">
             <h3 class="mb-3">
               <a href={withBase(a.href)} class="after:absolute after:inset-0 focus-visible:outline-offset-8">
                 {a.title}
@@ -89,28 +89,28 @@ const pipeline = [
     </div>
   </section>
 
-  <!-- 5. Solution portfolio -->
-  <section class="section bg-ink-800">
+  <!-- 4. Solution portfolio — raised variant -->
+  <section class="section section--raised">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">02 / The solution portfolio</p>
-      <h2 class="mb-12 max-w-3xl">Specialized tools. One investigative purpose.</h2>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <p class="reveal eyebrow">02 / The solution portfolio</p>
+      <h2 class="reveal mb-12 max-w-3xl">Specialized tools. One investigative purpose.</h2>
+      <div class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {solutions.map((s, i) => <ProductCard solution={s} index={i} />)}
       </div>
     </div>
   </section>
 
-  <!-- 6. From signal to evidence -->
-  <section class="section">
+  <!-- 5. From signal to evidence — default variant -->
+  <section class="section section--default">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">03 / From signal to evidence</p>
-      <h2 class="mb-4 max-w-3xl">A clear path through complex data.</h2>
-      <p data-ix="lead" class="mb-12 max-w-2xl text-muted">
+      <p class="reveal eyebrow">03 / From signal to evidence</p>
+      <h2 class="reveal mb-4 max-w-3xl">A clear path through complex data.</h2>
+      <p class="reveal mb-12 max-w-2xl text-muted">
         A common investigative framework connects collection, context, analysis and reporting across our solutions.
       </p>
-      <ol data-pipeline class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <ol data-pipeline class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {pipeline.map((step, i) => (
-          <li data-ix="large" data-step class="card">
+          <li class="stagger-item card" data-step>
             <p class="mb-6 text-sm text-cyan-text">{String(i + 1).padStart(2, '0')}</p>
             <h3 class="mb-3">{step.title}</h3>
             <p class="text-muted">{step.body}</p>
@@ -120,20 +120,20 @@ const pipeline = [
     </div>
   </section>
 
-  <!-- 8. CTA band -->
-  <section class="section pt-0 md:pt-0 xl:pt-0">
+  <!-- 6. Closing CTA — stronger focal point using cta-band component -->
+  <section class="section section--default">
     <div class="container-site">
-      <div data-ix="large" class="rounded-xl border border-line bg-band p-8 md:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12">
-        <div class="mb-8 max-w-2xl lg:mb-0">
+      <div class="reveal cta-band">
+        <div class="cta-band__content">
           <p class="eyebrow">Start a conversation</p>
           <h2 class="mb-4">Bring clarity to your next investigation.</h2>
           <p class="text-muted">
             Talk to our team about your evidence workflow, intelligence needs and the right solution for your organization.
           </p>
         </div>
-        <div class="flex flex-col gap-4 sm:flex-row lg:flex-col">
-          <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
-          <a href={withBase('/contact/')} class="btn btn-secondary">Or Contact Us</a>
+        <div class="cta-band__actions stagger-group">
+          <a href={withBase('/contact/')} class="stagger-item btn btn-primary">Request a Demo</a>
+          <a href={withBase('/contact/')} class="stagger-item btn btn-secondary">Or Contact Us</a>
         </div>
       </div>
     </div>

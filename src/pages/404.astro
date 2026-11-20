@@ -9,10 +9,10 @@ const description = 'Page not found';
 <Layout title={title} description={description}>
   <section class="section hero-glow flex min-h-[60vh] items-center">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">404</p>
-      <h1 class="mb-6">Page not found</h1>
-      <div data-ix="small">
-        <a href={withBase('/')} class="btn btn-primary">Go to Home</a>
+      <p class="reveal eyebrow">404</p>
+      <h1 class="reveal mb-6">Page not found</h1>
+      <div class="stagger-group">
+        <a href={withBase('/')} class="stagger-item btn btn-primary">Go to Home</a>
       </div>
     </div>
   </section>

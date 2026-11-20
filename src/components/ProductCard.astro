@@ -10,7 +10,7 @@ interface Props {
 const { solution, index } = Astro.props;
 ---
 
-<article data-ix="large" class="card relative flex h-full flex-col">
+<article class="stagger-item card relative flex h-full flex-col">
   <div class="mb-6 flex items-start justify-between gap-4">
     <p class="text-sm text-cyan-text">{solution.category}</p>
     <p class="text-sm text-faint" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>

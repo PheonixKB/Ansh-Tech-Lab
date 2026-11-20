@@ -1,38 +1,56 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
 
 /*
-  Tokens ported from the Webflow template (Colors, Typography and Sizes variable
-  collections). Token names are kept from the previous theme (ink-*, cyan, muted ...)
-  so existing utility classes keep working; only the values changed.
+  Design System v2 — Tokens from Webflow template + v2 refinements
+  - Section variants: default, raised, accent, glow
+  - Layered backgrounds: radial gradients, subtle grid
+  - Raised text contrast: muted 70%, faint 65% (WCAG AA)
+  - Consistent vertical rhythm
+  - Stronger closing CTA
 */
 @theme {
-  /* Surfaces: template Neutral Primary / Secondary */
+  /* Surfaces */
   --color-ink-950: #09090b; /* page background */
-  --color-ink-900: #101013; /* cards */
-  --color-ink-800: #101013; /* alternate section bands */
+  --color-ink-900: #101013; /* cards, nav surface */
+  --color-ink-800: #101013; /* raised band (slightly lighter) */
   --color-band: rgb(40 178 191 / 0.1); /* CTA band (accent at 10%) */
 
-  /* Borders: template Neutral Inverse at 10% / 20% */
-  --color-line: rgb(243 243 243 / 0.1);
-  --color-line-strong: rgb(243 243 243 / 0.2);
+  /* Section variant surfaces */
+  --color-surface-default: var(--color-ink-950); /* default section */
+  --color-surface-raised: var(--color-ink-800); /* raised band */
+  --color-surface-accent: var(--color-cyan); /* accent band — teal #28b2bf */
+  --color-surface-glow: var(
+    --color-ink-950
+  ); /* glow variant uses base + radial */
 
-  /* Text: template Neutral Inverse at 100% / 60% / 50% */
-  --color-text: #f3f3f3;
-  --color-muted: rgb(243 243 243 / 0.6); /* body copy; use this on the band */
-  --color-faint: rgb(
-    243 243 243 / 0.5
-  ); /* small labels (not on --color-band) */
+  /* Borders */
+  --color-line: rgb(243 243 243 / 0.1); /* default 1px borders, dividers */
+  --color-line-strong: rgb(243 243 243 / 0.2); /* tag borders */
 
-  /* Accent: template Accent Primary */
-  --color-cyan: #28b2bf;
-  --color-cyan-hover: #4bcdd9;
-  --color-cyan-text: #46bbc7; /* accent used as text on dark */
-  --color-cyan-dim: rgb(40 178 191 / 0.4); /* hover borders, subtle accents */
-  --color-accent-10: rgb(40 178 191 / 0.1);
-  --color-accent-20: rgb(40 178 191 / 0.2);
+  /* Text — raised for WCAG AA */
+  --color-text: #f3f3f3; /* headings, primary text (100%) */
+  --color-muted: rgb(243 243 243 / 0.6); /* body copy; use this on the band */;
+  --color-faint: rgb(243 243 243 / 0.65); /* small labels — 65% (was 50%) */
+  --color-on-accent: var(--color-ink-950); /* dark text for accent surfaces */
 
-  /* Radii: template Sizes collection */
+  /* Accent */
+  --color-cyan: #28b2bf; /* primary button, accent surface */
+  --color-cyan-hover: #4bcdd9; /* button hover, focus ring, link hover */
+  --color-cyan-text: #46bbc7; /* eyebrows, active nav, card labels */
+  --color-cyan-dim: rgb(
+    40 178 191 / 0.4
+  ); /* card hover border, lit pipeline step */
+  --color-accent-10: rgb(40 178 191 / 0.1); /* secondary button hover */
+  --color-accent-20: rgb(40 178 191 / 0.2); /* secondary button default */
+
+  /* Background lighting */
+  --color-glow-strong: rgb(40 178 191 / 0.15); /* stronger radial glow */
+  --color-glow-subtle: rgb(40 178 191 / 0.05); /* subtle radial glow */
+  --color-grid-line: rgb(243 243 243 / 0.03); /* subtle grid pattern */
+
+  /* Radii */
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem; /* buttons, inputs, tags */
@@ -55,7 +73,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Template headings: weight 500, line-height 1.04, tracking -0.01em */
+  /* Headings: weight 500, line-height 1.04, tracking -0.01em */
   h1,
   h2,
   h3,
@@ -64,7 +82,7 @@
     line-height: 1.04;
     letter-spacing: -0.01em;
   }
-  /* Template sizes (H1 5.65rem, H2 2.83rem, H3 2rem, H4 1.41rem), fluid on small screens */
+  /* Fluid heading sizes */
   h1 {
     font-size: clamp(2.5rem, 7vw, 5.65rem);
   }
@@ -91,7 +109,9 @@
 }
 
 @layer components {
-  /* Layout: template container 1280px, section padding 8rem (scaled down on small screens) */
+  /* ============================================================
+     Layout primitives
+     ============================================================ */
   .container-site {
     margin-inline: auto;
     width: 100%;
@@ -103,21 +123,38 @@
       padding-inline: 1.5rem;
     }
   }
+
+  /* Vertical rhythm — one spacing scale */
   .section {
-    padding-block: 4rem;
+    padding-block: var(--space-section, 6rem);
   }
-  @media (min-width: 768px) {
+  @media (max-width: 767px) {
     .section {
-      padding-block: 6rem;
+      padding-block: var(--space-section-sm, 4rem);
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1279px) {
+    .section {
+      padding-block: var(--space-section-md, 6rem);
     }
   }
   @media (min-width: 1280px) {
     .section {
-      padding-block: 8rem;
+      padding-block: var(--space-section-lg, 8rem);
     }
   }
 
-  /* Eyebrow: template 0.9rem Inter in the accent colour (replaces the mono labels) */
+  /* Consistent inner spacing for section content */
+  .section > .container-site > * + * {
+    margin-top: var(--space-section-inner, 3rem);
+  }
+  @media (min-width: 768px) {
+    .section > .container-site > * + * {
+      margin-top: var(--space-section-inner-lg, 4rem);
+    }
+  }
+
+  /* Eyebrow */
   .eyebrow {
     font-size: 0.9rem;
     line-height: 1.3;
@@ -126,7 +163,9 @@
     margin-bottom: 1rem;
   }
 
-  /* Buttons: template radius 0.75rem, padding 1em 1.5em, min height 44px */
+  /* ============================================================
+     Buttons
+     ============================================================ */
   .btn {
     display: inline-flex;
     min-height: 44px;
@@ -141,10 +180,9 @@
       background-color 0.2s ease,
       color 0.2s ease;
   }
-  /* Dark text on the accent: the template's light text on #28B2BF is only ~2.4:1 */
   .btn-primary {
     background: var(--color-cyan);
-    color: var(--color-ink-950);
+    color: var(--color-on-accent);
   }
   .btn-primary:hover {
     background: var(--color-cyan-hover);
@@ -157,7 +195,9 @@
     background: var(--color-accent-10);
   }
 
-  /* Cards: template radius 1rem, padding 2rem, 10% border */
+  /* ============================================================
+     Cards
+     ============================================================ */
   .card {
     background: var(--color-ink-900);
     border: 1px solid var(--color-line);
@@ -198,20 +238,285 @@
     background: var(--color-line);
   }
 
-  /* Soft accent glow behind the hero */
+  /* ============================================================
+     Section variant modifiers
+     Apply ONE of these to a .section element
+     ============================================================ */
+
+  /* Default — page background (ink-950), standard text colors */
+  .section--default {
+    background: var(--color-surface-default);
+  }
+  .section--default .eyebrow,
+  .section--default h1,
+  .section--default h2,
+  .section--default h3,
+  .section--default p {
+    color: inherit;
+  }
+  .section--default .muted,
+  .section--default .text-muted {
+    color: var(--color-muted);
+  }
+
+  /* Raised — slightly lighter band (ink-800), standard text colors */
+  .section--raised {
+    background: var(--color-surface-raised);
+  }
+  .section--raised .eyebrow,
+  .section--raised h1,
+  .section--raised h2,
+  .section--raised h3,
+  .section--raised p {
+    color: inherit;
+  }
+  .section--raised .muted,
+  .section--raised .text-muted {
+    color: var(--color-muted);
+  }
+
+  /* Accent — teal surface (#28b2bf) with DARK text for contrast */
+  .section--accent {
+    background: var(--color-surface-accent);
+  }
+  .section--accent .eyebrow,
+  .section--accent h1,
+  .section--accent h2,
+  .section--accent h3,
+  .section--accent p,
+  .section--accent .btn-secondary {
+    color: var(--color-on-accent);
+  }
+  .section--accent .btn-secondary {
+    background: var(--color-ink-900);
+    border: 1px solid var(--color-on-accent);
+  }
+  .section--accent .btn-secondary:hover {
+    background: var(--color-ink-950);
+  }
+  .section--accent .card {
+    background: var(--color-ink-900);
+    border-color: var(--color-line);
+  }
+  .section--accent .tag {
+    border-color: var(--color-on-accent);
+    color: var(--color-on-accent);
+  }
+  .section--accent .divider {
+    background: var(--color-on-accent);
+  }
+
+  /* Glow — base background + strong radial teal glow */
+  .section--glow {
+    background: var(--color-surface-glow);
+    position: relative;
+    isolation: isolate;
+  }
+  .section--glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      60rem 30rem at 50% -10%,
+      var(--color-glow-strong),
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Optional subtle grid overlay for any section */
+  .section--grid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ============================================================
+     Hero glow (kept for backward compat)
+     ============================================================ */
   .hero-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .hero-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
     background: radial-gradient(
       60rem 30rem at 50% -10%,
       var(--color-accent-20),
       transparent 70%
     );
+    pointer-events: none;
+    z-index: -1;
   }
 
-  /* Pipeline step lit by animations.ts */
+  /* ============================================================
+     Pipeline step lit state
+     ============================================================ */
   [data-step] {
     transition: border-color 0.4s ease;
   }
   [data-step].is-lit {
     border-color: var(--color-cyan-dim);
+  }
+
+  /* ============================================================
+     Marquee
+     ============================================================ */
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* ============================================================
+     Scroll reveal animations (CSS-only, CSP-safe)
+     ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s ease-out;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stagger-group {
+    --stagger-delay: 0.1s;
+  }
+  .stagger-group .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+    transition-delay: calc(var(--stagger-index, 0) * var(--stagger-delay));
+  }
+  .stagger-group.is-visible .stagger-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .count-up {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .count-up.is-visible {
+    opacity: 1;
+  }
+
+  .diagram-draw .draw {
+    stroke-dasharray: var(--path-length, 1000);
+    stroke-dashoffset: var(--path-length, 1000);
+    transition: stroke-dashoffset 1.2s ease-in-out;
+  }
+  .diagram-draw.is-visible .draw {
+    stroke-dashoffset: 0;
+  }
+  .diagram-draw .node {
+    transform: scale(0);
+    transform-origin: 50% 50%;
+    transition: transform 0.4s ease-out;
+    transition-delay: 0.6s;
+  }
+  .diagram-draw.is-visible .node {
+    transform: scale(1);
+  }
+  .diagram-draw .label {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0.9s;
+  }
+  .diagram-draw.is-visible .label {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .stagger-item,
+    .count-up,
+    .diagram-draw .draw,
+    .diagram-draw .node,
+    .diagram-draw .label {
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      stroke-dashoffset: 0 !important;
+    }
+  }
+
+  /* ============================================================
+     Stronger closing CTA
+     ============================================================ */
+  .cta-band {
+    background: var(--color-band);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+  }
+  @media (min-width: 768px) {
+    .cta-band {
+      padding: 4rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .cta-band {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 4rem 5rem;
+    }
+  }
+  .cta-band__content {
+    max-width: 32rem;
+  }
+  .cta-band__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+  .cta-band h2 {
+    margin-bottom: 0.75rem;
+  }
+  .cta-band p {
+    color: var(--color-muted);
+    margin-bottom: 0;
   }
 }

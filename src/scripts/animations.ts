@@ -1,36 +1,20 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 /*
-  Ported from the Webflow template's two interactions:
-    1. "Nav on page load": nav scales 0.9 -> 1 while fading in (0.6s).
-    2. "All sections on scroll": when a .section / footer reaches "top 80%" it plays once:
-       eyebrows scale in, headings scale in word by word, large elements (cards, grids,
-       lists) and small elements (button groups, logos) stagger in, dividers fade in last.
-  All of it is transform + opacity only, and skipped for reduced-motion users.
+  CSS-based scroll reveals (CSP-safe). GSAP is kept only for:
+  - Pipeline step highlight (toggles CSS class)
+  - Diagram draw-in (could be CSS but GSAP gives more control)
+  - Count-up numbers
+  All animations respect prefers-reduced-motion via matchMedia.
 */
-
-const EASE = "power2.out";
-
-/** Elements of a given selector inside `root`, minus anything inside `excludeSelector`. */
-function pick(
-  root: Element,
-  selector: string,
-  excludeSelector?: string,
-): HTMLElement[] {
-  return gsap.utils
-    .toArray<HTMLElement>(root.querySelectorAll(selector))
-    .filter((el) => !excludeSelector || !el.closest(excludeSelector));
-}
 
 const mm = gsap.matchMedia();
 
 mm.add("(prefers-reduced-motion: no-preference)", () => {
-  // 1. Nav on page load. Template waits 1.2s (behind its hero intro); shortened to 0.3s
-  //    so navigation is never invisible for over a second.
+  // 1. Nav on page load
   const nav = document.querySelector<HTMLElement>("[data-nav]");
   if (nav) {
     gsap.from(nav, {
@@ -38,99 +22,96 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       scale: 0.9,
       duration: 0.6,
       delay: 0.3,
-      ease: EASE,
+      ease: "power2.out",
     });
   }
 
-  // 2. Sections on scroll
-  const splits: SplitText[] = [];
-
-  gsap.utils
-    .toArray<HTMLElement>(".section, .footer-section")
-    .forEach((section) => {
-      const eyebrows = pick(section, "[data-ix='eyebrow']");
-      const headings = pick(
-        section,
-        "h1, h2, [data-ix='heading'], [data-ix='lead']",
-        ".card, [data-ix='large'], [data-ix='small']",
-      );
-      const large = pick(
-        section,
-        "[data-ix='large']",
-        "[data-ix='large'] [data-ix='large']",
-      );
-      const small = pick(section, "[data-ix='small']");
-      const dividers = pick(section, "[data-ix='divider']");
-
-      const tl = gsap.timeline({
-        defaults: { ease: EASE },
-        scrollTrigger: { trigger: section, start: "top 80%", once: true },
+  // 2. Scroll reveals using IntersectionObserver + CSS classes
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
       });
+    },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+  );
 
-      if (eyebrows.length) {
-        tl.from(
-          eyebrows,
-          { autoAlpha: 0, scale: 0.9, duration: 0.8, stagger: { amount: 0.8 } },
-          0,
-        );
-      }
+  // Simple reveal elements
+  document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => {
+    revealObserver.observe(el);
+  });
 
-      if (headings.length) {
-        // aria-label is only valid on elements with a role (headings), not on <p>
-        const words = headings.flatMap((el) => {
-          const split = SplitText.create(el, {
-            type: "words",
-            aria: el.matches("h1, h2, h3, h4, h5, h6") ? "auto" : "none",
-          });
-          splits.push(split);
-          return split.words as HTMLElement[];
-        });
-        tl.from(
-          words,
-          { autoAlpha: 0, scale: 0.9, duration: 0.8, stagger: { amount: 0.8 } },
-          0,
-        );
-      }
-
-      if (large.length) {
-        tl.from(
-          large,
-          {
-            autoAlpha: 0,
-            scale: 0.9,
-            duration: 0.7,
-            stagger: { each: 0.15 },
-            // Hand the transform back to CSS so card hover lift keeps working
-            clearProps: "opacity,visibility,transform",
-          },
-          0.6,
-        );
-      }
-
-      if (small.length) {
-        tl.from(
-          small,
-          {
-            autoAlpha: 0,
-            scale: 0.8,
-            duration: 0.7,
-            stagger: { each: 0.15 },
-            clearProps: "opacity,visibility,transform",
-          },
-          0.6,
-        );
-      }
-
-      if (dividers.length) {
-        tl.from(
-          dividers,
-          { autoAlpha: 0, duration: 0.75, ease: "power1.out" },
-          1.2,
-        );
-      }
+  // Stagger groups
+  document.querySelectorAll<HTMLElement>(".stagger-group").forEach((group) => {
+    const items = group.querySelectorAll<HTMLElement>(".stagger-item");
+    items.forEach((item, index) => {
+      item.style.setProperty("--stagger-index", String(index));
     });
+    revealObserver.observe(group);
+  });
 
-  // 3. Pipeline: steps light up in sequence as the row scrolls in
+  // 3. Count-up numbers
+  const countUpObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const end = Number(el.dataset.count);
+          const suffix = el.dataset.suffix ?? "";
+          let current = 0;
+          const duration = 1400;
+          const startTime = performance.now();
+
+          const animate = (now: number) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            current = Math.round(eased * end);
+            el.textContent = current + suffix;
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          el.classList.add("is-visible");
+          requestAnimationFrame(animate);
+          countUpObserver.unobserve(el);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.5 },
+  );
+
+  document.querySelectorAll<HTMLElement>(".count-up").forEach((el) => {
+    el.textContent = "0" + (el.dataset.suffix ?? "");
+    countUpObserver.observe(el);
+  });
+
+  // 4. Diagram draw-in (SVG stroke animation via CSS)
+  const diagramObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const svg = entry.target as SVGSVGElement;
+          // Set path lengths for CSS variables
+          svg.querySelectorAll<SVGGeometryElement>(".draw").forEach((path) => {
+            const len = path.getTotalLength();
+            path.style.setProperty("--path-length", String(len));
+          });
+          svg.classList.add("is-visible");
+          diagramObserver.unobserve(svg);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -20% 0px", threshold: 0.2 },
+  );
+
+  document.querySelectorAll<SVGSVGElement>(".diagram-draw").forEach((svg) => {
+    diagramObserver.observe(svg);
+  });
+
+  // 5. Pipeline: steps light up in sequence as the row scrolls in
   gsap.utils.toArray<HTMLElement>("[data-pipeline]").forEach((row) => {
     const steps = row.querySelectorAll<HTMLElement>("[data-step]");
     const tl = gsap.timeline({
@@ -140,7 +121,4 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       tl.add(() => step.classList.add("is-lit"), 1 + i * 0.35),
     );
   });
-
-  // Undo the word wrappers when the media query stops matching (user turns on reduced motion)
-  return () => splits.forEach((s) => s.revert());
 });

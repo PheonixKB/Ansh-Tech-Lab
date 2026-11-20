@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
 
 // SITE_URL and BASE_PATH are set only by the GitHub Pages staging deploy
 // (.github/workflows/deploy.yml). Locally and on the custom domain they are
@@ -14,6 +15,7 @@ export default defineConfig({
   base,
   // AGENTS.md rule 6: CSP-clean output, so never inline stylesheets into the HTML.
   build: { inlineStylesheets: "never" },
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

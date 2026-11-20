@@ -12,26 +12,26 @@ const { s } = Astro.props;
 <Layout title={s.name} description={s.sub}>
   <section class="section hero-glow pb-12 pt-16 md:pt-24">
     <div class="container-site">
-      <nav data-ix="eyebrow" aria-label="Breadcrumb" class="mb-6 text-sm">
+      <nav aria-label="Breadcrumb" class="reveal mb-6 text-sm">
         <a href={withBase('/solutions/')} class="text-muted hover:text-text">← Back to Solutions</a>
       </nav>
-      <p data-ix="eyebrow" class="eyebrow">{s.eyebrow}</p>
-      <h1 class="mb-6 max-w-5xl">{s.name}</h1>
-      <p data-ix="lead" class="mb-10 max-w-2xl text-lg text-muted">{s.sub}</p>
-      <div data-ix="small" class="flex flex-col gap-4 sm:flex-row">
-        <a href={withBase('/contact/')} class="btn btn-primary">Request a Demo</a>
-        <a href={withBase('/solutions/')} class="btn btn-secondary">All Solutions</a>
+      <p class="reveal eyebrow">{s.eyebrow}</p>
+      <h1 class="reveal mb-6 max-w-5xl">{s.name}</h1>
+      <p class="reveal mb-10 max-w-2xl text-lg text-muted">{s.sub}</p>
+      <div class="stagger-group flex flex-col gap-4 sm:flex-row">
+        <a href={withBase('/contact/')} class="stagger-item btn btn-primary">Request a Demo</a>
+        <a href={withBase('/solutions/')} class="stagger-item btn btn-secondary">All Solutions</a>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container-site grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div data-ix="large" class="card">
+    <div class="stagger-group container-site grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div class="stagger-item card">
         <h2 class="mb-4 text-3xl">Challenge</h2>
         <p class="text-muted">{s.challenge.body}</p>
       </div>
-      <div data-ix="large" class="card">
+      <div class="stagger-item card">
         <h2 class="mb-4 text-3xl">Core Focus</h2>
         <p class="text-muted">{s.coreFocus}</p>
       </div>
@@ -40,10 +40,10 @@ const { s } = Astro.props;
 
   <section class="section bg-ink-800">
     <div class="container-site">
-      <h2 class="mb-12">Capabilities</h2>
-      <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <h2 class="reveal mb-12">Capabilities</h2>
+      <ul class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-3">
         {s.capabilities.map((cap) => (
-          <li data-ix="large" class="card">
+          <li class="stagger-item card">
             <h3 class="mb-3 text-2xl">{cap.title}</h3>
             <p class="text-muted">{cap.body}</p>
           </li>
@@ -54,10 +54,10 @@ const { s } = Astro.props;
 
   <section class="section">
     <div class="container-site">
-      <h2 class="mb-12">Workflow</h2>
-      <ol data-pipeline class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <h2 class="reveal mb-12">Workflow</h2>
+      <ol data-pipeline class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {s.workflow.map((step, i) => (
-          <li data-ix="large" data-step class="card">
+          <li class="stagger-item card" data-step>
             <p class="mb-6 text-sm text-cyan-text">{String(i + 1).padStart(2, '0')}</p>
             <h3 class="mb-3 text-2xl">{step.title}</h3>
             <p class="text-muted">{step.body}</p>
