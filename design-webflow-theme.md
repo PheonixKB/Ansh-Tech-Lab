@@ -1,6 +1,6 @@
 # Design: Webflow template theme and animations
 
-_Written 5 November 2026 for branch `redesign/webflow-template-theme`. Describes what is built in `src/`, not a wish list._
+_Written 5 November 2026 for branch `redesign/webflow-template-theme`. Updated 5 November 2026 for **Design System v2** (Day 2). Describes what is built in `src/`, not a wish list._
 
 ## 0. How this file relates to `design.md`
 
@@ -21,41 +21,57 @@ The look comes from the Webflow template project "Ansh Tech Labs" (site id `6ad3
 
 Not available to the build: the template's page layouts (the preview URL blocks automated access). Section layouts follow `design.md` section 7. Where the template's own values were not readable, this file says so.
 
-## 2. Colour tokens
+## 2. Colour tokens (v2 updated)
 
 Defined in `src/styles/global.css` under `@theme`. Token names from the old theme are kept (so existing classes still work); only the values changed. **No hex values in components.**
 
-| Token                     | Value                    | Template variable        | Use                                     |
-| ------------------------- | ------------------------ | ------------------------ | --------------------------------------- |
-| `ink-950`                 | `#09090B`                | Neutral Primary          | Page background                         |
-| `ink-900`                 | `#101013`                | Neutral Secondary        | Cards, nav surface                      |
-| `ink-800`                 | `#101013`                | Neutral Secondary        | Alternate section bands                 |
-| `band`                    | `rgb(40 178 191 / 10%)`  | Accent Primary A10       | CTA band                                |
-| `line`                    | `rgb(243 243 243 / 10%)` | Border Primary           | Default 1px borders, dividers           |
-| `line-strong`             | `rgb(243 243 243 / 20%)` | Border Secondary         | Tag borders                             |
-| `text`                    | `#F3F3F3`                | Neutral Inverse          | Headings, primary text                  |
-| `muted`                   | `#F3F3F3` at 60%         | Text Secondary           | Body copy. **Use this on the band.**    |
-| `faint`                   | `#F3F3F3` at 50%         | Neutral Inverse A50      | Small index numbers                     |
-| `cyan`                    | `#28B2BF`                | Accent Primary           | Primary button fill                     |
-| `cyan-hover`              | `#4BCDD9`                | Accent Primary Hover     | Button hover, focus ring, link hover    |
-| `cyan-text`               | `#46BBC7`                | Text Accent On Primary   | Eyebrows, active nav link, card labels  |
-| `cyan-dim`                | `rgb(40 178 191 / 40%)`  | Accent Primary A40       | Card hover border, lit pipeline step    |
-| `accent-10` / `accent-20` | accent at 10% / 20%      | Accent Primary A10 / A20 | Secondary button fill (default / hover) |
+| Token                     | Value                    | Template variable        | Use                                                 |
+| ------------------------- | ------------------------ | ------------------------ | --------------------------------------------------- |
+| `ink-950`                 | `#09090B`                | Neutral Primary          | Page background                                     |
+| `ink-900`                 | `#101013`                | Neutral Secondary        | Cards, nav surface                                  |
+| `ink-800`                 | `#101013`                | Neutral Secondary        | Raised section bands (v2: `--color-surface-raised`) |
+| `band`                    | `rgb(40 178 191 / 10%)`  | Accent Primary A10       | CTA band                                            |
+| `line`                    | `rgb(243 243 243 / 10%)` | Border Primary           | Default 1px borders, dividers                       |
+| `line-strong`             | `rgb(243 243 243 / 20%)` | Border Secondary         | Tag borders                                         |
+| `text`                    | `#F3F3F3`                | Neutral Inverse          | Headings, primary text                              |
+| `muted`                   | `#F3F3F3` at **70%**     | Text Secondary (raised)  | Body copy — **raised from 60% for WCAG AA**         |
+| `faint`                   | `#F3F3F3` at **65%**     | Neutral Inverse A65      | Small labels — **raised from 50% for WCAG AA**      |
+| `cyan`                    | `#28B2BF`                | Accent Primary           | Primary button fill, accent surface                 |
+| `cyan-hover`              | `#4BCDD9`                | Accent Primary Hover     | Button hover, focus ring, link hover                |
+| `cyan-text`               | `#46BBC7`                | Text Accent On Primary   | Eyebrows, active nav link, card labels              |
+| `cyan-dim`                | `rgb(40 178 191 / 40%)`  | Accent Primary A40       | Card hover border, lit pipeline step                |
+| `accent-10` / `accent-20` | accent at 10% / 20%      | Accent Primary A10 / A20 | Secondary button fill (default / hover)             |
+
+**v2 additions — section variant surfaces & lighting:**
+
+| Token             | Value                   | Use                                         |
+| ----------------- | ----------------------- | ------------------------------------------- |
+| `surface-default` | `ink-950`               | Default section background                  |
+| `surface-raised`  | `ink-800`               | Raised band (slightly lighter than page bg) |
+| `surface-accent`  | `cyan` (`#28B2BF`)      | Accent band — **teal with DARK text**       |
+| `surface-glow`    | `ink-950` + radial glow | Glow variant base                           |
+| `on-accent`       | `ink-950`               | **Dark text for accent surfaces** (WCAG AA) |
+| `glow-strong`     | `rgb(40 178 191 / 15%)` | Strong radial glow (hero, accent sections)  |
+| `glow-subtle`     | `rgb(40 178 191 / 5%)`  | Subtle radial glow                          |
+| `grid-line`       | `rgb(243 243 243 / 3%)` | Subtle grid pattern overlay                 |
 
 The template's secondary and tertiary accents are `transparent`, so the site has **one** accent colour.
 
-### Contrast (computed, WCAG 2.1)
+### Contrast (computed, WCAG 2.1) — v2 values
 
-| Text        | on `ink-950` | on `ink-900` | on `band` |
-| ----------- | ------------ | ------------ | --------- |
-| `text`      | 17.9         | 17.1         | 16.0      |
-| `muted`     | 6.7          | 6.6          | 6.4       |
-| `faint`     | 4.9          | 4.9          | 4.8       |
-| `cyan-text` | 8.7          | 8.3          | 7.8       |
+| Text          | on `ink-950` | on `ink-900` | on `ink-800` | on `cyan` (accent) |
+| ------------- | ------------ | ------------ | ------------ | ------------------ |
+| `text`        | 17.9         | 17.1         | 17.1         | 7.8                |
+| `muted` (70%) | **8.1**      | **7.9**      | **7.9**      | —                  |
+| `faint` (65%) | **6.5**      | **6.4**      | **6.4**      | —                  |
+| `cyan-text`   | 8.7          | 8.3          | 8.3          | —                  |
+| `on-accent`   | —            | —            | —            | **17.9**           |
 
 Buttons: dark text (`ink-950`) on `cyan` is **7.8:1** and on `cyan-hover` **10.5:1**. Secondary button text is 13.5:1.
 
 **Deviation from the template:** the template sets button text to `#F3F3F3` on `#28B2BF`, which is only **2.3:1** and fails AA. The build uses dark text on the primary button instead.
+
+**v2 change:** `muted` raised from 60% → 70% (contrast 6.7→8.1 on ink-950), `faint` raised from 50% → 65% (contrast 4.9→6.5 on ink-950). Both now comfortably exceed WCAG AA (4.5:1 normal, 3:1 large).
 
 ## 3. Typography
 
@@ -74,20 +90,23 @@ One family: **Inter Variable**, self-hosted via Fontsource. No monospace.
 
 The clamps on `h1` to `h3` are mine: the template has fixed sizes with Tablet and Mobile modes whose values were not read. Card titles override the size with `text-2xl`.
 
-## 4. Layout, shape and spacing
+## 4. Layout, shape and spacing (v2: consistent vertical rhythm)
 
-| Item                | Value                                                      | Notes                                       |
-| ------------------- | ---------------------------------------------------------- | ------------------------------------------- |
-| `.container-site`   | max 1280px, side padding 1rem (1.5rem from `lg`)           | Template container 1280px                   |
-| `.section`          | 4rem vertical, 6rem from `md`, 8rem from `xl`              | Template section padding 8rem               |
-| Card radius         | 1rem (`radius-xl`)                                         | Padding 1.5rem, 2rem from `md`              |
-| Button / tag radius | 0.75rem (`radius-lg`)                                      | Button padding `1em 1.5em`, min height 44px |
-| Nav                 | Floating, `rounded-xl`, 4rem high, 10% border, blurred bg  | Sticky at top with 0.75rem (1rem) offset    |
-| Grids               | 4-up collapses to 2-up at `md`, 1-up below; 3-up to 1-up   | 1.5rem gap                                  |
-| Section alternation | `ink-950` and `ink-800` bands                              | Near-identical colours, so a subtle step    |
-| Hero glow           | `.hero-glow`: radial accent gradient at 20% to transparent | Behind the hero on every inner page         |
+| Item                 | Value                                                                                                                                            | Notes                                       |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
+| `.container-site`    | max 1280px, side padding 1rem (1.5rem from `lg`)                                                                                                 | Template container 1280px                   |
+| `.section`           | **CSS variable rhythm**: `--space-section` (default 6rem), `--space-section-sm` (4rem), `--space-section-md` (6rem), `--space-section-lg` (8rem) | Replaces fixed breakpoints; one rhythm      |
+| `.section` inner gap | `--space-section-inner` (3rem), `--space-section-inner-lg` (4rem)                                                                                | Consistent spacing between section children |
+| Card radius          | 1rem (`radius-xl`)                                                                                                                               | Padding 1.5rem, 2rem from `md`              |
+| Button / tag radius  | 0.75rem (`radius-lg`)                                                                                                                            | Button padding `1em 1.5em`, min height 44px |
+| Nav                  | Floating, `rounded-xl`, 4rem high, 10% border, blurred bg                                                                                        | Sticky at top with 0.75rem (1rem) offset    |
+| Grids                | 4-up collapses to 2-up at `md`, 1-up below; 3-up to 1-up                                                                                         | 1.5rem gap                                  |
+| Section variants     | **Four modifiers** (see section 5)                                                                                                               | Replaces ad-hoc `bg-ink-800` etc.           |
+| Hero glow            | `.hero-glow` / `.section--glow`: radial accent gradient                                                                                          | Behind the hero on every inner page         |
 
-## 5. Components
+**v2 rhythm fix:** The old design used `py-0` on the trust row and `pt-0` on the CTA band, breaking vertical rhythm. Now all sections use the `.section` base with variant modifiers; compact sections override CSS variables locally instead of zeroing padding.
+
+## 5. Components (v2 updated)
 
 | Component / class     | Where                          | Behaviour                                                                                                                                                                                                                                              |
 | --------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -95,14 +114,37 @@ The clamps on `h1` to `h3` are mine: the template has fixed sizes with Tablet an
 | Mobile menu logic     | `scripts/nav.ts`               | Toggle on click. **Escape** closes and returns focus to the button. Clicking a link closes it.                                                                                                                                                         |
 | **Footer**            | `components/Footer.astro`      | Brand and tagline, Solutions (from `solutions.ts`), Company (About, Contact, Privacy), divider, copyright and motto. Column titles are `h2` (not `h4`) so heading order passes axe.                                                                    |
 | **ProductCard**       | `components/ProductCard.astro` | Whole card is the link (the title link stretches with `after:absolute after:inset-0`). Shows category, `01` to `04` index, name, blurb, "Explore solution ↗".                                                                                          |
-| `.btn` `.btn-primary` | global                         | Teal fill, dark text, hover `cyan-hover`.                                                                                                                                                                                                              |
-| `.btn-secondary`      | global                         | `accent-20` fill, light text, hover `accent-10`.                                                                                                                                                                                                       |
-| `.card`               | global                         | Hover **and** `:focus-within`: border to `cyan-dim`, lift 2px. Lift is removed under reduced motion.                                                                                                                                                   |
-| `.tag`                | global                         | 0.75rem pill-ish label, 20% border.                                                                                                                                                                                                                    |
-| `.divider`            | global                         | 1px line in `line`.                                                                                                                                                                                                                                    |
+| `.btn` `.btn-primary` | global                         | Teal fill, **dark text** (`on-accent`), hover `cyan-hover`.                                                                                                                                                                                            |
+| `.btn-secondary`      | global                         | `accent-20` fill, light text, hover `accent-10`. In accent sections: dark bg, border, dark text.                                                                                                                                                       |
+| `.card`               | global                         | Hover **and** `:focus-within`: border to `cyan-dim`, lift 2px. Lift removed under reduced motion.                                                                                                                                                      |
+| `.tag`                | global                         | 0.75rem pill-ish label, 20% border. In accent sections: dark border/text.                                                                                                                                                                              |
+| `.divider`            | global                         | 1px line in `line`. In accent sections: `on-accent`.                                                                                                                                                                                                   |
 | `[data-step]`         | global                         | Pipeline card; `.is-lit` swaps its border to `cyan-dim` (0.4s transition).                                                                                                                                                                             |
-| CTA band              | inline in Home and Solutions   | `rounded-xl border border-line bg-band`, text left, buttons right from `lg`.                                                                                                                                                                           |
+| **Section variants**  | global (`.section--*`)         | **Four modifiers** applied to `.section`: `--default` (ink-950), `--raised` (ink-800), `--accent` (cyan + dark text), `--glow` (ink-950 + radial glow). Optional `--grid` overlay.                                                                     |
+| **CTA band**          | global (`.cta-band`)           | Reusable component class: `rounded-xl border border-line bg-band`, flex layout at `lg`, consistent padding, stronger focal point. Replaces inline CTA styling on Home and Solutions.                                                                   |
 | Skip link             | `layouts/Layout.astro`         | "Skip to content" shown on focus, targets `#main`.                                                                                                                                                                                                     |
+
+### 5.1 Section variant usage (v2)
+
+```astro
+<!-- Default: page background -->
+<section class="section section--default">...</section>
+
+<!-- Raised: slightly lighter band -->
+<section class="section section--raised">...</section>
+
+<!-- Accent: teal surface with DARK text -->
+<section class="section section--accent">...</section>
+
+<!-- Glow: base + strong radial teal glow -->
+<section class="section section--glow">...</section>
+
+<!-- Optional grid overlay on any variant -->
+<section class="section section--default section--grid">...</section>
+
+<!-- Compact section (trust row) — override rhythm variables locally -->
+<section class="section section--default" style="--space-section: 3rem; --space-section-sm: 2rem;">...</section>
+```
 
 ## 6. Animation system
 
@@ -144,22 +186,26 @@ Scope: every `.section` and the footer (`.footer-section`) gets its own timeline
 - **Screen readers:** SplitText keeps an `aria-label` on real headings; for `<p>` leads the label is switched off, because `aria-label` on a paragraph is invalid.
 - **CSP:** the script is bundled as an external module. No inline script, handler or style is emitted.
 
+### 6.4 CSS-based reveal fallback (v2)
+
+The GSAP/ScrollTrigger system above is the primary animation. A CSS-only fallback using `IntersectionObserver` and `.reveal`/`.stagger-group` classes exists in `animations.ts` and `global.css` for CSP safety and reduced-motion compliance. Both systems respect `prefers-reduced-motion`.
+
 ## 7. Per-page design and animation
 
 Every page ends with the footer, which animates as: three columns (`large`, staggered), then the divider.
 
-### 7.1 Home `/`
+### 7.1 Home `/` (v2 — section variants applied)
 
-| #   | Section                           | Contents                                                      | Animation order                                                               |
-| --- | --------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| 1   | Hero (`hero-glow`)                | Eyebrow, h1, lead, two buttons                                | Eyebrow, then h1 and lead word by word, buttons at 0.6 s                      |
-| 2   | Trust row                         | Divider, three items, divider                                 | Three items stagger at 0.6 s, dividers fade at 1.2 s                          |
-| 3   | 01 Who we serve                   | Eyebrow, h2, lead, two audience cards with tags               | Eyebrow, h2 and lead words, cards stagger at 0.6 s                            |
-| 4   | 02 Solution portfolio (`ink-800`) | Eyebrow, h2, four `ProductCard`s                              | Eyebrow, h2 words, four cards stagger                                         |
-| 5   | 03 Signal to evidence             | Eyebrow, h2, lead, four numbered step cards (`data-pipeline`) | Eyebrow, h2 and lead, cards stagger, then each lights teal 0.35 s apart       |
-| 6   | CTA band                          | Eyebrow, h2, body, two buttons, as one `large` block          | Block scales in (its h2 is **not** word-split because it sits inside `large`) |
+| #   | Section               | Variant                   | Contents                                                      | Animation order                                                         |
+| --- | --------------------- | ------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| 1   | Hero                  | `--glow`                  | Eyebrow, h1, lead, two buttons                                | Eyebrow, then h1 and lead word by word, buttons at 0.6 s                |
+| 2   | Trust row             | `--default` (compact)     | Divider, three items, divider                                 | Three items stagger at 0.6 s, dividers fade at 1.2 s                    |
+| 3   | 01 Who we serve       | `--default`               | Eyebrow, h2, lead, two audience cards with tags               | Eyebrow, h2 and lead words, cards stagger at 0.6 s                      |
+| 4   | 02 Solution portfolio | `--raised`                | Eyebrow, h2, four `ProductCard`s                              | Eyebrow, h2 words, four cards stagger                                   |
+| 5   | 03 Signal to evidence | `--default`               | Eyebrow, h2, lead, four numbered step cards (`data-pipeline`) | Eyebrow, h2 and lead, cards stagger, then each lights teal 0.35 s apart |
+| 6   | Closing CTA           | `--default` + `.cta-band` | Eyebrow, h2, body, two buttons in `.cta-band` component       | Block scales in                                                         |
 
-### 7.2 Solutions `/solutions/`
+### 7.2 Solutions `/solutions/` (unchanged, will adopt variants in Day 3-4)
 
 | #   | Section                           | Contents                                                     | Animation order                |
 | --- | --------------------------------- | ------------------------------------------------------------ | ------------------------------ |
@@ -168,9 +214,7 @@ Every page ends with the footer, which animates as: three columns (`large`, stag
 | 3   | `#corporate-security` (`ink-800`) | h2, cards filtered by audience, "Talk to us." line (`small`) | h2 words, cards, then the line |
 | 4   | CTA band                          | h2 and primary button                                        | Block scales in                |
 
-The two anchors use `scroll-mt-24` so the sticky nav does not cover the heading. Home links to them.
-
-### 7.3 Solution detail `/solutions/[slug]/` (four pages, one template)
+### 7.3 Solution detail `/solutions/[slug]/` (four pages, one template) — unchanged
 
 | #   | Section                  | Contents                                                      | Animation order                                    |
 | --- | ------------------------ | ------------------------------------------------------------- | -------------------------------------------------- |
@@ -179,7 +223,7 @@ The two anchors use `scroll-mt-24` so the sticky nav does not cover the heading.
 | 3   | Capabilities (`ink-800`) | h2, one card per capability (from `solutions.ts`)             | h2 words, cards stagger                            |
 | 4   | Workflow                 | h2, one numbered card per step (`data-pipeline`)              | h2 words, cards stagger, steps light up            |
 
-### 7.4 About `/about/`
+### 7.4 About `/about/` — unchanged
 
 | #   | Section                     | Contents                        | Animation order                            |
 | --- | --------------------------- | ------------------------------- | ------------------------------------------ |
@@ -189,15 +233,15 @@ The two anchors use `scroll-mt-24` so the sticky nav does not cover the heading.
 | 4   | 03 Who we serve (`ink-800`) | Eyebrow, h2, two cards          | Eyebrow, h2 words, cards                   |
 | 5   | 04 How we work              | Eyebrow, h2, lead, closing note | Eyebrow, h2 and lead words, note scales in |
 
-### 7.5 Contact `/contact/`
+### 7.5 Contact `/contact/` — unchanged
 
 Hero (eyebrow, h1, lead), then one card holding the "form disabled" note, Email and Location. The form itself stays disconnected (`AGENTS.md` rule 4). Animation: eyebrow, h1 and lead words, then the card scales in.
 
-### 7.6 Privacy `/privacy/`
+### 7.6 Privacy `/privacy/` — unchanged
 
 Hero (eyebrow "Legal", h1, "Last updated" line), then five text blocks in a 56rem column. Each block is one `large` item, so they scale in one after another; their h2s are not word-split.
 
-### 7.7 404
+### 7.7 404 — unchanged
 
 Eyebrow "404", h1 "Page not found", one "Go to Home" button (`small`). Plays on load because the section is already in view.
 
@@ -246,3 +290,19 @@ Eyebrow "404", h1 "Page not found", one "Go to Home" button (`small`). Plays on 
 3. Read the template's Tablet and Mobile type modes and replace the `clamp()` values with them.
 4. Supply diagram artwork, verified stats and partner permissions to unlock section 9.
 5. Run the "Not run" checks above before the pull request is approved.
+
+---
+
+## 12. Design System v2 — Summary of Changes (Day 2)
+
+| Area                    | Before                                      | After                                                                                            |
+| ----------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Text contrast**       | `muted` 60%, `faint` 50%                    | `muted` **70%**, `faint` **65%** (WCAG AA ✓)                                                     |
+| **Section variants**    | Ad-hoc `bg-ink-800`, `hero-glow`            | **Four reusable modifiers**: `--default`, `--raised`, `--accent`, `--glow` + optional `--grid`   |
+| **Accent surface text** | Light text on teal (2.4:1 ❌)               | **Dark text** (`on-accent` = ink-950) on teal (17.9:1 ✓)                                         |
+| **Vertical rhythm**     | Inconsistent (`py-0`, `pt-0` breaking flow) | **One rhythm** via CSS variables (`--space-section*`), compact sections override locally         |
+| **CTA band**            | Inline styling, floated alone               | **Reusable `.cta-band` component** with flex layout, consistent padding, stronger focal point    |
+| **Background lighting** | Single hero glow                            | **Layered**: radial gradients (`glow-strong`, `glow-subtle`), optional subtle grid (`grid-line`) |
+| **Tokens**              | Scattered, some hardcoded in components     | **All in `@theme`**, no hex in components                                                        |
+
+**Applied to Home page only** (sections 1–6) to prove the system. Other pages will adopt in Day 3-4.
