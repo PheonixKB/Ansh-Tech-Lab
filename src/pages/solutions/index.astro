@@ -24,25 +24,53 @@ const groups = [
 >
   <section class="section hero-glow pb-12 pt-16 md:pt-24">
     <div class="container-site">
-      <p data-ix="eyebrow" class="eyebrow">Solutions</p>
-      <h1 class="mb-6 max-w-5xl">Specialized tools. One investigative purpose.</h1>
-      <p data-ix="lead" class="max-w-2xl text-lg text-muted">
+      <p class="reveal eyebrow">Solutions</p>
+      <h1 class="reveal mb-6 max-w-5xl">Specialized tools. One investigative purpose.</h1>
+      <p class="reveal max-w-2xl text-lg text-muted">
         Four solutions across collection, correlation and analysis, built for investigation teams.
       </p>
+    </div>
+  </section>
+
+  <section class="section py-10 md:py-12 xl:py-12" aria-label="Capabilities">
+    <div class="container-site">
+      <p class="reveal eyebrow">Built for investigative workflows</p>
+      <div class="marquee text-xl text-muted">
+        <ul class="marquee-track">
+          <li class="whitespace-nowrap">Digital evidence</li>
+          <li class="whitespace-nowrap">UAV forensics</li>
+          <li class="whitespace-nowrap">Biometrics</li>
+          <li class="whitespace-nowrap">OSINT</li>
+          <li class="whitespace-nowrap">Deep web monitoring</li>
+          <li class="whitespace-nowrap">Threat intelligence</li>
+          <li class="whitespace-nowrap">Law enforcement</li>
+          <li class="whitespace-nowrap">Corporate security</li>
+        </ul>
+        <ul class="marquee-track" aria-hidden="true">
+          <li class="whitespace-nowrap">Digital evidence</li>
+          <li class="whitespace-nowrap">UAV forensics</li>
+          <li class="whitespace-nowrap">Biometrics</li>
+          <li class="whitespace-nowrap">OSINT</li>
+          <li class="whitespace-nowrap">Deep web monitoring</li>
+          <li class="whitespace-nowrap">Threat intelligence</li>
+          <li class="whitespace-nowrap">Law enforcement</li>
+          <li class="whitespace-nowrap">Corporate security</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   {groups.map((group, gi) => (
     <section id={group.id} class:list={['section scroll-mt-24', gi % 2 === 1 && 'bg-ink-800']}>
       <div class="container-site">
-        <h2 class="mb-12">{group.title}</h2>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <h2 class="reveal mb-12">{group.title}</h2>
+        <div class="stagger-group grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {group.items.map((s) => (
             <ProductCard solution={s} index={solutions.indexOf(s)} />
           ))}
         </div>
         {group.id === 'corporate-security' && (
-          <p data-ix="small" class="mt-8 text-muted">
+          <p class="reveal mt-8 text-muted">
             Need something specific to your organization?{' '}
             <a href={withBase('/contact/')} class="text-cyan-text underline underline-offset-4 hover:text-cyan-hover">Talk to us.</a>
           </p>
@@ -53,7 +81,7 @@ const groups = [
 
   <section class="section">
     <div class="container-site">
-      <div data-ix="large" class="rounded-xl border border-line bg-band p-8 md:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12">
+      <div class="reveal rounded-xl border border-line bg-band p-8 md:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12">
         <div class="mb-8 max-w-2xl lg:mb-0">
           <h2 class="mb-4">Not sure which solution fits? Tell us your challenge.</h2>
         </div>
