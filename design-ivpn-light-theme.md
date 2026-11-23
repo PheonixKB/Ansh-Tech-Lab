@@ -1,6 +1,6 @@
 # Design: IVPN-style light theme
 
-_Written 23 November 2026 for branch `redesign/ivpn-light-theme`. Describes what is built in `src/`._
+_Written 23 November 2026 for branch `redesign/ivpn-light-theme`. Describes what is built in `src/`. Values sampled from a screenshot of the ivpn.net home page supplied by the team._
 
 ## 0. How this file relates to the others
 
@@ -8,101 +8,50 @@ _Written 23 November 2026 for branch `redesign/ivpn-light-theme`. Describes what
 
 **Decision needed from admins:** merge this into `design.md` and update `AGENTS.md` sections 4 and 7.2, or keep it separate. Not merged automatically because `design.md` outranks everything except `security.md`.
 
-## 1. What was taken from the reference (ivpn.net)
+## 1. What was taken from the reference (ivpn.net home page)
 
-Read on 23 Nov 2026 as page text only. The site's stylesheet, screenshots and images could not be fetched (shell requests to ivpn.net are blocked and the open-source repo was not reachable), so **no colour or font value was sampled from IVPN**. What was copied is the structure and character of the page:
+Colours were sampled from the supplied PDF screenshot. IVPN's CSS was not reachable.
 
-| Observed on ivpn.net                                                           | Applied here                                                      |
-| ------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| Plain top bar with logo left, text links, one call to action; no floating card | Full-width sticky bar, thin bottom border, white with slight blur |
-| Left-aligned hero: short heading, one paragraph, one main button               | Same. Heading is smaller than the dark theme (max 3.75rem)        |
-| Content-first sections, long plain-text blocks, few decorations                | Flat white cards, thin borders, no shadows, no glow orbs          |
-| Light and dark variants of every image                                         | Light only for now (section 6)                                    |
-| Dense multi-column footer on a pale band                                       | Footer on `alt` band, same three columns                          |
-| One accent colour for links and buttons                                        | One blue                                                          |
+| Observed on ivpn.net                                                  | Applied here                                                             |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| White page, `#F2F2F2` grey bands, `#222226` text, black bold headings | Same values (`page`, `alt`, `text`, `heading`)                           |
+| Monospace type everywhere                                             | JetBrains Mono Variable (already a dependency; no new font added)        |
+| Square corners on buttons and tags                                    | All radius tokens are 0                                                  |
+| No cards: text blocks under a short rule                              | `.card` is a plain block with a 4.5rem top rule that turns blue on hover |
+| Sky-blue `#449CF8` primary button, grey secondary button              | `btn-primary` blue fill, `btn-secondary` `#F2F2F2` fill                  |
+| Plain white top bar, logo left, links, one button                     | Full-width sticky bar, thin bottom border                                |
+| Dark charcoal footer `#222226` with blue links                        | `footer` token, light grey text, white on hover                          |
 
-The blue accent, greys and radii are **my estimates of a light IVPN-like look, not IVPN's brand values**. Replace them if the company has a brand colour.
+## 2. Accessibility adaptations (where IVPN's own values fail WCAG AA)
 
-## 2. Colour tokens (`src/styles/global.css`, `@theme`)
+| Pair                    | Ratio | Decision                                                                     |
+| ----------------------- | ----- | ---------------------------------------------------------------------------- |
+| White on `#449CF8`      | 2.85  | Not used. Button text is `#222226` on `#449CF8` (5.55)                       |
+| `#449CF8` text on white | 2.85  | Not used for text. `accent-text` `#1764C0` (5.8 on white, 5.18 on `#F2F2F2`) |
+| `#449CF8` on `#222226`  | 5.55  | Fine, used for footer-style accents                                          |
 
-Token names changed from the dark theme because `ink-*` and `cyan` no longer describe the values. **No hex values in components.**
+## 3. Tokens (`src/styles/global.css`, `@theme`)
 
-| Token                     | Value                 | Use                                    | Old name                   |
-| ------------------------- | --------------------- | -------------------------------------- | -------------------------- |
-| `page`                    | `#FFFFFF`             | Page background                        | `ink-950`                  |
-| `surface`                 | `#FFFFFF`             | Cards, nav                             | `ink-900`                  |
-| `alt`                     | `#F3F6FA`             | Alternate section bands, footer        | `ink-800`                  |
-| `band`                    | `#E8F0FD`             | CTA band                               | `band`                     |
-| `line`                    | `#E3E8EF`             | 1px borders, dividers                  | `line`                     |
-| `line-strong`             | `#CDD5E0`             | Tag and secondary-button borders       | `line-strong`              |
-| `text`                    | `#101828`             | Headings, primary text                 | `text`                     |
-| `muted`                   | `#475467`             | Body copy. **Use this on the band**    | `muted`                    |
-| `faint`                   | `#667085`             | Small index numbers                    | `faint`                    |
-| `accent`                  | `#1D63D6`             | Primary button fill, focus ring        | `cyan`                     |
-| `accent-hover`            | `#174FAE`             | Button hover                           | `cyan-hover`               |
-| `accent-text`             | `#1456B8`             | Eyebrows, active nav link, card labels | `cyan-text`                |
-| `accent-dim`              | `#9DB9EA`             | Card hover border, lit pipeline step   | `cyan-dim`                 |
-| `accent-10` / `accent-20` | `#E8F0FD` / `#D6E4FB` | Hero wash, tints                       | same                       |
-| `on-accent`               | `#FFFFFF`             | Text on the accent fill                | `ink-950` (as button text) |
+`page`/`surface` `#FFFFFF`; `alt`/`band` `#F2F2F2`; `footer` `#222226`; `footer-text` `#C8C8CC`; `line` `#E3E3E3`; `line-strong` `#D7D7D8`; `heading` `#000000`; `text` `#222226`; `muted` `#3F3F44`; `faint` `#6B6B72`; `accent` `#449CF8`; `accent-hover` `#5BA8F8`; `accent-text` `#1764C0`; `accent-dim` `#BDDCFC`; `accent-10` `#E8F1FD`; `accent-20` `#DCE7F2`; `on-accent` `#222226`. No hex values in components.
 
-### Contrast (computed, WCAG 2.1)
+## 4. Typography and shape
 
-| Text          | on `page` | on `alt` | on `band`       |
-| ------------- | --------- | -------- | --------------- |
-| `text`        | 17.8      | 16.4     | 15.5            |
-| `muted`       | 7.7       | 7.1      | 6.7             |
-| `faint`       | 5.0       | 4.6      | **4.3 (fails)** |
-| `accent-text` | 6.9       | 6.4      | 6.0             |
-
-Buttons: white on `accent` is **5.5:1**, on `accent-hover` **7.6:1**. Rule kept from before: never use `faint` on the band.
-
-## 3. Typography
-
-One family, **Inter Variable** (self-hosted). Headings are weight 600 (was 500), tracking `-0.02em`, line height 1.1.
-
-| Role       | Size                                | Notes             |
-| ---------- | ----------------------------------- | ----------------- |
-| `h1`       | `clamp(2.25rem, 5vw, 3.75rem)`      | Was up to 5.65rem |
-| `h2`       | `clamp(1.75rem, 3.5vw, 2.5rem)`     |                   |
-| `h3`       | `clamp(1.25rem, 2vw, 1.5rem)`       |                   |
-| `h4`       | `1.125rem`                          |                   |
-| Body       | `1rem` / 1.6                        |                   |
-| `.eyebrow` | `0.875rem`, weight 500, accent text |                   |
-| `.tag`     | `0.75rem`, on `alt` fill            |                   |
-
-## 4. Shape and layout
-
-| Item                        | Value                                                                                |
-| --------------------------- | ------------------------------------------------------------------------------------ |
-| Container                   | max 1200px, side padding 1rem (1.5rem from `lg`)                                     |
-| Section padding             | 4rem, 5rem from `md`, 6rem from `xl`                                                 |
-| Card                        | white, 1px `line` border, radius 0.75rem, padding 1.5rem (2rem from `md`), no shadow |
-| Button / tag / input radius | 0.5rem; button min height 44px                                                       |
-| Primary button              | `accent` fill, white text                                                            |
-| Secondary button            | white fill, `line-strong` border, hover `alt` fill and `accent-dim` border           |
-| Nav                         | full width, sticky, white at 90% with blur, bottom border, 4rem high                 |
-| Hero (`hero-glow`)          | vertical wash from `accent-10` to white                                              |
-| Alternation                 | `page` and `alt` bands                                                               |
+Body 0.9375rem / 1.8, weight 400. Headings bold, `-0.02em` tracking: h1 `clamp(2rem, 4.5vw, 3.25rem)`, h2 `clamp(1.5rem, 3vw, 2rem)`, h3 1.0625rem, h4 1rem. Container max 1100px. Buttons min height 44px, bold, square. CTA block is a flat grey band. Hero has no gradient.
 
 ## 5. Components touched
 
-`Navbar` (flat bar, no rounded floating card), `Footer` (`alt` band), `ProductCard` and all pages (token renames only), `Layout` (skip link uses `on-accent`), `animations.ts` (nav fades, no scale). Markup and content are otherwise unchanged.
+`global.css`, `Navbar` (flat bar), `Footer` (dark), `ProductCard` and pages (token renames, removal of rounded/bordered boxes), `Layout` (skip link), `animations.ts` (nav fades, no scale).
 
 ## 6. Not done
 
-| Item                           | Why                                                                                                                                      |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Dark mode toggle               | IVPN ships light and dark; the request was light only. Tokens are semantic now, so a dark set can be added under `prefers-color-scheme`. |
-| Hero product image             | Like IVPN's hero screenshot. Needs sanitized artwork (`AGENTS.md` rule 1).                                                               |
-| IVPN-style "transparency" grid | Plain heading plus text blocks for each commitment. Needs approved copy; no claims were invented.                                        |
-| Sampled IVPN colours and fonts | Not obtainable from this environment (section 1).                                                                                        |
+| Item                                                            | Why                                                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Dark mode toggle                                                | Light only requested; tokens are semantic so a dark set can be added                    |
+| Hero product image, IVPN-specific widgets (IP status bar, etc.) | No approved artwork or content; nothing invented                                        |
+| Blue round bullet lists, centred section titles                 | Current content has no bullet lists; section titles remain left-aligned. Easy follow-up |
 
 ## 7. Verification status
 
-**Run** (built site, Google Chrome, 23 Nov 2026):
+**Run** (built site, Google Chrome, 23 Nov 2026): `astro build`, `astro check` (0 errors, 0 warnings), Prettier on `src/`; axe-core on Home, Solutions and About with reduced motion: no violations (with motion on, axe reports contrast hits that are most likely mid-fade, not isolated); no console errors at 1280px and 390px; Home screenshot reviewed at desktop.
 
-- `astro build` and `astro check` (0 errors, 0 warnings); Prettier applied to `src/`.
-- axe-core on Home, Solutions, a product page, About, Contact, Privacy and 404: **no violations** with reduced motion on. With motion on, axe reported contrast hits on Home, Solutions and About when run right after load; these disappeared in the final state, so they are most likely elements caught mid-fade, but this was not isolated further.
-- No console errors at 1280px and 390px. Screenshots of Home reviewed at both widths.
-
-**Not run:** Lighthouse, the repo Playwright suite, a keyboard-only walkthrough, a CSP build (the layout has no CSP meta tag yet), the other pages' screenshots, 768px.
+**Not run:** Lighthouse, repo Playwright suite, keyboard walkthrough, CSP build, 768px, screenshots of other pages.

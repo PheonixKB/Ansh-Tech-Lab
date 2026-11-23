@@ -18,7 +18,7 @@ const linkClass = (href: string) =>
       class="relative"
     >
       <div class="flex h-16 items-center justify-between">
-        <a href={withBase('/')} class="text-lg font-medium tracking-tight text-text">
+        <a href={withBase('/')} class="text-lg font-bold tracking-tight text-heading">
           Ansh Tech Labs
         </a>
 
@@ -44,7 +44,7 @@ const linkClass = (href: string) =>
           data-nav-toggle
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="inline-flex size-11 items-center justify-center rounded-lg border border-line text-text md:hidden"
+          class="inline-flex size-11 items-center justify-center border border-line text-text md:hidden"
         >
           <span class="sr-only">Menu</span>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
@@ -59,7 +59,7 @@ const linkClass = (href: string) =>
             <li>
               <a
                 href={withBase(item.href)}
-                class:list={['block rounded-lg px-3 py-3', linkClass(item.href)]}
+                class:list={['block px-3 py-3', linkClass(item.href)]}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
                 {item.label}
