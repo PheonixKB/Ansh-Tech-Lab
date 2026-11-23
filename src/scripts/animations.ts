@@ -35,8 +35,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   if (nav) {
     gsap.from(nav, {
       autoAlpha: 0,
-      scale: 0.9,
-      duration: 0.6,
+      duration: 0.5,
       delay: 0.3,
       ease: EASE,
     });

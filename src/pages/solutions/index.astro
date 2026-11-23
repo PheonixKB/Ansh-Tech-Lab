@@ -33,7 +33,7 @@ const groups = [
   </section>
 
   {groups.map((group, gi) => (
-    <section id={group.id} class:list={['section scroll-mt-24', gi % 2 === 1 && 'bg-ink-800']}>
+    <section id={group.id} class:list={['section scroll-mt-24', gi % 2 === 1 && 'bg-alt']}>
       <div class="container-site">
         <h2 class="mb-12">{group.title}</h2>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -44,7 +44,7 @@ const groups = [
         {group.id === 'corporate-security' && (
           <p data-ix="small" class="mt-8 text-muted">
             Need something specific to your organization?{' '}
-            <a href={withBase('/contact/')} class="text-cyan-text underline underline-offset-4 hover:text-cyan-hover">Talk to us.</a>
+            <a href={withBase('/contact/')} class="text-accent-text underline underline-offset-4 hover:text-accent-hover">Talk to us.</a>
           </p>
         )}
       </div>

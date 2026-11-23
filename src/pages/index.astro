@@ -90,7 +90,7 @@ const pipeline = [
   </section>
 
   <!-- 5. Solution portfolio -->
-  <section class="section bg-ink-800">
+  <section class="section bg-alt">
     <div class="container-site">
       <p data-ix="eyebrow" class="eyebrow">02 / The solution portfolio</p>
       <h2 class="mb-12 max-w-3xl">Specialized tools. One investigative purpose.</h2>
@@ -111,7 +111,7 @@ const pipeline = [
       <ol data-pipeline class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {pipeline.map((step, i) => (
           <li data-ix="large" data-step class="card">
-            <p class="mb-6 text-sm text-cyan-text">{String(i + 1).padStart(2, '0')}</p>
+            <p class="mb-6 text-sm text-accent-text">{String(i + 1).padStart(2, '0')}</p>
             <h3 class="mb-3">{step.title}</h3>
             <p class="text-muted">{step.body}</p>
           </li>
