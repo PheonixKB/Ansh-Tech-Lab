@@ -4,36 +4,36 @@ import { site } from '../data/site';
 import { solutions } from '../data/solutions';
 ---
 
-<footer class="footer-section border-t border-line">
+<footer class="footer-section bg-footer text-footer-text">
   <div class="container-site grid grid-cols-1 gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
     <div data-ix="large" class="lg:col-span-2">
-      <a href={withBase('/')} class="mb-4 block text-lg font-medium tracking-tight text-text">
+      <a href={withBase('/')} class="mb-4 block text-lg font-bold tracking-tight text-white">
         Ansh Tech Labs
       </a>
-      <p class="max-w-md text-muted">{site.tagline}</p>
+      <p class="max-w-md text-footer-text">{site.tagline}</p>
     </div>
     <div data-ix="large">
-      <h2 class="mb-4 text-xl text-text">Solutions</h2>
-      <ul class="space-y-2 text-muted">
+      <h2 class="mb-4 text-base text-white">Solutions</h2>
+      <ul class="space-y-2 text-footer-text">
         {solutions.map((s) => (
           <li>
-            <a href={withBase(`/solutions/${s.slug}/`)} class="hover:text-cyan-text">{s.name}</a>
+            <a href={withBase(`/solutions/${s.slug}/`)} class="hover:text-white">{s.name}</a>
           </li>
         ))}
       </ul>
     </div>
     <div data-ix="large">
-      <h2 class="mb-4 text-xl text-text">Company</h2>
-      <ul class="space-y-2 text-muted">
-        <li><a href={withBase('/about/')} class="hover:text-cyan-text">About</a></li>
-        <li><a href={withBase('/contact/')} class="hover:text-cyan-text">Contact</a></li>
-        <li><a href={withBase('/privacy/')} class="hover:text-cyan-text">Privacy</a></li>
+      <h2 class="mb-4 text-base text-white">Company</h2>
+      <ul class="space-y-2 text-footer-text">
+        <li><a href={withBase('/about/')} class="hover:text-white">About</a></li>
+        <li><a href={withBase('/contact/')} class="hover:text-white">Contact</a></li>
+        <li><a href={withBase('/privacy/')} class="hover:text-white">Privacy</a></li>
       </ul>
     </div>
   </div>
   <div class="container-site">
-    <div data-ix="divider" class="divider"></div>
-    <div class="flex flex-col gap-2 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+    <div data-ix="divider" class="h-px bg-white/15"></div>
+    <div class="flex flex-col gap-2 py-8 text-sm text-footer-text sm:flex-row sm:items-center sm:justify-between">
       <p>© 2026 Ansh Tech Labs Pvt. Ltd.</p>
       <p>{site.footerMotto}</p>
     </div>
