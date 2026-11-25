@@ -1,3 +1,5 @@
+> **Superseded 25 Nov 2026** by `design-ivpn-light-theme.md` (visual layer). Section 6 (animation) still applies.
+
 # Design: Webflow template theme and animations
 
 _Written 5 November 2026 for branch `redesign/webflow-template-theme`. Describes what is built in `src/`, not a wish list._

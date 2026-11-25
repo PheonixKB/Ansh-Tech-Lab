@@ -32,15 +32,15 @@ A static marketing site for Ansh Tech Labs, built with **Astro + Tailwind CSS + 
 
 ## 2. Tech stack
 
-| Concern   | Choice                                                              | Notes                                                                    |
-| --------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Framework | **Astro** (static output)                                           | Components, layouts, dynamic routes; ships almost no JS by default       |
-| Styling   | **Tailwind CSS** (v4, via `@tailwindcss/vite`)                      | Tokens defined in CSS with `@theme`                                      |
-| Animation | **GSAP** + ScrollTrigger                                            | Scroll reveals, count-up, SVG drawing. Optional: Lenis for smooth scroll |
-| Fonts     | `@fontsource-variable/inter`, `@fontsource-variable/jetbrains-mono` | Self-hosted, no third-party font requests                                |
-| Sitemap   | `@astrojs/sitemap`                                                  | Needs `site` set in config                                               |
-| Forms     | Formspree or Web3Forms                                              | Static site has no backend. Use the provider's spam protection           |
-| Hosting   | **GitHub Pages** via GitHub Actions                                 | Custom domain `anshtechlabs.com`                                         |
+| Concern   | Choice                                         | Notes                                                                    |
+| --------- | ---------------------------------------------- | ------------------------------------------------------------------------ |
+| Framework | **Astro** (static output)                      | Components, layouts, dynamic routes; ships almost no JS by default       |
+| Styling   | **Tailwind CSS** (v4, via `@tailwindcss/vite`) | Tokens defined in CSS with `@theme`                                      |
+| Animation | **GSAP** + ScrollTrigger                       | Scroll reveals, count-up, SVG drawing. Optional: Lenis for smooth scroll |
+| Fonts     | `@fontsource-variable/jetbrains-mono`          | Self-hosted, no third-party font requests                                |
+| Sitemap   | `@astrojs/sitemap`                             | Needs `site` set in config                                               |
+| Forms     | Formspree or Web3Forms                         | Static site has no backend. Use the provider's spam protection           |
+| Hosting   | **GitHub Pages** via GitHub Actions            | Custom domain `anshtechlabs.com`                                         |
 
 ### 2.1 Setup
 
@@ -50,7 +50,7 @@ npm create astro@latest ansh-tech-labs    # choose: Empty template, install deps
 cd ansh-tech-labs
 npm install tailwindcss @tailwindcss/vite # Tailwind's Vite plugin (see astro.config below)
 npx astro add sitemap
-npm install gsap @fontsource-variable/inter @fontsource-variable/jetbrains-mono
+npm install gsap @fontsource-variable/jetbrains-mono
 npm run dev                               # http://localhost:4321
 ```
 
@@ -103,12 +103,14 @@ src/
 .github/workflows/deploy.yml
 ```
 
+> **Visual layer updated 25 Nov 2026:** sections 3 and 4 now describe the IVPN-style light theme. Details and verification: `design-ivpn-light-theme.md`. The old dark Webflow look is in `design-webflow-theme.md` (superseded).
+
 ---
 
 ## 3. Design principles
 
-1. **Case-file feel.** Numbered mono eyebrows (`01 / WHO WE SERVE`), figure captions (`FIG. 01`), thin 1px borders, square corners.
-2. **One accent.** Cyan marks actions and key labels only. Everything else is navy and grey.
+1. **Plain and technical.** Monospace type, square corners, no cards or shadows, thin rules, numbered eyebrows (`01 / Who we serve`).
+2. **One accent.** IVPN-style sky blue marks actions and key labels only, on a white and grey page with a dark footer. Light theme only.
 3. **Say what the tool does.** Plain verbs. No buzzwords and no unverifiable superlatives.
 4. **Honest visuals.** Diagrams are labelled `CONCEPTUAL WORKFLOW / ILLUSTRATIVE DATA`. Use sanitized or mock data in any screenshot. Never show real case data.
 5. **Motion supports meaning.** Animate to explain flow (lines connecting, pipeline lighting up), never to decorate. Respect reduced-motion.
@@ -121,33 +123,48 @@ src/
 
 ```css
 @import "tailwindcss";
-@import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
 
+/* Source of truth: src/styles/global.css. Values sampled from the ivpn.net home page. */
 @theme {
   /* Surfaces */
-  --color-ink-950: #060b14; /* page background */
-  --color-ink-900: #0a1320; /* cards */
-  --color-ink-800: #0d1b2b; /* alternate section bands */
-  --color-band: #0f2d3a; /* CTA band (teal-tinted) */
-  --color-line: #1b2d3f; /* 1px borders */
+  --color-page: #ffffff; /* page background */
+  --color-surface: #ffffff;
+  --color-alt: #f2f2f2; /* alternate bands, secondary button, tags, CTA band */
+  --color-band: #f2f2f2;
+  --color-footer: #222226;
+  --color-footer-text: #c8c8cc;
+  --color-line: #e3e3e3; /* 1px rules */
+  --color-line-strong: #d7d7d8;
 
   /* Text */
-  --color-text: #f2f6fa;
-  --color-muted: #9ba9b8; /* body copy on dark */
-  --color-faint: #7c8ca0; /* small labels (not on --color-band) */
+  --color-heading: #000000;
+  --color-text: #222226;
+  --color-muted: #3f3f44; /* body copy */
+  --color-faint: #6b6b72; /* small labels (not on --color-band) */
 
-  /* Accent */
-  --color-cyan: #40dff2;
-  --color-cyan-dim: #1e7f8c; /* diagram strokes, subtle accents */
+  /* Accent: sky blue is a FILL; use accent-text for blue text */
+  --color-accent: #449cf8;
+  --color-accent-hover: #5ba8f8;
+  --color-accent-text: #1764c0;
+  --color-accent-dim: #bddcfc;
+  --color-accent-10: #e8f1fd;
+  --color-accent-20: #dce7f2;
+  --color-on-accent: #222226; /* text on the blue fill */
 
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0; /* square */
+  --font-sans:
+    "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono:
+    "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
 @layer base {
   html {
-    background: var(--color-ink-950);
+    background: var(--color-page);
     color: var(--color-text);
     scroll-behavior: smooth;
   }
@@ -156,7 +173,7 @@ src/
     -webkit-font-smoothing: antialiased;
   }
   :focus-visible {
-    outline: 2px solid var(--color-cyan);
+    outline: 2px solid var(--color-accent-text);
     outline-offset: 3px;
   }
   @media (prefers-reduced-motion: reduce) {
@@ -169,35 +186,39 @@ src/
 
 ### 4.2 Verified contrast (WCAG)
 
-| Text    | on `ink-950` | on `ink-900` | on `ink-800` | on `band`       |
-| ------- | ------------ | ------------ | ------------ | --------------- |
-| `text`  | 18.2         | 17.2         | 16.0         | 13.3            |
-| `muted` | 8.2          | 7.8          | 7.3          | 6.0             |
-| `faint` | 5.7          | 5.4          | 5.1          | **4.2 (fails)** |
-| `cyan`  | 12.3         | 11.6         | 10.8         | 9.0             |
+| Text          | on `page` | on `alt` / `band` |
+| ------------- | --------- | ----------------- |
+| `heading`     | 21.0      | 18.8              |
+| `text`        | 15.9      | 14.2              |
+| `muted`       | 10.5      | 9.4               |
+| `faint`       | 5.3       | 4.7               |
+| `accent-text` | 5.8       | 5.2               |
 
-- Dark text (`ink-950`) on a cyan button: **12.3:1**.
-- **Rule:** use `muted`, never `faint`, on the CTA band. Body text 4.5:1 minimum.
-- The small mono labels and tag lines in the mockups look dimmer than `faint`. A darker grey such as `#5F6F80` would fall to about 3.4–3.8:1 on these backgrounds, so `faint` is deliberately lighter. Check the real Figma values against this table.
+- `on-accent` (`#222226`) on the blue `accent` fill: **5.6:1** (6.3 on hover). **White on `#449CF8` is 2.85:1 and fails; never use it.** `#449CF8` as text on white also fails, so use `accent-text`.
+- Footer: `footer-text` on `footer` 9.5:1, white 15.9:1, `accent` on `footer` 5.6:1.
+- Body text 4.5:1 minimum.
+- **Rule:** use `muted`, never `faint`, on the CTA band.
 
 ### 4.3 Typography
 
-| Role               | Font           | Size (desktop / mobile)        | Weight  | Notes                                        |
-| ------------------ | -------------- | ------------------------------ | ------- | -------------------------------------------- |
-| Display (H1)       | Inter          | `clamp(2.5rem, 5vw, 4rem)`     | 400–500 | tight leading (1.05–1.1), tracking `-0.02em` |
-| Section title (H2) | Inter          | `clamp(1.75rem, 3vw, 2.75rem)` | 400     |                                              |
-| Card title (H3)    | Inter          | 1.25–1.5rem                    | 400–500 |                                              |
-| Body               | Inter          | 1rem–1.125rem                  | 400     | `text-muted`, max width ~65ch                |
-| Eyebrow / label    | JetBrains Mono | **0.75rem minimum**            | 400     | uppercase, tracking `0.08em`, `text-cyan`    |
-| Caption / tag      | JetBrains Mono | **0.75rem minimum**            | 400     | `text-faint`                                 |
+| Role            | Font           | Size                          | Weight | Notes                              |
+| --------------- | -------------- | ----------------------------- | ------ | ---------------------------------- |
+| Display (H1)    | JetBrains Mono | `clamp(2rem, 4.5vw, 3.25rem)` | 700    | black, tracking `-0.02em`          |
+| Section (H2)    | JetBrains Mono | `clamp(1.5rem, 3vw, 2rem)`    | 700    | black                              |
+| Card title (H3) | JetBrains Mono | 1.0625rem                     | 700    | turns `accent-text` on hover       |
+| Body            | JetBrains Mono | 0.9375rem / 1.8               | 400    | `text-muted`, max width ~65ch      |
+| Eyebrow / label | JetBrains Mono | 0.8125rem                     | 500    | sentence case, `text-accent-text`  |
+| Tag             | JetBrains Mono | 0.75rem minimum               | 400    | grey `alt` fill, no border, square |
 
 ### 4.4 Layout
 
-- Container: `max-w-[1200px] mx-auto px-6 lg:px-8`.
-- Section spacing: `py-20 md:py-28`. Alternate `bg-ink-950` and `bg-ink-800` bands.
-- Cards: `bg-ink-900 border border-line`, no radius. Hover: border becomes `cyan-dim`, translate up 2px.
+- Container: max 1100px, `px-4 lg:px-6`.
+- Section spacing: `py-16 md:py-20`. Alternate `bg-page` and `bg-alt` bands. Hero is plain white.
+- "Cards" are plain blocks: no border, fill or radius. A 4.5rem `line-strong` rule sits above and turns `accent` on hover; the H3 turns `accent-text`. Class: `.card`.
+- Buttons: square, bold, min height 44px. Primary `bg-accent text-on-accent`; secondary `bg-alt text-accent-text`.
+- Footer: `bg-footer`, light text, white on hover.
 - Breakpoints: Tailwind defaults (`sm 640`, `md 768`, `lg 1024`, `xl 1280`). Design mobile first.
-- Grids: 4-up cards collapse to 2-up at `md`, 1-up below. 2-up audience cards stack below `md`.
+- Grids: 4-up collapse to 2-up at `md`, 1-up below. 2-up audience blocks stack below `md`.
 
 ---
 
@@ -227,8 +248,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
-  <body class="min-h-screen bg-ink-950 text-text">
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 bg-cyan text-ink-950 px-4 py-2">Skip to content</a>
+  <body class="min-h-screen bg-page text-text">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 bg-accent text-on-accent px-4 py-2">Skip to content</a>
     <Navbar currentPath={Astro.url.pathname} />
     <main id="main"><slot /></main>
     <Footer />
@@ -239,21 +260,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
 ### 5.2 Component specs
 
-| Component          | Props                                                     | Spec                                                                                                                                                                                                                                                                                                                                                   |
-| ------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Navbar**         | `currentPath`                                             | Logo (mark + "ANSH / TECH LABS" wordmark), links Home, Solutions, About, Contact, cyan "Request a Demo" button. 1px bottom border. Active link in `text-cyan`. **Mobile:** hamburger `<button aria-expanded aria-controls>` toggles a full-width panel; close on Escape and on link click. Solutions can stay a single link (the page lists all four). |
-| **Button**         | `variant: primary \| secondary \| link`, `href`, `arrow?` | Primary: `bg-cyan text-ink-950 font-medium px-6 py-3`, trailing ↗ icon. Secondary: 1px `line` border, `text-text`, hover border cyan. Link: cyan text with arrow. Min height 44px.                                                                                                                                                                     |
-| **SectionHeader**  | `index`, `label`, `title`, `intro?`                       | Mono eyebrow `01 / LABEL`, H2, optional right-aligned intro paragraph (2-col at `lg`).                                                                                                                                                                                                                                                                 |
-| **AudienceCard**   | `icon`, `title`, `body`, `tags[]`, `href`, `cta`          | Large card, icon top-left, title, body, mono tags row, link CTA.                                                                                                                                                                                                                                                                                       |
-| **SolutionCard**   | `index`, `category`, `name`, `blurb`, `href`, `icon`      | Mono index top-right (`01`), category eyebrow, name, one-line blurb, "Explore solution ↗". Whole card is the link.                                                                                                                                                                                                                                     |
-| **PipelineStep**   | `index`, `title`, `body`                                  | Number + arrow top row, title, body. Used 4-up for pipelines.                                                                                                                                                                                                                                                                                          |
-| **CapabilityCard** | `icon`, `title`, `body`                                   | Icon, title, body. 3-up.                                                                                                                                                                                                                                                                                                                               |
-| **StatItem**       | `value`, `suffix?`, `label`                               | Large number (count-up), small label, 1px top border.                                                                                                                                                                                                                                                                                                  |
-| **PartnerStrip**   | `partners[]`                                              | Row of grayscale logos, hover to full color. Caption "Partners & contributors". **Renders only verified entries.**                                                                                                                                                                                                                                     |
-| **CTABand**        | `eyebrow`, `title`, `body`, `primary`, `secondary?`       | `bg-band` band, text left, primary button right. Body text uses `text-muted` (not `faint`).                                                                                                                                                                                                                                                            |
-| **ProductHero**    | `solution`                                                | Breadcrumb, eyebrow, product name, H1, sub, two buttons, diagram on right.                                                                                                                                                                                                                                                                             |
-| **DemoForm**       | none                                                      | See section 7.6 and section 9.                                                                                                                                                                                                                                                                                                                         |
-| **Footer**         | none                                                      | 4 columns: brand + tagline; Solutions (4 links); Company (About, Contact, Request a Demo, **Privacy**); Our focus. Add contact details (email, location) and LinkedIn. Bottom row: © 2026 + `PRECISION IN DATA. CLARITY IN EVIDENCE.`                                                                                                                  |
+| Component          | Props                                                     | Spec                                                                                                                                                                                                                                                                                                                                                          |
+| ------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Navbar**         | `currentPath`                                             | Logo (mark + "ANSH / TECH LABS" wordmark), links Home, Solutions, About, Contact, blue "Request a Demo" button. 1px bottom border. Active link in `text-accent-text`. **Mobile:** hamburger `<button aria-expanded aria-controls>` toggles a full-width panel; close on Escape and on link click. Solutions can stay a single link (the page lists all four). |
+| **Button**         | `variant: primary \| secondary \| link`, `href`, `arrow?` | Primary: `bg-accent text-on-accent font-bold px-7 py-3.5`, trailing ↗ icon. Secondary: 1px `line` border, `text-text`, hover rule `accent`. Link: `accent-text` with arrow. Min height 44px.                                                                                                                                                                  |
+| **SectionHeader**  | `index`, `label`, `title`, `intro?`                       | Mono eyebrow `01 / LABEL`, H2, optional right-aligned intro paragraph (2-col at `lg`).                                                                                                                                                                                                                                                                        |
+| **AudienceCard**   | `icon`, `title`, `body`, `tags[]`, `href`, `cta`          | Large card, icon top-left, title, body, mono tags row, link CTA.                                                                                                                                                                                                                                                                                              |
+| **SolutionCard**   | `index`, `category`, `name`, `blurb`, `href`, `icon`      | Mono index top-right (`01`), category eyebrow, name, one-line blurb, "Explore solution ↗". Whole card is the link.                                                                                                                                                                                                                                            |
+| **PipelineStep**   | `index`, `title`, `body`                                  | Number + arrow top row, title, body. Used 4-up for pipelines.                                                                                                                                                                                                                                                                                                 |
+| **CapabilityCard** | `icon`, `title`, `body`                                   | Icon, title, body. 3-up.                                                                                                                                                                                                                                                                                                                                      |
+| **StatItem**       | `value`, `suffix?`, `label`                               | Large number (count-up), small label, 1px top border.                                                                                                                                                                                                                                                                                                         |
+| **PartnerStrip**   | `partners[]`                                              | Row of grayscale logos, hover to full color. Caption "Partners & contributors". **Renders only verified entries.**                                                                                                                                                                                                                                            |
+| **CTABand**        | `eyebrow`, `title`, `body`, `primary`, `secondary?`       | `bg-band` band, text left, primary button right. Body text uses `text-muted` (not `faint`).                                                                                                                                                                                                                                                                   |
+| **ProductHero**    | `solution`                                                | Breadcrumb, eyebrow, product name, H1, sub, two buttons, diagram on right.                                                                                                                                                                                                                                                                                    |
+| **DemoForm**       | none                                                      | See section 7.6 and section 9.                                                                                                                                                                                                                                                                                                                                |
+| **Footer**         | none                                                      | 4 columns: brand + tagline; Solutions (4 links); Company (About, Contact, Request a Demo, **Privacy**); Our focus. Add contact details (email, location) and LinkedIn. Bottom row: © 2026 + `PRECISION IN DATA. CLARITY IN EVIDENCE.`                                                                                                                         |
 
 ---
 
@@ -515,16 +536,16 @@ The current site lists NFSU, COEDF, CCoE, i-hub, SIIC, DSCIwN, n-coe and INTERPO
 
 **Meta:** title "Digital forensics & OSINT platforms"; description "Intelligence platforms and forensic tools for law enforcement and corporate security teams."
 
-| #   | Section                                        | Layout                                                      | Content                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| --- | ---------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | **Hero**                                       | 2-col at `lg` (text left, diagram right); stacked on mobile | Eyebrow `DIGITAL FORENSICS / OSINT / CYBER-INTELLIGENCE`. H1 **"From complex digital data to actionable legal evidence"**. Sub: "Intelligence platforms and forensic tools for the teams that turn fragmented digital traces into meaningful investigative insight." Buttons: **Request a Demo** (primary), **Explore Solutions** (secondary). Diagram caption `FIG. 01 · FRAGMENTED SIGNALS → CONNECTED EVIDENCE`.                                                                                                                                                                                                                  |
-| 2   | **Trust row**                                  | 3 items, top/bottom border                                  | "10+ years in cyber forensics" · "Built for investigative workflows" · "Law enforcement & corporate security"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| 3   | **Partner strip**                              | 4–8 logos                                                   | Caption "Partners & contributors". Verified logos only (6.3).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| 4   | **01 / WHO WE SERVE**                          | 2 AudienceCards                                             | H2 "Different mandates. Shared need for clarity." Intro: "From public-sector investigations to enterprise threat monitoring, put the right intelligence in the right hands." **For Law Enforcement:** "Connect evidence collection and analysis across police, forensic labs and government investigations." Tags: Digital evidence / UAV forensics / Biometrics → `/solutions/#law-enforcement`. **For Corporate Security:** "Monitor open-source signals and threat intelligence to identify exposure and help prevent data breaches." Tags: OSINT / Deep web monitoring / Threat intelligence → `/solutions/#corporate-security`. |
-| 5   | **02 / THE SOLUTION PORTFOLIO** (`bg-ink-800`) | 4 SolutionCards from `solutions.ts`                         | H2 "Specialized tools. One investigative purpose."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| 6   | **03 / FROM SIGNAL TO EVIDENCE**               | 4 PipelineSteps                                             | H2 "A clear path through complex data." Intro: "A common investigative framework connects collection, context, analysis and reporting across our solutions." Steps: **Collect** "Gather relevant digital, open-source or field evidence." · **Correlate** "Connect entities, events and data points in context." · **Analyze** "Examine relationships and reconstruct activity." · **Report** "Organize findings for investigative and legal review."                                                                                                                                                                                |
-| 7   | **04 / BUILT ON SPECIALIST EXPERIENCE**        | Stats row + short paragraph                                 | **Change from design:** the old row ("10+ years / 4 solutions / 2 focus audiences / 4 pipeline stages") counted the company's own sections. Keep **10+ years in cyber forensics** and add only figures the company can verify (e.g. agencies served, officers trained). If there are none yet, replace the row with one sentence and a link to About: "Our team brings together white-hat hackers, forensic analysts and software engineers."                                                                                                                                                                                        |
-| 8   | **CTA band**                                   | `CTABand`                                                   | Eyebrow `START A CONVERSATION`. "Bring clarity to your next investigation." Body: "Talk to our team about your evidence workflow, intelligence needs and the right solution for your organization." Primary: Request a Demo → `/contact/`. Link: "Or Contact Us" → `/contact/`.                                                                                                                                                                                                                                                                                                                                                      |
+| #   | Section                                    | Layout                                                      | Content                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --- | ------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | **Hero**                                   | 2-col at `lg` (text left, diagram right); stacked on mobile | Eyebrow `DIGITAL FORENSICS / OSINT / CYBER-INTELLIGENCE`. H1 **"From complex digital data to actionable legal evidence"**. Sub: "Intelligence platforms and forensic tools for the teams that turn fragmented digital traces into meaningful investigative insight." Buttons: **Request a Demo** (primary), **Explore Solutions** (secondary). Diagram caption `FIG. 01 · FRAGMENTED SIGNALS → CONNECTED EVIDENCE`.                                                                                                                                                                                                                  |
+| 2   | **Trust row**                              | 3 items, top/bottom border                                  | "10+ years in cyber forensics" · "Built for investigative workflows" · "Law enforcement & corporate security"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 3   | **Partner strip**                          | 4–8 logos                                                   | Caption "Partners & contributors". Verified logos only (6.3).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 4   | **01 / WHO WE SERVE**                      | 2 AudienceCards                                             | H2 "Different mandates. Shared need for clarity." Intro: "From public-sector investigations to enterprise threat monitoring, put the right intelligence in the right hands." **For Law Enforcement:** "Connect evidence collection and analysis across police, forensic labs and government investigations." Tags: Digital evidence / UAV forensics / Biometrics → `/solutions/#law-enforcement`. **For Corporate Security:** "Monitor open-source signals and threat intelligence to identify exposure and help prevent data breaches." Tags: OSINT / Deep web monitoring / Threat intelligence → `/solutions/#corporate-security`. |
+| 5   | **02 / THE SOLUTION PORTFOLIO** (`bg-alt`) | 4 SolutionCards from `solutions.ts`                         | H2 "Specialized tools. One investigative purpose."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 6   | **03 / FROM SIGNAL TO EVIDENCE**           | 4 PipelineSteps                                             | H2 "A clear path through complex data." Intro: "A common investigative framework connects collection, context, analysis and reporting across our solutions." Steps: **Collect** "Gather relevant digital, open-source or field evidence." · **Correlate** "Connect entities, events and data points in context." · **Analyze** "Examine relationships and reconstruct activity." · **Report** "Organize findings for investigative and legal review."                                                                                                                                                                                |
+| 7   | **04 / BUILT ON SPECIALIST EXPERIENCE**    | Stats row + short paragraph                                 | **Change from design:** the old row ("10+ years / 4 solutions / 2 focus audiences / 4 pipeline stages") counted the company's own sections. Keep **10+ years in cyber forensics** and add only figures the company can verify (e.g. agencies served, officers trained). If there are none yet, replace the row with one sentence and a link to About: "Our team brings together white-hat hackers, forensic analysts and software engineers."                                                                                                                                                                                        |
+| 8   | **CTA band**                               | `CTABand`                                                   | Eyebrow `START A CONVERSATION`. "Bring clarity to your next investigation." Body: "Talk to our team about your evidence workflow, intelligence needs and the right solution for your organization." Primary: Request a Demo → `/contact/`. Link: "Or Contact Us" → `/contact/`.                                                                                                                                                                                                                                                                                                                                                      |
 
 **Home hero diagram:** the home page and the STROTPRAGNA page currently share the same diagram. Give the home hero its own animated version (see 8.4) so the two pages feel different.
 
@@ -573,8 +594,8 @@ const { s } = Astro.props;
 
 **Section order (all four pages):**
 
-1. **ProductHero**: breadcrumb `SOLUTIONS / {NAME}`, eyebrow, product name (cyan), H1 from `headline` (one line per array item), `sub`, buttons Request a Demo + Contact Us, diagram chosen by `diagram`.
-2. **Info strip** (`bg-ink-800`, 2-col): `DESIGNED FOR` / `CORE FOCUS`.
+1. **ProductHero**: breadcrumb `SOLUTIONS / {NAME}`, eyebrow, product name (`accent-text`), H1 from `headline` (one line per array item), `sub`, buttons Request a Demo + Contact Us, diagram chosen by `diagram`.
+2. **Info strip** (`bg-alt`, 2-col): `DESIGNED FOR` / `CORE FOCUS`.
 3. **01 / THE CHALLENGE**: `challenge.title` + `challenge.body` (2-col).
 4. **02 / KEY CAPABILITIES**: H2 "Focused on the work that matters." Three `CapabilityCard`s.
 5. **03 / WORKFLOW**: H2 "From input to investigative context." Note: "A conceptual view of the process. Discuss supported sources, operational scope and your team's requirements in a demo." Four `PipelineStep`s.
@@ -728,7 +749,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
   // 5. Pipeline: steps light up in sequence as the row scrolls in
   gsap.utils.toArray<HTMLElement>("[data-pipeline]").forEach((row) => {
-    // CSS: [data-step]{transition:border-color .4s} [data-step].is-lit{border-color:var(--color-cyan-dim)}
+    // CSS: [data-step]{transition:border-color .4s} [data-step].is-lit{border-color:var(--color-accent-dim)}
     const steps = row.querySelectorAll<HTMLElement>("[data-step]");
     const tl = gsap.timeline({
       scrollTrigger: { trigger: row, start: "top 75%", once: true },
@@ -775,7 +796,7 @@ Important details:
 
 ### 8.3 Hover and focus (CSS only, no JS)
 
-- Cards: `transition-colors duration-200 hover:border-cyan-dim` and `hover:-translate-y-0.5`.
+- Cards: `transition-colors duration-200` and a rule that turns `accent`; no lift.
 - Buttons: arrow icon slides 2px up-right on hover.
 - Links: underline offset animation.
 - Focus-visible ring is global (4.1).

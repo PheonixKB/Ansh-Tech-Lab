@@ -31,7 +31,7 @@ Do not invent requirements. When files disagree, the order is: `security.md` > `
 
 ## 3. Stack and commands
 
-Astro 7 (static output), Tailwind CSS 4 via `@tailwindcss/vite`, TypeScript (strict), GSAP + ScrollTrigger, Fontsource (Inter, JetBrains Mono), `@astrojs/sitemap`, Prettier (Astro + Tailwind plugins), `@astrojs/check`, Playwright + axe-core. Node 24 (Astro 7.4 needs >= 22.22.0). Hosted on GitHub Pages with the `anshtechlabs.com` custom domain (`public/CNAME`, no `base`).
+Astro 7 (static output), Tailwind CSS 4 via `@tailwindcss/vite`, TypeScript (strict), GSAP + ScrollTrigger, Fontsource (JetBrains Mono), `@astrojs/sitemap`, Prettier (Astro + Tailwind plugins), `@astrojs/check`, Playwright + axe-core. Node 24 (Astro 7.4 needs >= 22.22.0). Hosted on GitHub Pages with the `anshtechlabs.com` custom domain (`public/CNAME`, no `base`).
 
 Check exact versions against `tech-stack.md` and the registry before installing. The versions there were checked on 17 Oct 2026.
 
@@ -57,7 +57,7 @@ Follow the folder structure in `design.md` section 2.3. Key points:
 - Animations in `src/scripts/animations.ts`, wrapped in `gsap.matchMedia()`. Reduced motion shows the final state with no movement. Animate `transform` and `opacity` only.
 - Semantic HTML first: one `h1` per page, landmarks, real `button` and `a` elements, visible focus, 44px minimum touch targets, `alt` text on every meaningful image.
 - Copy tone: plain and precise, no buzzwords, no hacker clichés. Three pillars: Collect, Correlate, Analyze/Report.
-- Hex colours in the design are estimates from screenshots. If a Figma file is available, sample from it. Use `muted` rather than `faint` for text on the teal band (contrast).
+- Hex colours in the design are estimates from screenshots. If a Figma file is available, sample from it. The current palette is sampled from the ivpn.net screenshot (`design-ivpn-light-theme.md`). Use `muted` rather than `faint` on the grey CTA band, dark `on-accent` text on the blue fill (white fails), and `accent-text` for blue text.
 
 ## 5. How to work
 
@@ -98,14 +98,14 @@ These are the capabilities required, grouped by phase. The right-hand column nam
 
 ### 7.2 Design and UX skills
 
-| Capability                      | What it means here                                                                              | Matching skill                                                                                 |
-| ------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Distinctive visual design**   | Keep the case-file look (mono eyebrows, thin borders, one cyan accent). Avoid generic templates | `frontend-design`                                                                              |
-| **Design-to-code from Figma**   | Turn the approved Figma screens into components using tokens                                    | `figma:figma-design-to-code` (needs the Figma connector and file access; not installed so far) |
-| **Motion from design**          | Match animation timing and easing to the prototype                                              | `figma:figma-implement-motion`                                                                 |
-| **Design-system upkeep**        | Check for hard-coded values, document component variants and states                             | `design:design-system`                                                                         |
-| **Design handoff and critique** | Compare the build to the design, list differences                                               | `design:design-critique`, `design:design-handoff`                                              |
-| **UX copy**                     | Button labels, form errors, empty and success states, responsible-use note                      | `design:ux-copy`                                                                               |
+| Capability                      | What it means here                                                                                                  | Matching skill                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Distinctive visual design**   | Keep the IVPN-style light look (monospace, square, no cards, one blue accent, dark footer). Avoid generic templates | `frontend-design`                                                                              |
+| **Design-to-code from Figma**   | Turn the approved Figma screens into components using tokens                                                        | `figma:figma-design-to-code` (needs the Figma connector and file access; not installed so far) |
+| **Motion from design**          | Match animation timing and easing to the prototype                                                                  | `figma:figma-implement-motion`                                                                 |
+| **Design-system upkeep**        | Check for hard-coded values, document component variants and states                                                 | `design:design-system`                                                                         |
+| **Design handoff and critique** | Compare the build to the design, list differences                                                                   | `design:design-critique`, `design:design-handoff`                                              |
+| **UX copy**                     | Button labels, form errors, empty and success states, responsible-use note                                          | `design:ux-copy`                                                                               |
 
 ### 7.3 Quality skills
 
