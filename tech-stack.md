@@ -7,9 +7,9 @@ _Draft: 17 October 2026. Companion to [`idea.md`](./idea.md) (what and why) and 
 | Layer         | Choice                                   | Version checked*       | Why                                                                                                                                 |
 | ------------- | ---------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Framework     | **Astro**                                | 7.4.0                  | Builds to plain static HTML, ships almost no JavaScript, reusable components and layouts, dynamic routes for the four product pages |
-| Styling       | **Tailwind CSS** + `@tailwindcss/vite`   | 4.3.3                  | Design tokens in CSS (`@theme`), fast to build a custom dark UI. Astro's docs now recommend Tailwind's Vite plugin                  |
+| Styling       | **Tailwind CSS** + `@tailwindcss/vite`   | 4.3.3                  | Design tokens in CSS (`@theme`), fast to build a custom light UI. Astro's docs now recommend Tailwind's Vite plugin                 |
 | Animation     | **GSAP** + ScrollTrigger                 | 3.15.0                 | Scroll reveals, count-up numbers, SVG line drawing, timelines                                                                       |
-| Fonts         | **Fontsource** (Inter, JetBrains Mono)   | 5.3.0 each             | Self-hosted, so no third-party font requests                                                                                        |
+| Fonts         | **Fontsource** (JetBrains Mono)          | 5.3.0 each             | Self-hosted, so no third-party font requests                                                                                        |
 | SEO           | `@astrojs/sitemap`                       | 3.7.4                  | Generates `sitemap-index.xml`                                                                                                       |
 | Formatting    | Prettier + Astro and Tailwind plugins    | 3.9.10 / 1.1.1 / 0.8.1 | One consistent code style                                                                                                           |
 | Type check    | `@astrojs/check`                         | 0.9.10                 | Catches errors in `.astro` files                                                                                                    |
@@ -51,7 +51,7 @@ Check: `node -v` and `npm -v`. To manage Node versions, use `nvm` or a similar t
 
 ### Styling: Tailwind CSS
 
-- Design tokens (colors, fonts) are defined once in `global.css` and become utility classes like `bg-ink-900` and `text-cyan`.
+- Design tokens (colors, fonts) are defined once in `global.css` and become utility classes like `bg-alt` and `text-accent-text`.
 - Utility classes keep styles next to the markup, which speeds up building the page designs.
 - Alternative: hand-written CSS or scoped Astro `<style>` blocks. Valid, but slower for a design-heavy site and harder to keep consistent.
 
@@ -81,7 +81,7 @@ The Astro project is identical on all three. If strong security headers become a
 
 ### Fonts and icons
 
-- **Fonts:** `@fontsource-variable/inter` and `@fontsource-variable/jetbrains-mono`, imported in `global.css`. No requests to Google Fonts, which is better for privacy and speed.
+- **Fonts:** `@fontsource-variable/jetbrains-mono`, imported in `global.css`. No requests to Google Fonts, which is better for privacy and speed.
 - **Icons:** inline SVG components (copy from an open-source set such as Lucide or Tabler). No icon library dependency.
 
 ## 4. Dependencies
@@ -93,7 +93,7 @@ npm create astro@latest ansh-tech-labs     # Empty template, install deps, init 
 cd ansh-tech-labs
 npm install tailwindcss @tailwindcss/vite
 npx astro add sitemap
-npm install gsap @fontsource-variable/inter @fontsource-variable/jetbrains-mono
+npm install gsap @fontsource-variable/jetbrains-mono
 ```
 
 Dev tools:
@@ -125,7 +125,6 @@ npx playwright install chromium            # downloads the test browser
     "tailwindcss": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "gsap": "^3.15.0",
-    "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0"
   },
   "devDependencies": {

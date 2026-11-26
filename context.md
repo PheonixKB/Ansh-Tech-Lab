@@ -13,15 +13,15 @@ Static marketing website for Ansh Tech Labs â€” digital forensics, OSINT an
 - Framework: Astro 7 (static output)
 - Styling: Tailwind CSS 4 via `@tailwindcss/vite`
 - Animation: GSAP + ScrollTrigger
-- Fonts: `@fontsource-variable/inter`, `@fontsource-variable/jetbrains-mono` (self-hosted)
+- Fonts: `@fontsource-variable/jetbrains-mono` (self-hosted)
 - SEO: `@astrojs/sitemap`
 - Forms: Disabled until provider approved (security.md Â§7)
 - Testing: Playwright + axe-core
 
 ## Design Principles (from design.md)
 
-1. **Case-file feel.** Numbered mono eyebrows (`01 / WHO WE SERVE`), figure captions (`FIG. 01`), thin 1px borders, square corners.
-2. **One accent.** Cyan marks actions and key labels only. Everything else is navy and grey.
+1. **Plain and technical.** Monospace type, square corners, no cards or shadows, thin rules, numbered eyebrows (`01 / Who we serve`).
+2. **One accent.** IVPN-style sky blue marks actions and key labels only, on a white and grey page with a dark footer. Light theme only.
 3. **Say what the tool does.** Plain verbs. No buzzwords and no unverifiable superlatives.
 4. **Honest visuals.** Diagrams are labelled `CONCEPTUAL WORKFLOW / ILLUSTRATIVE DATA`. Use sanitized or mock data in any screenshot. Never show real case data.
 5. **Motion supports meaning.** Animate to explain flow (lines connecting, pipeline lighting up), never to decorate. Respect reduced-motion.
@@ -30,44 +30,47 @@ Static marketing website for Ansh Tech Labs â€” digital forensics, OSINT an
 
 ### Colors
 
-- `--color-ink-950: #060B14` â€” page background
-- `--color-ink-900: #0A1320` â€” cards
-- `--color-ink-800: #0D1B2B` â€” alternate section bands
-- `--color-band: #0F2D3A` â€” CTA band (teal-tinted)
-- `--color-line: #1B2D3F` â€” 1px borders
-- `--color-text: #F2F6FA`
-- `--color-muted: #9BA9B8` â€” body copy on dark
-- `--color-faint: #7C8CA0` â€” small labels (not on --color-band)
-- `--color-cyan: #40DFF2` â€” accent
-- `--color-cyan-dim: #1E7F8C` â€” diagram strokes, subtle accents
+Light theme sampled from ivpn.net (see `design-ivpn-light-theme.md`). Source of truth: `src/styles/global.css`.
+
+- `page` / `surface` `#FFFFFF`; `alt` / `band` `#F2F2F2`; `footer` `#222226`; `footer-text` `#C8C8CC`
+- `line` `#E3E3E3`; `line-strong` `#D7D7D8`
+- `heading` `#000000`; `text` `#222226`; `muted` `#3F3F44`; `faint` `#6B6B72`
+- `accent` `#449CF8` (fill); `accent-hover` `#5BA8F8`; `accent-text` `#1764C0`; `accent-dim` `#BDDCFC`; `on-accent` `#222226`
 
 ### Typography
 
-- **Display (H1):** Inter, `clamp(2.5rem, 5vw, 4rem)`, 400â€“500, tight leading (1.05â€“1.1), tracking `-0.02em`
-- **Section title (H2):** Inter, `clamp(1.75rem, 3vw, 2.75rem)`, 400
-- **Card title (H3):** Inter, 1.25â€“1.5rem, 400â€“500
-- **Body:** Inter, 1remâ€“1.125rem, 400, `text-muted`, max width ~65ch
-- **Eyebrow / label:** JetBrains Mono, 0.75rem minimum, 400, uppercase, tracking `0.08em`, `text-cyan`
-- **Caption / tag:** JetBrains Mono, 0.75rem minimum, 400, `text-faint`
+| Role            | Font           | Size                          | Weight | Notes                              |
+| --------------- | -------------- | ----------------------------- | ------ | ---------------------------------- |
+| Display (H1)    | JetBrains Mono | `clamp(2rem, 4.5vw, 3.25rem)` | 700    | black, tracking `-0.02em`          |
+| Section (H2)    | JetBrains Mono | `clamp(1.5rem, 3vw, 2rem)`    | 700    | black                              |
+| Card title (H3) | JetBrains Mono | 1.0625rem                     | 700    | turns `accent-text` on hover       |
+| Body            | JetBrains Mono | 0.9375rem / 1.8               | 400    | `text-muted`, max width ~65ch      |
+| Eyebrow / label | JetBrains Mono | 0.8125rem                     | 500    | sentence case, `text-accent-text`  |
+| Tag             | JetBrains Mono | 0.75rem minimum               | 400    | grey `alt` fill, no border, square |
 
 ### Layout
 
-- Container: `max-w-[1200px] mx-auto px-6 lg:px-8`
-- Section spacing: `py-20 md:py-28`
-- Alternate `bg-ink-950` and `bg-ink-800` bands
-- Cards: `bg-ink-900 border border-line`, no radius. Hover: border becomes `cyan-dim`, translate up 2px
+- Container: max 1100px, `px-4 lg:px-6`.
+- Section spacing: `py-16 md:py-20`. Alternate `bg-page` and `bg-alt` bands. Hero is plain white.
+- "Cards" are plain blocks: no border, fill or radius. A 4.5rem `line-strong` rule sits above and turns `accent` on hover; the H3 turns `accent-text`. Class: `.card`.
+- Buttons: square, bold, min height 44px. Primary `bg-accent text-on-accent`; secondary `bg-alt text-accent-text`.
+- Footer: `bg-footer`, light text, white on hover.
 - Breakpoints: Tailwind defaults (`sm 640`, `md 768`, `lg 1024`, `xl 1280`). Design mobile first.
-- Grids: 4-up cards collapse to 2-up at `md`, 1-up below. 2-up audience cards stack below `md`.
+- Grids: 4-up collapse to 2-up at `md`, 1-up below. 2-up audience blocks stack below `md`.
 
 ### Verified Contrast (WCAG)
 
-| Text    | on `ink-950` | on `ink-900` | on `ink-800` | on `band` |
-| ------- | ------------ | ------------ | ------------ | --------- |
-| `text`  | 18.2         | 17.2         | 16.0         | 13.3      |
-| `muted` | 8.2          | 7.8          | 7.3          | 6.0       |
-| `cyan`  | 12.3         | 11.6         | 10.8         | 9.0       |
+| Text          | on `page` | on `alt` / `band` |
+| ------------- | --------- | ----------------- |
+| `heading`     | 21.0      | 18.8              |
+| `text`        | 15.9      | 14.2              |
+| `muted`       | 10.5      | 9.4               |
+| `faint`       | 5.3       | 4.7               |
+| `accent-text` | 5.8       | 5.2               |
 
-**Rule:** use `muted`, never `faint`, on the CTA band. Body text 4.5:1 minimum.
+- `on-accent` (`#222226`) on the blue `accent` fill: **5.6:1** (6.3 on hover). **White on `#449CF8` is 2.85:1 and fails; never use it.** `#449CF8` as text on white also fails, so use `accent-text`.
+- Footer: `footer-text` on `footer` 9.5:1, white 15.9:1, `accent` on `footer` 5.6:1.
+- Body text 4.5:1 minimum.
 
 ## Project Structure
 

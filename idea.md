@@ -106,7 +106,7 @@ We checked the navigation and page types of **Magnet Forensics** and **Maltego**
 - **Hero diagram that explains the product:** lines connect signals to an entity, then to evidence. Subtle draw-in animation.
 - **Interactive pipeline:** Collect → Correlate → Analyze → Report. Each step lights up on scroll and can expand to show what happens (v1.1).
 - **Audience-aware demo form:** choosing Law Enforcement or Corporate Security changes the suggested solutions.
-- **Case-file visual language:** numbered mono eyebrows, figure captions, thin borders. It makes the site feel like documentation, which suits the subject.
+- **Plain technical visual language:** monospace type, square corners, thin rules and a single blue accent on a white page (modelled on ivpn.net). It reads like documentation, which suits the subject.
 - **Responsible-use note on the contact form:** "Please do not include case evidence, personal identifiers or sensitive operational details." This is already in the approved design and should stay.
 
 ## 9. How we will build it (summary)
