@@ -12,7 +12,7 @@ const description = 'Get in touch with Ansh Tech Labs';
       <p data-ix="eyebrow" class="eyebrow">Contact</p>
       <h1 class="mb-6">Request a Demo</h1>
       <p data-ix="lead" class="max-w-2xl text-lg text-muted">
-        Ready to bring clarity to your investigation? Fill out the form below and our team will be in touch shortly.
+        Ready to bring clarity to your investigation? Fill out the form below.
       </p>
     </div>
   </section>
@@ -23,15 +23,36 @@ const description = 'Get in touch with Ansh Tech Labs';
         <p class="mb-8 text-muted">
           <strong class="font-medium text-text">Note:</strong> The contact form is currently disabled. Until a form provider is approved by the admins, please use the contact details below.
         </p>
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <!-- Contact form UI - disabled until admin approves provider -->
+        <form class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" novalidate>
           <div>
-            <h2 class="mb-3 text-2xl">Email</h2>
-            <p class="text-muted">{site.contact.email}</p>
+            <label class="block text-sm font-medium text-text mb-2" for="name">Full Name</label>
+            <input class="w-full rounded border-border-line py-2 pl-3 text-text focus:outline-none focus:ring-2 focus:ring-accent" id="name" type="text" disabled>
           </div>
           <div>
-            <h2 class="mb-3 text-2xl">Location</h2>
-            <p class="text-muted">Gandhinagar, Gujarat, India</p>
+            <label class="block text-sm font-medium text-text mb-2" for="email">Email</label>
+            <input class="w-full rounded border-border-line py-2 pl-3 text-text focus:outline-none focus:ring-2 focus:ring-accent" id="email" type="email" disabled>
           </div>
+          <div class="lg:col-span-2">
+            <label class="block text-sm font-medium text-text mb-2" for="organization">Organization</label>
+            <input class="w-full rounded border-border-line py-2 pl-3 text-text focus:outline-none focus:ring-2 focus:ring-accent" id="organization" type="text" disabled>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text mb-2" for="subject">Subject</label>
+            <input class="w-full rounded border-border-line py-2 pl-3 text-text focus:outline-none focus:ring-2 focus:ring-accent" id="subject" type="text" disabled>
+          </div>
+          <div class="col-span-3 lg:col-span-2">
+            <label class="block text-sm font-medium text-text mb-2" for="message">Message</label>
+            <textarea class="w-full rounded border-border-line py-2 pl-3 text-text focus:outline-none focus:ring-2 focus:ring-accent resize-hg" id="message" rows="4" disabled></textarea>
+          </div>
+          <div class="col-span-3 lg:col-span-2">
+            <button class="btn btn-primary w-full py-3 rounded font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>Request a Demo</button>
+          </div>
+        </form>
+        <div class="mt-6 pt-6 border-t border-border-line text-sm text-muted">
+          <p>Contact details:</p>
+          <p class="font-medium text-text">{site.contact.email}</p>
+          <p>Gandhinagar, Gujarat, India</p>
         </div>
       </div>
     </div>
